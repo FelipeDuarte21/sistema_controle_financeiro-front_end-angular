@@ -1,3 +1,7 @@
 .linha-card{
     border-left: 2px solid #0d6efd;
 }
+
+.nao-quebra-tabela{
+    white-space: nowrap;
+}
