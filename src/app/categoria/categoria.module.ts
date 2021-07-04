@@ -1,5 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { CabecalhoModule } from "../compartilhados/cabecalho/cabecalho.module";
 import { CategoriaRoutingModule } from "./categoria-routing.module";
 import { CategoriaComponent } from "./categoria.component";
 
@@ -9,7 +11,8 @@ import { CategoriaComponent } from "./categoria.component";
     ],
     imports: [
         CommonModule,
-        CategoriaRoutingModule
+        CategoriaRoutingModule,
+        CabecalhoModule
     ],
     exports: [
         CategoriaComponent
