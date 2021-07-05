@@ -5,11 +5,15 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'categoria'
+        redirectTo: 'lancamento/1'
     },
     {
         path: 'categoria',
         loadChildren: () => import('./categoria/categoria.module').then(m => m.CategoriaModule)
+    },
+    {
+        path: 'lancamento/:idCategoria',
+        loadChildren: () => import('./lancamento/lancamento.module').then(m => m.LancamentoModule)
     }
 ];
 
