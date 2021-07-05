@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { LancamentoComponent } from "./lancamento.component";
 import { LancamentoListarComponent } from "./listar/lancamento-listar.component";
+import { LancamentoSalvarComponent } from "./salvar/lancamento-salvar.component";
 
 const routes: Routes = [
     {
@@ -11,6 +12,14 @@ const routes: Routes = [
             {
                 path: '',
                 component: LancamentoListarComponent
+            },
+            {
+                path: 'lancar',
+                component: LancamentoSalvarComponent
+            },
+            {
+                path: 'lancar/atualizar/:id',
+                component: LancamentoSalvarComponent
             }
         ]
     }
