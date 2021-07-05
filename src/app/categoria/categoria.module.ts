@@ -4,11 +4,13 @@ import { CabecalhoModule } from "../compartilhados/cabecalho/cabecalho.module";
 import { CategoriaRoutingModule } from "./categoria-routing.module";
 import { CategoriaComponent } from "./categoria.component";
 import { CategoriaListarComponent } from "./listar/categoria-listar.component";
+import { CategoriaSalvarComponent } from "./salvar/categoria-salvar.component";
 
 @NgModule({
     declarations: [
         CategoriaComponent,
-        CategoriaListarComponent
+        CategoriaListarComponent,
+        CategoriaSalvarComponent
     ],
     imports: [
         CommonModule,
