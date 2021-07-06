@@ -9,11 +9,11 @@ const routes: Routes = [
     },
     {
         path: 'categoria',
-        loadChildren: () => import('./categoria/categoria.module').then(m => m.CategoriaModule)
+        loadChildren: () => import('./modulos-principais/categoria/categoria.module').then(m => m.CategoriaModule)
     },
     {
         path: 'lancamento/:idCategoria',
-        loadChildren: () => import('./lancamento/lancamento.module').then(m => m.LancamentoModule)
+        loadChildren: () => import('./modulos-principais/lancamento/lancamento.module').then(m => m.LancamentoModule)
     }
 ];
 
