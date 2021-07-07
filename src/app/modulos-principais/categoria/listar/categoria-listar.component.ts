@@ -18,7 +18,9 @@ export class CategoriaListarComponent implements OnInit{
 
     private paginaAtual = 0;
     private quantidadeAtual = this.qtdOpcoes[0];
-    private ordem = 1; 
+    private ordem = 1;
+
+    tamanho:number = 0;
 
     constructor(
         private categoriaService: CategoriaService
