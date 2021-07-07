@@ -62,4 +62,26 @@ export class CategoriaListarComponent implements OnInit{
         this.painelCard = false;
     }
 
+    public excluir(id: number){
+
+        let c = confirm("Deseja Realmente Excluir a Categoria?");
+
+        if(c == true){
+
+            this.categoriaService.excluir(id).subscribe(
+                resp => {
+                    alert("Categoria Excluída Com Sucesso!");
+                    this.paginaAtual = 0;
+                    this.quantidadeAtual = this.qtdOpcoes[0];
+                    this.listarCategorias();
+                },
+                error => {
+                    alert("Erro ao Excluir Categoria!");
+                }
+            );
+            
+        }
+
+    }
+
 }
