@@ -26,6 +26,10 @@ export class CategoriaService{
         return this.http.delete(`${this.baseURL}/${id}`);
     }
 
+    public buscarPorId(id:number):Observable<Categoria>{
+        return this.http.get<Categoria>(`${this.baseURL}/${id}`);
+    }
+
     public listar(pagina:number, quantidade:number, order:number):Observable<PaginaCategoria>{
         return this.http.get<PaginaCategoria>(`${this.baseURL}?page=${pagina}&size=${quantidade}&order=${order}`);
     }

@@ -11,8 +11,6 @@
 
             <form [formGroup]="formCategoria" (submit)="enviar()" class="mt-4">
 
-                <input formControlName="id" type="hidden" name="id">
-
                 <div class="form-group">
                     <label for="nome">Nome:</label>
                     <input formControlName="nome" type="text" class="form-control" id="nome" [ngClass]="{'is-invalid': verificaCampo('nome')}">
