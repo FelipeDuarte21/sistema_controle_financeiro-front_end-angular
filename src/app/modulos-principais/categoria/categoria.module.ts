@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
 import { CategoriaService } from "src/app/servicos/categoria.service";
 import { CategoriaRoutingModule } from "./categoria-routing.module";
@@ -18,7 +19,9 @@ import { CategoriaSalvarComponent } from "./salvar/categoria-salvar.component";
         CommonModule,
         CategoriaRoutingModule,
         CabecalhoModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     exports: [
         CategoriaComponent
