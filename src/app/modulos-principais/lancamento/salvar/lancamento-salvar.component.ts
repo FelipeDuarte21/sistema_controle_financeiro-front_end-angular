@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { LancamentoSalvar } from "src/app/modelos/lancamento.model";
 import { Tipo } from "src/app/modelos/tipo.model";
 import { LancamentoService } from "src/app/servicos/lancamento.service";
@@ -13,6 +13,8 @@ import { TipoService } from "src/app/servicos/tipo.service";
 })
 export class LancamentoSalvarComponent implements OnInit{
 
+    public titulo: string = "Lançar";
+
     public idCategoria:number;
 
     public tiposLancamentos: Array<Tipo>;
@@ -23,7 +25,8 @@ export class LancamentoSalvarComponent implements OnInit{
         private tipoService:TipoService,
         private formBuilder: FormBuilder,
         private lancamentoService: LancamentoService,
-        private router: Router
+        private router: Router,
+        private activedRoute: ActivatedRoute
     ){}
 
     ngOnInit(): void {
@@ -45,6 +48,28 @@ export class LancamentoSalvarComponent implements OnInit{
             balanco: [parseInt(localStorage.getItem("balanco"))],
             tipo: ['',[Validators.required]]
         });
+
+        this.activedRoute.params.subscribe(resp => {
+            let id = resp.id;
+            if(id == null){
+                this.titulo = "Lançar";
+            }else{
+                this.titulo = "Atualizar Lançamento";
+            }
+            this.lancamentoService.buscarPorId(id).subscribe(
+                lancamento => {
+                    this.formLancamento.get('id').setValue(lancamento.id);
+                    this.formLancamento.get('nome').setValue(lancamento.nome);
+                    this.formLancamento.get('descricao').setValue(lancamento.descricao);
+                    this.formLancamento.get('valor').setValue(lancamento.valor);
+                    this.formLancamento.get('dataCadastro').setValue(lancamento.dataCadastro);
+                    this.formLancamento.get('sugestao').setValue(lancamento.sugestao);
+                    this.formLancamento.get('balanco').setValue(parseInt(localStorage.getItem("balanco")));
+                    this.formLancamento.get('tipo').setValue(lancamento.tipo.valor);
+                }
+            );
+        });
+
     }
 
     public verificaCampo(campo:string): boolean{
@@ -74,6 +99,20 @@ export class LancamentoSalvarComponent implements OnInit{
                 error => {
                     console.log(error);
                     alert("Erro ao Tentar Realizar Lançamento!");
+                }
+            );
+
+        }else{
+
+            this.lancamentoService.alterar(lancamento).subscribe(
+                lancamento => {
+                    this.formLancamento.reset();
+                    this.router.navigate(['/lancamento',this.idCategoria]);
+                    alert("Lançamento Atualizado Com Sucesso!");
+                },
+                error => {
+                    console.log(error);
+                    alert("Erro ao Tentar Atualizar Lançamento!");
                 }
             );
 
