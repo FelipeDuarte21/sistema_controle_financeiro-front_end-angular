@@ -64,4 +64,27 @@ export class LancamentoListarComponent implements OnInit{
         this.listarLancamentos();
     }
 
+    public excluir(id:number){
+       
+        let c = confirm("Deseja Realmente Excluir Lançamento?");
+
+        if(c == true){
+
+            this.lancamentoService.excluir(id).subscribe(
+                resp => {
+                    alert("Lançamento Excluído Com Sucesso!");
+                    this.paginaAtual = 0;
+                    this.quantidadeAtual = this.qtdOpcoes[0];
+                    this.listarLancamentos();
+                },
+                error => {
+                    console.log(error);
+                    alert("Erro ao excluir Lançamento");
+                }
+            );
+
+        }
+
+    }
+
 }
