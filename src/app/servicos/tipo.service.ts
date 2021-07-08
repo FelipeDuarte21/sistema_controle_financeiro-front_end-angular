@@ -13,8 +13,8 @@ export class TipoService{
         private http: HttpClient
     ){}
 
-    public buscarTodos():Observable<Tipo>{
-        return this.http.get<Tipo>(this.baseURL);
+    public buscarTodos():Observable<Array<Tipo>>{
+        return this.http.get<Array<Tipo>>(this.baseURL);
     }
 
 }

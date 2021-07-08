@@ -11,3 +11,14 @@ export interface Lancamento {
     tipo: Tipo;
     categoria: Categoria
 }
+
+export interface LancamentoSalvar{
+    id: number;
+    nome: string;
+    descricao: string;
+    valor: number;
+    dataCadastro: string;
+    sugestao: boolean;
+    balanco: number;
+    tipo: number
+}
