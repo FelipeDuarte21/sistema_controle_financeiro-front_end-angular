@@ -1,3 +1,4 @@
+import { Categoria } from "./categoria.model";
 import { Tipo } from "./tipo.model";
 
 export interface Lancamento {
@@ -8,4 +9,5 @@ export interface Lancamento {
     dataCadastro: string;
     sugestao: boolean;
     tipo: Tipo;
+    categoria: Categoria
 }

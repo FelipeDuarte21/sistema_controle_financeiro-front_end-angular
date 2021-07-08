@@ -1,5 +1,4 @@
 import { Categoria } from "./categoria.model";
-import { Lancamento } from "./lancamento.model";
 
 export interface Balanco{
     id: number;
@@ -9,5 +8,4 @@ export interface Balanco{
     saldoAtual: number;
     fechado: boolean;
     categoria: Categoria;
-    lancamentos: Lancamento[];
 }

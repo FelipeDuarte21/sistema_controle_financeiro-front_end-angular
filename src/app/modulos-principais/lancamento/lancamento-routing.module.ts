@@ -18,7 +18,7 @@ const routes: Routes = [
                 component: LancamentoSalvarComponent
             },
             {
-                path: 'lancar/atualizar/:id',
+                path: 'atualizar/:id',
                 component: LancamentoSalvarComponent
             }
         ]

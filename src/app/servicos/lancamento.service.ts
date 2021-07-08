@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Lancamento } from "../modelos/lancamento.model";
+import { PaginaLancamento } from "../modelos/pagina-lancamento.model";
 
 @Injectable()
 export class LancamentoService{
@@ -27,6 +28,10 @@ export class LancamentoService{
 
     public buscarPorId(id:number):Observable<Lancamento>{
         return this.http.get<Lancamento>(`${this.baseURL}/${id}`);
+    }
+
+    public buscarPorBalanco(idBalanco:number,page:number,size:number,order:number):Observable<PaginaLancamento>{
+        return this.http.get<PaginaLancamento>(`${this.baseURL}/balanco?balanco=${idBalanco}&page=${page}&size=${size}&order=${order}`);
     }
 
 }

@@ -17,7 +17,7 @@
                     <div class="d-flex justify-content-start">
                         <div class="text-start">
                             <h6 class="mb-0"><small><i class="fas fa-tags me-1" style="font-size: 12px;"></i>Categoria:</small></h6>
-                            <span style="font-size: 20px;">Despesas Gerais</span>
+                            <span style="font-size: 20px;">{{balanco?.categoria.nome}}</span>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                     <div class="d-flex justify-content-start justify-content-md-center">
                         <div class="text-start">
                             <h6 class="mb-0"><small><i class="fas fa-calendar-alt me-1" style="font-size: 12px;"></i>Data:</small></h6>
-                            <span style="font-size: 20px;">Junho/2021</span>
+                            <span style="font-size: 20px;">{{balanco?.mes | converteMes}}/{{balanco?.ano}}</span>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,9 @@
                     <div class="d-flex justify-content-start justify-content-md-end">
                         <div class="text-start">
                             <h6 class="mb-0"><small><i class="fas fa-comment-dollar me-1" style="font-size: 12px;"></i>Saldo:</small></h6>
-                            <span class="text-primary" style="font-size: 20px;">+ R$ 750,00</span>
+                            <span class="text-primary" style="font-size: 20px;" *ngIf="balanco?.saldoAtual>0">+ {{balanco?.saldoAtual | currency:'R$'}}</span>
+                            <span class="text-danger" style="font-size: 20px;" *ngIf="balanco?.saldoAtual<0">- {{balanco?.saldoAtual | currency:'R$'}}</span>
+                            <span style="font-size: 20px;" *ngIf="balanco?.saldoAtual==0">{{balanco?.saldoAtual | currency:'R$'}}</span>
                         </div>
                     </div>
                 </div>
@@ -46,17 +48,17 @@
             <a routerLink="lancar" class="btn btn-primary mt-5"><i class="fas fa-plus me-1"></i>Novo Lançamento</a>
 
             <!--Barra de utilitários-->
-            <div class="row mt-4 mb-0">
+            <div class="row mt-4 mb-0" *ngIf="paginaLancamentos?.content.length > 0">
 
                 <!--Quantidade de categorias na página-->
                 <div class="col-12 col-md-4">
                     <div class="row justify-content-start">
                         <label for="size" class="d-none d-md-block col-md-4 col-lg-3 col-xl-2 col-form-label">Mostrar:</label>
                         <div class="col-12 col-md-5 col-lg-4 col-xl-3">
-                            <select id="size" class="form-select">
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
+                            <select id="size" class="form-select" (change)="mudarQuantidade($event.target)">
+                                <ng-container *ngFor="let opt of qtdOpcoes">
+                                    <option [value]="opt">{{opt}}</option>
+                                </ng-container>
                             </select>
                         </div>
                     </div>
@@ -66,14 +68,14 @@
                 <div class="col-12 col-md-4 p-0 mt-3 mt-md-0">
                     <p class="text-center">
 
-                        <span>
-                            <a class="btn" href="#"><i class="fas fa-caret-left fx-3"></i></a>
+                        <span class="me-1" *ngIf="paginaLancamentos?.number > 0">
+                            <a (click)="retrocederAnterior()" class="btn btn-outline-secondary"><i class="fas fa-caret-left fx-3"></i></a>
                         </span>
 
-                        <span>1 de 5</span>
+                        <span>{{paginaLancamentos?.number+1}} de {{paginaLancamentos?.totalPages}}</span>
 
-                        <span>
-                            <a class="btn" href="#"><i class="fas fa-caret-right"></i></a>
+                        <span class="ms-1" *ngIf="(paginaLancamentos?.number+1) < paginaLancamentos?.totalPages">
+                            <a (click)="avancarPagina()" class="btn btn-outline-secondary"><i class="fas fa-caret-right"></i></a>
                         </span>
 
                     </p>
@@ -92,9 +94,9 @@
             </div>
             
             <!--Lista de Lançamentos-->
-            <div class="row mt-0 mb-5">
+            <div class="row mt-0 mb-5" *ngIf="paginaLancamentos?.content.length > 0">
 
-                <div class="col-12">
+                <div class="col-12 mt-2" *ngFor="let lancamento of paginaLancamentos?.content">
                     <div class="card">
                         <div class="card-body px-1 py-2">
                             <div class="row">
@@ -102,35 +104,37 @@
                                 <div class="col-12 col-xxl-1">
                                     <div class="text-start text-xxl-center ms-2">
                                         <h6 class="mb-0"><small>Tipo:</small></h6>
-                                        <span class="text-success" style="font-size: 17px;"><i class="fas fa-square me-1"></i><span class="d-xxl-none">Provento</span></span>
+                                        <span class="text-success" style="font-size: 17px;" *ngIf="lancamento.tipo.valor == PROVENTO"><i class="fas fa-square me-1"></i><span class="d-xxl-none">Provento</span></span>
+                                        <span class="text-danger" style="font-size: 17px;" *ngIf="lancamento.tipo.valor == DESPESA"><i class="fas fa-square me-1"></i><span class="d-xxl-none">Despesa</span></span>
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-xxl-1">
                                     <div class="text-start ms-2 mt-2 mt-xxl-0">
                                         <h6 class="mb-0"><small>Data:</small></h6>
-                                        <span style="font-size: 17px;">03/06/2021</span>
+                                        <span style="font-size: 17px;">{{lancamento?.dataCadastro | date: 'dd/MM/yyyy'}}</span>
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-xxl-1">
+                                <div class="col-12 col-xxl-2">
                                     <div class="text-start ms-2 mt-2 mt-xxl-0">
                                         <h6 class="mb-0"><small>Valor:</small></h6>
-                                        <span class="text-success" style="font-size: 17px;">+ R$ 900,00</span>
+                                        <span class="text-success" style="font-size: 17px;" *ngIf="lancamento?.tipo.valor == 0">+ {{lancamento?.valor | currency: 'BRL'}}</span>
+                                        <span class="text-danger" style="font-size: 17px;" *ngIf="lancamento?.tipo.valor == 1">- {{lancamento?.valor | currency: 'BRL'}}</span>
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-xxl-7">
+                                <div class="col-12 col-xxl-6">
                                     <div class="text-start ms-2 mt-2 mt-xxl-0">
                                         <h6 class="mb-0"><small>Nome/Descrição:</small></h6>
-                                        <span style="font-size: 17px;">Pagamento do Estágio do BNDES - Estágio em programação no BNDES</span>
+                                        <span style="font-size: 17px;">{{lancamento?.nome}} - {{lancamento?.descricao}}</span>
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-xxl-2">
                                     <div class="text-start ms-2 mt-2 mt-xxl-0">
                                         <h6 class="mb-1"><small>Ações:</small></h6>
-                                        <a href="#" class="btn btn-primary btn-sm me-1"><i class="fas fa-edit me-1"></i>Editar</a>
+                                        <a [routerLink]="['atualizar',lancamento?.id]" class="btn btn-primary btn-sm me-1"><i class="fas fa-edit me-1"></i>Editar</a>
                                         <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash me-1"></i>Excluir</a>
                                     </div>                                    
                                 </div>
@@ -139,52 +143,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-12 mt-2">
-                    <div class="card">
-                        <div class="card-body px-1 py-2">
-                            <div class="row">
-
-                                <div class="col-12 col-xxl-1">
-                                    <div class="text-start text-xxl-center ms-2">
-                                        <h6 class="mb-0"><small>Tipo:</small></h6>
-                                        <span class="text-danger" style="font-size: 17px;"><i class="fas fa-square me-1"></i><span class="d-xxl-none">Despesa</span></span>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-xxl-1">
-                                    <div class="text-start ms-2 mt-2 mt-xxl-0">
-                                        <h6 class="mb-0"><small>Data:</small></h6>
-                                        <span style="font-size: 17px;">03/06/2021</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-xxl-1">
-                                    <div class="text-start ms-2 mt-2 mt-xxl-0">
-                                        <h6 class="mb-0"><small>Valor:</small></h6>
-                                        <span class="text-danger" style="font-size: 17px;">- R$ 150,00</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-xxl-7">
-                                    <div class="text-start ms-2 mt-2 mt-xxl-0">
-                                        <h6 class="mb-0"><small>Nome/Descrição:</small></h6>
-                                        <span style="font-size: 17px;">Conta da Net - pagamento da conta de internet, tv e telefone</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-xxl-2">
-                                    <div class="text-start ms-2 mt-2 mt-xxl-0">
-                                        <h6 class="mb-1"><small>Ações:</small></h6>
-                                        <a href="#" class="btn btn-primary btn-sm me-1"><i class="fas fa-edit me-1"></i>Editar</a>
-                                        <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash me-1"></i>Excluir</a>
-                                    </div>                                    
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
+            <div class="mt-5" *ngIf="paginaLancamentos?.content.length == 0">
+                <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não há nenhum lançamento!</div>
             </div>
 
         </div>
