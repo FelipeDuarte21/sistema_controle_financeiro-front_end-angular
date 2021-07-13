@@ -22,8 +22,6 @@ export class AutenticacaoComponent implements OnInit{
         private formBuilder: FormBuilder,
         private autenticacaoService: AutenticacaoService,
         private usuarioLogadoService: UsuarioLogadoService,
-        private tokenService: TokenService,
-        private usuarioService: UsuarioService,
         private router: Router
     ){}
 
@@ -48,15 +46,11 @@ export class AutenticacaoComponent implements OnInit{
             resp => {
 
                 let token = resp.headers.get('Authorization');
-                this.tokenService.setToken(token);
+                
+                this.usuarioLogadoService.logarUsuario(autenticacao.email,token);
 
-                this.usuarioService.buscarPorEmail(autenticacao.email).subscribe(
-                    usuario => {
-                        this.usuarioLogadoService.logarUsuario(usuario);
-                        this.router.navigate(['/categoria']);
-                    }
-                );
-
+                this.router.navigate(['/categoria']);
+ 
             },
             error => {
                 console.log(error);

@@ -12,8 +12,6 @@ export class InterceptorService implements HttpInterceptor{
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
-        console.log(req.url);
-
         if(!req.url.match('/login')){
 
             let token = this.tokenService.getToken();
