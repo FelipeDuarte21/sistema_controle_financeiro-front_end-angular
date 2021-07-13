@@ -7,19 +7,19 @@ export class TokenService{
 
     constructor(){}
 
-    setToken(token: string){
+    public setToken(token: string){
         window.sessionStorage.setItem(this.NOME_TOKEN, token);
     }
 
-    getToken():string{
+    public getToken():string{
         return window.sessionStorage.getItem(this.NOME_TOKEN);
     }
 
-    excluirToken(){
+    public excluirToken(){
         return window.sessionStorage.removeItem(this.NOME_TOKEN);
     }
 
-    temToken():boolean{
+    public temToken():boolean{
         return !!this.getToken();
     }
 

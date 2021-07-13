@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AutenticacaoGuardService } from "src/app/servicos/autenticacao-guard.service";
 import { AutenticacaoService } from "src/app/servicos/autenticacao.service";
 import { InterceptorService } from "src/app/servicos/interceptador.service";
 import { UsuarioService } from "src/app/servicos/usuario.service";
@@ -29,7 +30,8 @@ import { AutenticacaoComponent } from "./autenticacao.component";
             provide: HTTP_INTERCEPTORS,
             useClass:  InterceptorService,
             multi: true
-        }
+        },
+        AutenticacaoGuardService
     ],
     
 })

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
 import { CategoriaService } from "src/app/servicos/categoria.service";
 import { InterceptorService } from "src/app/servicos/interceptador.service";
+import { ModuloGuardService } from "src/app/servicos/modulo-guard.service";
 import { CategoriaRoutingModule } from "./categoria-routing.module";
 import { CategoriaComponent } from "./categoria.component";
 import { CategoriaListarComponent } from "./listar/categoria-listar.component";
@@ -33,7 +34,8 @@ import { CategoriaSalvarComponent } from "./salvar/categoria-salvar.component";
             provide: HTTP_INTERCEPTORS,
             useClass:  InterceptorService,
             multi: true
-        }
+        },
+        ModuloGuardService
     ]
 })
 export class CategoriaModule{

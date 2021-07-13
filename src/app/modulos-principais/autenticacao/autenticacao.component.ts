@@ -18,6 +18,8 @@ export class AutenticacaoComponent implements OnInit{
 
     public mostraErro: boolean = false;
 
+    public mostraEspinner:boolean = false;
+
     constructor(
         private formBuilder: FormBuilder,
         private autenticacaoService: AutenticacaoService,
@@ -49,8 +51,11 @@ export class AutenticacaoComponent implements OnInit{
                 
                 this.usuarioLogadoService.logarUsuario(autenticacao.email,token);
 
-                this.router.navigate(['/categoria']);
- 
+                this.mostraEspinner = true;
+                setTimeout(() => {
+                    this.router.navigate(['/categoria']);
+                },2000);
+
             },
             error => {
                 console.log(error);

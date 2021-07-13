@@ -14,7 +14,7 @@ export class UsuarioLogadoService{
         private usuarioService: UsuarioService
     ){}
 
-    logarUsuario(email:string, token:string){
+    public logarUsuario(email:string, token:string){
         this.tokenService.setToken(token);
         this.usuarioService.buscarPorEmail(email).subscribe(
             usuario => {
@@ -23,16 +23,20 @@ export class UsuarioLogadoService{
         );
     }
 
-    recuperarUsuario(): Observable<Usuario>{
+    public recuperarUsuario(): Observable<Usuario>{
         return this.usuarioSubject.asObservable();
     }
 
-    recuperarToken(): string{
-        if(!this.tokenService.temToken()) return null;
-        return this.tokenService.getToken();
+    public isUsuarioLogado(): boolean{
+        if(!this.tokenService.temToken()) return false;
+        let usuario: Usuario = null;
+        this.recuperarUsuario().subscribe(usu => {
+            usuario = usu;
+        });
+        return (usuario != null) ? true: false;
     }
 
-    deslogarUsuario(){
+    public deslogarUsuario(){
         this.usuarioSubject.next(null);
         this.tokenService.excluirToken();
     }

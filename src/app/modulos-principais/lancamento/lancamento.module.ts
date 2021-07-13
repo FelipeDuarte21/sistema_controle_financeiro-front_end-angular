@@ -7,6 +7,7 @@ import { ConverteMesPipe } from "src/app/compartilhados/pipes/converte-mes.pipe"
 import { BalancoService } from "src/app/servicos/balanco.service";
 import { InterceptorService } from "src/app/servicos/interceptador.service";
 import { LancamentoService } from "src/app/servicos/lancamento.service";
+import { ModuloGuardService } from "src/app/servicos/modulo-guard.service";
 import { TipoService } from "src/app/servicos/tipo.service";
 import { LancamentoRoutingModule } from "./lancamento-routing.module";
 import { LancamentoComponent } from "./lancamento.component";
@@ -39,7 +40,8 @@ import { LancamentoSalvarComponent } from "./salvar/lancamento-salvar.component"
             provide: HTTP_INTERCEPTORS,
             useClass:  InterceptorService,
             multi: true
-        }
+        },
+        ModuloGuardService
     ]
 })
 export class LancamentoModule{
