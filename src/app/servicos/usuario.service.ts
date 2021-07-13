@@ -18,4 +18,8 @@ export class UsuarioService{
         return this.http.post<Usuario>(this.baseURL,usuario);
     }
 
+    public buscarPorEmail(email:string):Observable<Usuario>{
+        return this.http.get<Usuario>(`${this.baseURL}/email?email=${email}`);
+    }
+
 }
