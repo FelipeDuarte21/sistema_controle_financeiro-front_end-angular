@@ -7,6 +7,7 @@ import { RodapeModule } from './compartilhados/rodape/rodape.module';
 
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { AutenticacaoModule } from './modulos-principais/autenticacao/autenticacao.module';
 
 registerLocaleData(ptBr);
 
@@ -17,7 +18,8 @@ registerLocaleData(ptBr);
   imports: [
     BrowserModule,
     RodapeModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AutenticacaoModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' }
