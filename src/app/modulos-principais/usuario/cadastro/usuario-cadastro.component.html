@@ -10,30 +10,43 @@
             <!--Botão Voltar-->
             <a routerLink="/" class="btn btn-outline-primary mt-4 mb-2"><i class="fas fa-undo-alt me-1"></i>Voltar</a>
 
-            <form class="mt-4">
+            <form [formGroup]="formCadastroUsuario" (submit)="enviar()" class="mt-4">
 
                 <div class="form-group mb-4">
                     <label class="mb-0" for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome">
-                    <span class="float-end text-end">0/50</span>
+                    <input type="text" class="form-control" id="nome" formControlName="nome"  [ngClass]="{'is-invalid': verificaCampo('nome')}" autocomplete="off">
+                    <span class="float-end text-end">{{tamanhoCampo('nome')}}/50</span>
+
+                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('nome').errors?.required">Nome é requerido!</div>
+                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('nome').errors?.minlength">Nome é menor que 3 caracteres!</div>
+                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('nome').errors?.maxlength">Nome é maior que 50 caracteres!</div>
                 </div>
 
                 <div class="form-group mb-4">
                     <label class="mb-0" for="email">Email</label>
-                    <input type="text" class="form-control" id="email">
-                    <span class="float-end text-end">0/80</span>
+                    <input type="text" class="form-control" id="email" formControlName="email" [ngClass]="{'is-invalid': verificaCampo('email')}" autocomplete="off" >
+                    <span class="float-end text-end">{{tamanhoCampo('email')}}/80</span>
+
+                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('email').errors?.required">Email é requerido!</div>
+                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('email').errors?.maxlength">Email é maior que 80 caracteres!</div>
+                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('email').errors?.email">Email incorreto!</div>
                 </div>
 
                 <div class="form-group mb-5">
                     <label class="mb-0" for="senha">Senha</label>
-                    <input type="password" class="form-control" id="senha">
-                    <span class="float-end text-end">0/15</span>
+                    <input type="password" class="form-control" id="senha" formControlName="senha" [ngClass]="{'is-invalid': verificaCampo('senha')}" autocomplete="off">
+                    <span class="float-end text-end">{{tamanhoCampo('senha')}}/15</span>
+
+                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.required">Senha é requerido!</div>
+                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.minlength">Senha é menor que 6 caracteres!</div>
+                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.maxlength">Senha é maior que 15 caracteres!</div>
                 </div>
 
-                <button class="btn btn-primary"><i class="fas fa-user-plus me-1"></i>Cadastrar</button>
-
+                <button [disabled]="formCadastroUsuario.invalid" type="submit" class="btn btn-primary"><i class="fas fa-user-plus me-1"></i>Cadastrar</button>
 
             </form>
+
+            <div class="alert alert-danger mt-3 text-center" *ngIf="exibeErro"><i class="fas fa-times me-1"></i>{{messagemErro}}</div>
         
         </div>
 
