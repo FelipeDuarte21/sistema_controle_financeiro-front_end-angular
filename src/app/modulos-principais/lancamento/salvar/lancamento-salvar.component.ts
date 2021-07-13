@@ -55,19 +55,20 @@ export class LancamentoSalvarComponent implements OnInit{
                 this.titulo = "Lançar";
             }else{
                 this.titulo = "Atualizar Lançamento";
+                this.lancamentoService.buscarPorId(id).subscribe(
+                    lancamento => {
+                        this.formLancamento.get('id').setValue(lancamento.id);
+                        this.formLancamento.get('nome').setValue(lancamento.nome);
+                        this.formLancamento.get('descricao').setValue(lancamento.descricao);
+                        this.formLancamento.get('valor').setValue(lancamento.valor);
+                        this.formLancamento.get('dataCadastro').setValue(lancamento.dataCadastro);
+                        this.formLancamento.get('sugestao').setValue(lancamento.sugestao);
+                        this.formLancamento.get('balanco').setValue(parseInt(localStorage.getItem("balanco")));
+                        this.formLancamento.get('tipo').setValue(lancamento.tipo.valor);
+                    }
+                );
             }
-            this.lancamentoService.buscarPorId(id).subscribe(
-                lancamento => {
-                    this.formLancamento.get('id').setValue(lancamento.id);
-                    this.formLancamento.get('nome').setValue(lancamento.nome);
-                    this.formLancamento.get('descricao').setValue(lancamento.descricao);
-                    this.formLancamento.get('valor').setValue(lancamento.valor);
-                    this.formLancamento.get('dataCadastro').setValue(lancamento.dataCadastro);
-                    this.formLancamento.get('sugestao').setValue(lancamento.sugestao);
-                    this.formLancamento.get('balanco').setValue(parseInt(localStorage.getItem("balanco")));
-                    this.formLancamento.get('tipo').setValue(lancamento.tipo.valor);
-                }
-            );
+            
         });
 
     }

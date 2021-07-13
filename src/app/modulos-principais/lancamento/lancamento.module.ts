@@ -1,10 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
 import { ConverteMesPipe } from "src/app/compartilhados/pipes/converte-mes.pipe";
 import { BalancoService } from "src/app/servicos/balanco.service";
+import { InterceptorService } from "src/app/servicos/interceptador.service";
 import { LancamentoService } from "src/app/servicos/lancamento.service";
 import { TipoService } from "src/app/servicos/tipo.service";
 import { LancamentoRoutingModule } from "./lancamento-routing.module";
@@ -33,7 +34,12 @@ import { LancamentoSalvarComponent } from "./salvar/lancamento-salvar.component"
     providers: [
         BalancoService,
         LancamentoService,
-        TipoService
+        TipoService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass:  InterceptorService,
+            multi: true
+        }
     ]
 })
 export class LancamentoModule{
