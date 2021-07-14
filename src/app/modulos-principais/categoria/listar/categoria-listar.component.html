@@ -123,7 +123,7 @@
                                         <td>{{categoria?.descricao}}</td>
                                         <td class="text-center">{{categoria?.dataCadastro | date: 'dd/MM/yyyy'}}</td>
                                         <td class="text-center">
-                                            <a [routerLink]="['/lancamento',categoria?.id]" class="btn btn-primary btn-sm me-1"><i class="fas fa-hand-holding-usd me-1"></i>Lançamentos</a> 
+                                            <a [routerLink]="['/lancamento']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary btn-sm me-1"><i class="fas fa-hand-holding-usd me-1"></i>Lançamentos</a> 
                                             <a [routerLink]="['atualizar',categoria?.id]" class="btn btn-primary btn-sm me-1"><i class="fas fa-edit me-1"></i>Editar</a> 
                                             <button type="button" (click)="excluir(categoria?.id)" class="btn btn-danger btn-sm"><i class="fas fa-trash me-1"></i>Excluir</button>
                                         </td>
