@@ -12,6 +12,9 @@ export class CabecalhoComponent implements OnInit{
 
     public usuario: Usuario;
 
+    public exibeMenuLancamento:boolean = false;
+    public idCategoria:number=0;
+
     constructor(
         private usuarioLogadoservice: UsuarioLogadoService,
         private router: Router
@@ -23,10 +26,21 @@ export class CabecalhoComponent implements OnInit{
                 this.usuario = usu;
             }
         );
+
+        let url = window.sessionStorage.getItem("rota");
+
+        if(url.match('/lancamento')){
+            this.exibeMenuLancamento = true;
+            let partes = url.split('?');
+            partes = partes[1].split('=');
+            this.idCategoria = parseInt(partes[1]);
+        }
+
     }
 
     public logout(){
         this.usuarioLogadoservice.deslogarUsuario();
+        window.sessionStorage.removeItem("rota");
         this.router.navigate(['/']);
     }
 

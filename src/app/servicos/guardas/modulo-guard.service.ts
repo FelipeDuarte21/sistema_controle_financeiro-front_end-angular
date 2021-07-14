@@ -13,6 +13,8 @@ export class ModuloGuardService implements CanActivate{
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         
+        window.sessionStorage.setItem("rota",state.url);
+
         if(!this.usuarioLogadoService.isUsuarioLogado()){
             this.router.navigate(['/']);
             return false;
