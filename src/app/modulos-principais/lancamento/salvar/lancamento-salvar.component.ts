@@ -16,6 +16,7 @@ export class LancamentoSalvarComponent implements OnInit{
     public titulo: string = "Lançar";
 
     public idCategoria:number;
+    public idBalanco:number;
 
     public tiposLancamentos: Array<Tipo>;
 
@@ -30,7 +31,26 @@ export class LancamentoSalvarComponent implements OnInit{
     ){}
 
     ngOnInit(): void {
-        this.idCategoria = parseInt(localStorage.getItem("categoria"));
+        
+        this.activedRoute.queryParams.subscribe(
+            queryParams => {
+
+                this.idCategoria = queryParams.categoria;
+                this.idBalanco = queryParams.balanco;
+
+                if(this.idCategoria == undefined || this.idCategoria==null || this.idCategoria==0)
+                    this.router.navigate(['/categoria']);
+
+                if(this.idBalanco==undefined || this.idBalanco==null || this.idBalanco==0)
+                    this.router.navigate(['/lancamento'],{queryParams:{categoria:this.idBalanco}});
+                
+
+            },
+            error => {
+                this.router.navigate(['/categoria']);            
+            }
+        );
+
         
         this.tipoService.buscarTodos().subscribe(
             tipos => {
@@ -45,7 +65,7 @@ export class LancamentoSalvarComponent implements OnInit{
             valor: ['',[Validators.required,Validators.min(0)]],
             dataCadastro: [''],
             sugestao: [false],
-            balanco: [parseInt(localStorage.getItem("balanco"))],
+            balanco: [this.idBalanco],
             tipo: ['',[Validators.required]]
         });
 
@@ -63,12 +83,14 @@ export class LancamentoSalvarComponent implements OnInit{
                         this.formLancamento.get('valor').setValue(lancamento.valor);
                         this.formLancamento.get('dataCadastro').setValue(lancamento.dataCadastro);
                         this.formLancamento.get('sugestao').setValue(lancamento.sugestao);
-                        this.formLancamento.get('balanco').setValue(parseInt(localStorage.getItem("balanco")));
+                        this.formLancamento.get('balanco').setValue(this.idBalanco);
                         this.formLancamento.get('tipo').setValue(lancamento.tipo.valor);
+                    },
+                    error => {
+                        this.router.navigate(['/lancamento'],{queryParams:{categoria:this.idCategoria}});
                     }
                 );
-            }
-            
+            }    
         });
 
     }
@@ -94,12 +116,15 @@ export class LancamentoSalvarComponent implements OnInit{
             this.lancamentoService.cadastrar(lancamento).subscribe(
                 lancamento => {
                     this.formLancamento.reset();
-                    this.router.navigate(['/lancamento',this.idCategoria]);
+                    this.router.navigate(['/lancamento'],{queryParams:{categoria:this.idCategoria}});
                     alert("Lançamento Realizado Com Sucesso!");
                 },
                 error => {
                     console.log(error);
                     alert("Erro ao Tentar Realizar Lançamento!");
+                    if(error.error.code == 403){
+                        this.router.navigate(['/lancamento'],{queryParams:{categoria:this.idCategoria}});
+                    }
                 }
             );
 
@@ -108,12 +133,15 @@ export class LancamentoSalvarComponent implements OnInit{
             this.lancamentoService.alterar(lancamento).subscribe(
                 lancamento => {
                     this.formLancamento.reset();
-                    this.router.navigate(['/lancamento',this.idCategoria]);
+                    this.router.navigate(['/lancamento'],{queryParams:{categoria:this.idCategoria}});
                     alert("Lançamento Atualizado Com Sucesso!");
                 },
                 error => {
                     console.log(error);
                     alert("Erro ao Tentar Atualizar Lançamento!");
+                    if(error.error.code == 403){
+                        this.router.navigate(['/lancamento'],{queryParams:{categoria:this.idCategoria}});
+                    }
                 }
             );
 

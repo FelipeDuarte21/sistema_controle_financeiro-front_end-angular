@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Balanco } from "src/app/modelos/balanco.model";
 import { PaginaLancamento } from "src/app/modelos/pagina-lancamento.model";
 import { EnumTipo } from "src/app/modelos/tipo.model";
@@ -24,20 +25,34 @@ export class LancamentoListarComponent implements OnInit{
     public PROVENTO:number = EnumTipo.Provento;
     public DESPESA:number = EnumTipo.Despesa;
 
+    public idCategoria:number = 0;
+
     constructor(
         private balancoService: BalancoService,
-        private lancamentoService: LancamentoService
+        private lancamentoService: LancamentoService,
+        private activetedRoute: ActivatedRoute,
+        private router: Router,
     ){}
 
     ngOnInit(): void {
-        let idCategoria = parseInt(localStorage.getItem("categoria"));
+        this.activetedRoute.queryParams.subscribe(queryParams => {
 
-        this.balancoService.buscarAtual(idCategoria).subscribe(balanco => {
-            this.balanco = balanco;
-            localStorage.setItem("balanco",this.balanco.id.toString());
-            this.listarLancamentos();
+            this.idCategoria = queryParams.categoria
+
+            if(this.idCategoria==undefined || this.idCategoria==null 
+                || this.idCategoria==0) this.router.navigate(['/categoria']);
+
+            this.balancoService.buscarAtual(this.idCategoria).subscribe(
+                balanco => {
+                    this.balanco = balanco;
+                    this.listarLancamentos();
+                },
+                error => {
+                    this.router.navigate(['/categoria']);
+                }
+            );
+
         });
-
     }
 
     private listarLancamentos(){

@@ -45,7 +45,7 @@
             </div>
 
             <!--Botão para novo lançamento-->
-            <a routerLink="lancar" class="btn btn-primary mt-5"><i class="fas fa-plus me-1"></i>Novo Lançamento</a>
+            <a [routerLink]="['lancar']" [queryParams]="{categoria:idCategoria,balanco:balanco?.id}" class="btn btn-primary mt-5"><i class="fas fa-plus me-1"></i>Novo Lançamento</a>
 
             <!--Barra de utilitários-->
             <div class="row mt-4 mb-0" *ngIf="paginaLancamentos?.content.length > 0">
@@ -134,7 +134,7 @@
                                 <div class="col-12 col-xxl-2">
                                     <div class="text-start ms-2 mt-2 mt-xxl-0">
                                         <h6 class="mb-1"><small>Ações:</small></h6>
-                                        <a [routerLink]="['atualizar',lancamento?.id]" class="btn btn-primary btn-sm me-1"><i class="fas fa-edit me-1"></i>Editar</a>
+                                        <a [routerLink]="['atualizar',lancamento?.id]" [queryParams]="{categoria:idCategoria,balanco:balanco?.id}" class="btn btn-primary btn-sm me-1"><i class="fas fa-edit me-1"></i>Editar</a>
                                         <button (click)="excluir(lancamento?.id)" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash me-1"></i>Excluir</button>
                                     </div>                                    
                                 </div>
