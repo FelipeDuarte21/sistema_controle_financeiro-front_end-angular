@@ -16,6 +16,11 @@ export class UsuarioLogadoService{
 
     public logarUsuario(email:string, token:string){
         this.tokenService.setToken(token);
+        window.sessionStorage.setItem("email",email);
+        this.buscarUsuario(email);
+    }
+
+    private buscarUsuario(email:string){
         this.usuarioService.buscarPorEmail(email).subscribe(
             usuario => {
                 this.usuarioSubject.next(usuario);
@@ -29,11 +34,9 @@ export class UsuarioLogadoService{
 
     public isUsuarioLogado(): boolean{
         if(!this.tokenService.temToken()) return false;
-        let usuario: Usuario = null;
-        this.recuperarUsuario().subscribe(usu => {
-            usuario = usu;
-        });
-        return (usuario != null) ? true: false;
+        let email = window.sessionStorage.getItem("email");
+        this.buscarUsuario(email);
+        return true;
     }
 
     public deslogarUsuario(){
