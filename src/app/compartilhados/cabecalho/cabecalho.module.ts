@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
 import { CabecalhoComponent } from "./cabecalho.component";
 
 @NgModule({
@@ -7,7 +8,8 @@ import { CabecalhoComponent } from "./cabecalho.component";
         CabecalhoComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        RouterModule
     ],
     exports: [
         CabecalhoComponent

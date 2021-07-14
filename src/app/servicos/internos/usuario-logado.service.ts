@@ -42,6 +42,7 @@ export class UsuarioLogadoService{
     public deslogarUsuario(){
         this.usuarioSubject.next(null);
         this.tokenService.excluirToken();
+        window.sessionStorage.removeItem("email");
     }
 
 }
