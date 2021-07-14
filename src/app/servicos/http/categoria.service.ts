@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Categoria } from "../modelos/categoria.model";
+import { Categoria } from "../../modelos/categoria.model";
 import { Observable } from "rxjs";
-import { PaginaCategoria } from "../modelos/pagina-categoria.model";
+import { PaginaCategoria } from "../../modelos/pagina-categoria.model";
 import { environment } from "src/environments/environment";
 
 @Injectable()

@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Balanco } from "src/app/modelos/balanco.model";
 import { PaginaLancamento } from "src/app/modelos/pagina-lancamento.model";
 import { EnumTipo } from "src/app/modelos/tipo.model";
-import { BalancoService } from "src/app/servicos/balanco.service";
-import { LancamentoService } from "src/app/servicos/lancamento.service";
+import { BalancoService } from "src/app/servicos/http/balanco.service";
+import { LancamentoService } from "src/app/servicos/http/lancamento.service";
 
 @Component({
     selector: 'lancamento-listar',

@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ModuloGuardService } from "src/app/servicos/modulo-guard.service";
+import { ModuloGuardService } from "src/app/servicos/guardas/modulo-guard.service";
 import { CategoriaComponent } from "./categoria.component";
 import { CategoriaListarComponent } from "./listar/categoria-listar.component";
 import { CategoriaSalvarComponent } from "./salvar/categoria-salvar.component";

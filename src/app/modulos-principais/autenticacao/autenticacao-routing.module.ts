@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AutenticacaoGuardService } from "src/app/servicos/autenticacao-guard.service";
+import { AutenticacaoGuardService } from "src/app/servicos/guardas/autenticacao-guard.service";
 import { AutenticacaoComponent } from "./autenticacao.component";
 
 const routes: Routes = [

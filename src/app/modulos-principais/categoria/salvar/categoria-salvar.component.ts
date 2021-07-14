@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Categoria } from "src/app/modelos/categoria.model";
-import { CategoriaService } from "src/app/servicos/categoria.service";
+import { CategoriaService } from "src/app/servicos/http/categoria.service";
 
 @Component({
     selector: 'categoria-salvar',

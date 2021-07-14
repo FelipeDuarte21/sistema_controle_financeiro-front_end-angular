@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { Usuario } from "../modelos/usuario.model";
+import { Usuario } from "../../modelos/usuario.model";
 import { TokenService } from "./token.service";
-import { UsuarioService } from "./usuario.service";
+import { UsuarioService } from '../http/usuario.service';
 
 @Injectable({providedIn: 'root'})
 export class UsuarioLogadoService{

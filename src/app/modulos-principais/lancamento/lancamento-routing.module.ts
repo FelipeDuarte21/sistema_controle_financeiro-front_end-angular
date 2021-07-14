@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ModuloGuardService } from "src/app/servicos/modulo-guard.service";
+import { ModuloGuardService } from "src/app/servicos/guardas/modulo-guard.service";
 import { LancamentoComponent } from "./lancamento.component";
 import { LancamentoListarComponent } from "./listar/lancamento-listar.component";
 import { LancamentoSalvarComponent } from "./salvar/lancamento-salvar.component";

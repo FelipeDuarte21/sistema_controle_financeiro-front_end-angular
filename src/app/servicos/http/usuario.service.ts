@@ -2,8 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { UsuarioCadastro } from "../modelos/usuario-cadastro.model";
-import { Usuario } from "../modelos/usuario.model";
+import { UsuarioCadastro } from "../../modelos/usuario-cadastro.model";
+import { Usuario } from "../../modelos/usuario.model";
 
 @Injectable()
 export class UsuarioService{

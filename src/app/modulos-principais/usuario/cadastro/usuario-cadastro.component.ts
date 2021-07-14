@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UsuarioCadastro } from "src/app/modelos/usuario-cadastro.model";
-import { UsuarioService } from "src/app/servicos/usuario.service";
+import { UsuarioService } from "src/app/servicos/http/usuario.service";
 
 @Component({
     selector: 'usuario-cadastro',

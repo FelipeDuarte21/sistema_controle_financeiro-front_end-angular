@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LancamentoSalvar } from "src/app/modelos/lancamento.model";
 import { Tipo } from "src/app/modelos/tipo.model";
-import { LancamentoService } from "src/app/servicos/lancamento.service";
-import { TipoService } from "src/app/servicos/tipo.service";
+import { LancamentoService } from "src/app/servicos/http/lancamento.service";
+import { TipoService } from "src/app/servicos/http/tipo.service";
 
 @Component({
     selector: 'lancamento-salvar',

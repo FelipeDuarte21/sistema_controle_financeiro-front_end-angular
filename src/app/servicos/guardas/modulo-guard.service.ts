@@ -1,22 +1,20 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
-import { UsuarioLogadoService } from "./usuario-logado.service";
+import { UsuarioLogadoService } from "../internos/usuario-logado.service";
 
 @Injectable()
-export class AutenticacaoGuardService implements CanActivate{
+export class ModuloGuardService implements CanActivate{
 
     constructor(
-        private usuarioLogado: UsuarioLogadoService,
+        private usuarioLogadoService: UsuarioLogadoService,
         private router: Router
     ){}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-       
-        if(this.usuarioLogado.isUsuarioLogado()){
-
-            this.router.navigate(['/categoria']);
-            
+        
+        if(!this.usuarioLogadoService.isUsuarioLogado()){
+            this.router.navigate(['/']);
             return false;
         }
 

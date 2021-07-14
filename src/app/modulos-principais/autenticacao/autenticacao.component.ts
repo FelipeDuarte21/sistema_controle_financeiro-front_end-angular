@@ -2,10 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Autenticacao } from "src/app/modelos/autenticacao.model";
-import { AutenticacaoService } from "src/app/servicos/autenticacao.service";
-import { TokenService } from "src/app/servicos/token.service";
-import { UsuarioLogadoService } from "src/app/servicos/usuario-logado.service";
-import { UsuarioService } from "src/app/servicos/usuario.service";
+import { AutenticacaoService } from "src/app/servicos/http/autenticacao.service";
+import { UsuarioLogadoService } from "src/app/servicos/internos/usuario-logado.service";
 
 @Component({
     selector: 'autenticacao',
