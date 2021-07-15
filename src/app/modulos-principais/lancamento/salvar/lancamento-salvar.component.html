@@ -14,7 +14,7 @@
 
                 <div class="form-group">
                     <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" formControlName="nome" id="nome" [ngClass]="{'is-invalid': verificaCampo('nome')}">
+                    <input type="text" class="form-control" formControlName="nome" id="nome" [ngClass]="{'is-invalid': verificaCampo('nome')}" autocomplete="off">
                     <span class="float-end text-end">{{tamanhoCampo("nome")}}/80</span>
 
                     <div class="invalid-feedback" *ngIf="formLancamento.get('nome').errors?.required">Nome é requerido!</div>

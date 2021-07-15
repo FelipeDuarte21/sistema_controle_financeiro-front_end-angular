@@ -52,7 +52,7 @@ export class AutenticacaoComponent implements OnInit{
                 this.mostraEspinner = true;
                 setTimeout(() => {
                     this.router.navigate(['/categoria']);
-                },2000);
+                },700);
 
             },
             error => {
