@@ -27,6 +27,10 @@ export class LancamentoListarComponent implements OnInit{
 
     public idCategoria:number = 0;
 
+    public balancoAnterior:boolean = true;
+    public balancoPosterior:boolean = true;
+    public balancoAtual:boolean = true;
+
     constructor(
         private balancoService: BalancoService,
         private lancamentoService: LancamentoService,
@@ -42,17 +46,58 @@ export class LancamentoListarComponent implements OnInit{
             if(this.idCategoria==undefined || this.idCategoria==null 
                 || this.idCategoria==0) this.router.navigate(['/categoria']);
 
-            this.balancoService.buscarAtual(this.idCategoria).subscribe(
-                balanco => {
-                    this.balanco = balanco;
-                    this.listarLancamentos();
-                },
-                error => {
-                    this.router.navigate(['/categoria']);
-                }
-            );
+            this.buscarBalancoAtual();
 
         });
+    }
+
+    public buscarBalancoAtual(){
+        this.balancoService.buscarAtual(this.idCategoria).subscribe(
+            balanco => {
+                this.balanco = balanco;
+                this.controlaNavegacaoBalanco(balanco);
+                this.listarLancamentos();
+            },
+            error => {
+                this.router.navigate(['/categoria']);
+            }
+        );
+    }
+
+    private buscarBalancoPorData(idCategoria:number,mes:number,ano:number){
+        this.balancoService.buscarPorData(idCategoria,mes,ano).subscribe(
+            balanco => {
+                this.balanco = balanco;
+                this.paginaAtual = 0;
+                this.quantidadeAtual = this.qtdOpcoes[0];
+                this.controlaNavegacaoBalanco(balanco);
+                this.listarLancamentos();
+            },
+            error => {
+                console.log(error);
+                this.controlaNavegacaoBalanco(null);
+            }
+        );
+    }
+
+    private controlaNavegacaoBalanco(balanco:Balanco){
+        let dataAtual = new Date();
+
+        if(balanco == null){
+            this.balancoAnterior = false;
+        }else{
+
+            this.balancoAnterior = true;
+
+            if(balanco.mes == dataAtual.getMonth()+1){
+                this.balancoPosterior = false;
+                this.balancoAtual = false;
+            }else{
+                this.balancoPosterior = true;
+                this.balancoAtual = true;
+            }
+            
+        }
     }
 
     private listarLancamentos(){
@@ -61,6 +106,20 @@ export class LancamentoListarComponent implements OnInit{
                 this.paginaLancamentos = paginaLancamentos;
             }
         );
+    }
+
+    public buscarPorMesAnterior(){
+        let data = new Date(this.balanco.ano,this.balanco.mes-1,1);
+        data.setMonth(data.getMonth()-1);
+
+        this.buscarBalancoPorData(this.idCategoria,data.getMonth()+1,data.getFullYear());
+    }
+
+    public buscarPorMesPosterior(){
+        let data = new Date(this.balanco.ano,this.balanco.mes-1,1);
+        data.setMonth(data.getMonth()+1);
+
+        this.buscarBalancoPorData(this.idCategoria,data.getMonth()+1,data.getFullYear());
     }
 
     public retrocederAnterior(){
@@ -77,6 +136,20 @@ export class LancamentoListarComponent implements OnInit{
         this.paginaAtual = 0;
         this.quantidadeAtual = evento.value;
         this.listarLancamentos();
+    }
+
+    public redirecionar(opcao:number,id:number){
+
+        let rota = '';
+
+        if(opcao == 1){
+            rota = 'lancamento/lancar';
+        }else if(opcao == 2){
+            rota = `lancamento/atualizar/${id}`;
+        }
+
+        this.router.navigate([`${rota}`],{queryParams:{categoria:this.idCategoria,balanco:this.balanco?.id}});
+
     }
 
     public excluir(id:number){
