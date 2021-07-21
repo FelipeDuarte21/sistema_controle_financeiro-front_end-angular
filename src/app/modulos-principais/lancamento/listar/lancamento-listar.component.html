@@ -1,4 +1,4 @@
-<div class="container-fluid mb-5">
+<div class="container-fluid">
 
     <div class="row justify-content-center">
 
@@ -99,7 +99,7 @@
             </div>
             
             <!--Lista de Lançamentos-->
-            <div class="row mt-1 mb-5" *ngIf="paginaLancamentos?.content.length > 0">
+            <div class="row mt-1" *ngIf="paginaLancamentos?.content.length > 0">
 
                 <div class="col-12 mt-2" *ngFor="let lancamento of paginaLancamentos?.content">
                     <div class="card">

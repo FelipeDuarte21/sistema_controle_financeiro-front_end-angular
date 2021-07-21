@@ -1,4 +1,4 @@
-<div class="container-fluid mb-5">
+<div class="container-fluid">
 
     <div class="row justify-content-center">
 
@@ -28,7 +28,7 @@
                     <div class="invalid-feedback" *ngIf="formCategoria.get('descricao').errors?.maxlength">Descrição é maior que 255 caracteres</div>
                 </div>
 
-                <button [disabled]="formCategoria.invalid" type="submit" class="btn btn-primary mt-4 mb-5"><i class="far fa-save me-1"></i>Salvar</button>
+                <button [disabled]="formCategoria.invalid" type="submit" class="btn btn-primary mt-4"><i class="far fa-save me-1"></i>Salvar</button>
 
             </form>
 
