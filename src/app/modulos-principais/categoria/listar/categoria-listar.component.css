@@ -5,3 +5,11 @@
 .nao-quebra-tabela{
     white-space: nowrap;
 }
+
+.spinner{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -28px;
+    margin-top: -28px;
+}

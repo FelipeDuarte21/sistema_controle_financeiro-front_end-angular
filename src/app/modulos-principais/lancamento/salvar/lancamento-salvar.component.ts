@@ -22,6 +22,8 @@ export class LancamentoSalvarComponent implements OnInit{
 
     public formLancamento: FormGroup;
 
+    public exibeSpinner: boolean = false;
+
     constructor(
         private tipoService:TipoService,
         private formBuilder: FormBuilder,
@@ -74,6 +76,7 @@ export class LancamentoSalvarComponent implements OnInit{
             if(id == null){
                 this.titulo = "Lançar";
             }else{
+                this.exibeSpinner = true;
                 this.titulo = "Atualizar Lançamento";
                 this.lancamentoService.buscarPorId(id).subscribe(
                     lancamento => {
@@ -85,6 +88,7 @@ export class LancamentoSalvarComponent implements OnInit{
                         this.formLancamento.get('sugestao').setValue(lancamento.sugestao);
                         this.formLancamento.get('balanco').setValue(this.idBalanco);
                         this.formLancamento.get('tipo').setValue(lancamento.tipo.valor);
+                        this.exibeSpinner = false;
                     },
                     error => {
                         this.router.navigate(['/lancamento'],{queryParams:{categoria:this.idCategoria}});

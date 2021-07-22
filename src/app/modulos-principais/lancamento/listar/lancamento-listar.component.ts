@@ -31,6 +31,9 @@ export class LancamentoListarComponent implements OnInit{
     public balancoPosterior:boolean = true;
     public balancoAtual:boolean = true;
 
+    public exibeSpinner:boolean;
+    public exibeSpinnerLancamento:boolean = true;
+
     constructor(
         private balancoService: BalancoService,
         private lancamentoService: LancamentoService,
@@ -39,6 +42,7 @@ export class LancamentoListarComponent implements OnInit{
     ){}
 
     ngOnInit(): void {
+        
         this.activetedRoute.queryParams.subscribe(queryParams => {
 
             this.idCategoria = queryParams.categoria
@@ -52,11 +56,13 @@ export class LancamentoListarComponent implements OnInit{
     }
 
     public buscarBalancoAtual(){
+        this.exibeSpinner=true;
         this.balancoService.buscarAtual(this.idCategoria).subscribe(
             balanco => {
                 this.balanco = balanco;
                 this.controlaNavegacaoBalanco(balanco);
                 this.listarLancamentos();
+                this.exibeSpinner = false;
             },
             error => {
                 this.router.navigate(['/categoria']);
@@ -101,9 +107,11 @@ export class LancamentoListarComponent implements OnInit{
     }
 
     private listarLancamentos(){
+        this.exibeSpinnerLancamento = true;
         this.lancamentoService.buscarPorBalanco(this.balanco.id,this.paginaAtual,this.quantidadeAtual,this.ordem).subscribe(
             paginaLancamentos => {
                 this.paginaLancamentos = paginaLancamentos;
+                this.exibeSpinnerLancamento = false;
             }
         );
     }

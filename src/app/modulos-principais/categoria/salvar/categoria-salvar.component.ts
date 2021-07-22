@@ -17,6 +17,8 @@ export class CategoriaSalvarComponent implements OnInit{
 
     public categoria: Categoria;
 
+    public exibeSpinner:boolean = false;
+
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
@@ -38,12 +40,14 @@ export class CategoriaSalvarComponent implements OnInit{
                 this.titulo = "Cadastrar";
             }else{
                 this.titulo = "Atualizar";
+                this.exibeSpinner = true;
                 this.categoriaService.buscarPorId(id).subscribe(
                     categoria => {
                         this.formCategoria.get("id").setValue(categoria.id);
                         this.formCategoria.get("nome").setValue(categoria.nome);
                         this.formCategoria.get("descricao").setValue(categoria.descricao);
                         this.formCategoria.get("dataCadastro").setValue(categoria.dataCadastro);
+                        this.exibeSpinner = false;
                     },
                     error => {
                         this.router.navigate(['/categoria']);

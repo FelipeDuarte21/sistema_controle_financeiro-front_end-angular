@@ -16,7 +16,7 @@ export class AutenticacaoComponent implements OnInit{
 
     public mostraErro: boolean = false;
 
-    public mostraEspinner:boolean = false;
+    public exibeSpinner:boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -42,6 +42,8 @@ export class AutenticacaoComponent implements OnInit{
 
         let autenticacao = this.formAutenticacao.getRawValue() as Autenticacao;
 
+        this.exibeSpinner = true;
+
         this.autenticacaoService.login(autenticacao).subscribe(
             resp => {
 
@@ -49,11 +51,9 @@ export class AutenticacaoComponent implements OnInit{
                 
                 this.usuarioLogadoService.logarUsuario(autenticacao.email,token);
 
-                this.mostraEspinner = true;
-                setTimeout(() => {
-                    this.router.navigate(['/categoria']);
-                },700);
-
+                this.exibeSpinner = false;
+                
+                this.router.navigate(['/categoria']);
             },
             error => {
                 console.log(error);
