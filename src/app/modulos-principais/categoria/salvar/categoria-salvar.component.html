@@ -28,7 +28,15 @@
                     <div class="invalid-feedback" *ngIf="formCategoria.get('descricao').errors?.maxlength">Descrição é maior que 255 caracteres</div>
                 </div>
 
-                <button [disabled]="formCategoria.invalid" type="submit" class="btn btn-primary mt-4"><i class="far fa-save me-1"></i>Salvar</button>
+                <button [disabled]="formCategoria.invalid || desativaBotaoSalvar" type="submit" class="btn btn-primary mt-4">
+                    <ng-container *ngIf="exibeSpinnerSalvar == false">
+                        <i class="far fa-save me-1"></i>Salvar
+                    </ng-container>
+                    <ng-container *ngIf="exibeSpinnerSalvar">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Salvando...
+                    </ng-container>
+                </button>
 
             </form>
 

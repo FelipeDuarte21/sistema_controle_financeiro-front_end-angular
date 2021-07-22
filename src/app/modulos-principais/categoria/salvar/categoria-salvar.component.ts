@@ -18,6 +18,9 @@ export class CategoriaSalvarComponent implements OnInit{
     public categoria: Categoria;
 
     public exibeSpinner:boolean = false;
+    public exibeSpinnerSalvar:boolean = false;
+
+    public desativaBotaoSalvar:boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -74,6 +77,9 @@ export class CategoriaSalvarComponent implements OnInit{
        
         let categoria = this.formCategoria.getRawValue() as Categoria;
 
+        this.exibeSpinnerSalvar = true;
+        this.desativaBotaoSalvar = true;
+
         if(categoria.id == 0){
 
             this.categoriaService.cadastrar(categoria).subscribe(
@@ -85,6 +91,8 @@ export class CategoriaSalvarComponent implements OnInit{
                 error => {
                     alert("Erro ao Tentar Cadastrar Categoria!");
                     console.log(error);
+                    this.exibeSpinnerSalvar = false;
+                    this.desativaBotaoSalvar = false;
                 }
             );
             
@@ -99,6 +107,8 @@ export class CategoriaSalvarComponent implements OnInit{
                 error => {
                     alert("Erro ao Tentar Atualizar Categoria!");
                     console.log(error);
+                    this.exibeSpinnerSalvar = false;
+                    this.desativaBotaoSalvar = false;
                 }
             );
 

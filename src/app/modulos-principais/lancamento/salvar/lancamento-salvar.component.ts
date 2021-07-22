@@ -24,6 +24,9 @@ export class LancamentoSalvarComponent implements OnInit{
 
     public exibeSpinner: boolean = false;
 
+    public exibeSpinnerSalvar:boolean = false;
+    public desativaBotaoSalvar:boolean = false;
+
     constructor(
         private tipoService:TipoService,
         private formBuilder: FormBuilder,
@@ -70,6 +73,7 @@ export class LancamentoSalvarComponent implements OnInit{
             balanco: [this.idBalanco],
             tipo: ['',[Validators.required]]
         });
+        
 
         this.activedRoute.params.subscribe(resp => {
             let id = resp.id;
@@ -115,6 +119,9 @@ export class LancamentoSalvarComponent implements OnInit{
 
         let lancamento = this.formLancamento.getRawValue() as LancamentoSalvar;
 
+        this.exibeSpinnerSalvar = true;
+        this.desativaBotaoSalvar = true;
+
         if(lancamento.id == 0){
 
             this.lancamentoService.cadastrar(lancamento).subscribe(
@@ -126,6 +133,8 @@ export class LancamentoSalvarComponent implements OnInit{
                 error => {
                     console.log(error);
                     alert("Erro ao Tentar Realizar Lançamento!");
+                    this.exibeSpinnerSalvar = false;
+                    this.desativaBotaoSalvar = false;
                     if(error.error.code == 403){
                         this.router.navigate(['/lancamento'],{queryParams:{categoria:this.idCategoria}});
                     }
@@ -143,6 +152,8 @@ export class LancamentoSalvarComponent implements OnInit{
                 error => {
                     console.log(error);
                     alert("Erro ao Tentar Atualizar Lançamento!");
+                    this.exibeSpinnerSalvar = false;
+                    this.desativaBotaoSalvar = false;
                     if(error.error.code == 403){
                         this.router.navigate(['/lancamento'],{queryParams:{categoria:this.idCategoria}});
                     }
