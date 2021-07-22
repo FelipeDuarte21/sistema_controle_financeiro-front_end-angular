@@ -57,14 +57,13 @@
                     <button [disabled]="balanco?.fechado==true" (click)="redirecionar(1,0)" type="button" class="btn btn-primary"><i class="fas fa-plus me-1"></i>Novo Lançamento</button>
 
                     <!--Barra de utilitários-->
-                    <div class="row mt-4 mb-0" *ngIf="paginaLancamentos?.content.length > 0">
+                    <div class="row mt-5" *ngIf="paginaLancamentos?.content.length > 0">
 
                         <!--Quantidade de categorias na página-->
-                        <div class="col-12 col-md-4">
+                        <div class="col-4 col-md-4">
                             <div class="row justify-content-start">
-                                <label for="size" class="d-none d-md-block col-md-4 col-lg-3 col-xl-2 col-form-label">Mostrar:</label>
                                 <div class="col-12 col-md-5 col-lg-4 col-xl-3">
-                                    <select id="size" class="form-select" (change)="mudarQuantidade($event.target)">
+                                    <select id="size" class="form-select form-select-sm" (change)="mudarQuantidade($event.target)">
                                         <ng-container *ngFor="let opt of qtdOpcoes">
                                             <option [value]="opt">{{opt}}</option>
                                         </ng-container>
@@ -74,23 +73,23 @@
                         </div>
                         
                         <!--Paginação-->
-                        <div class="col-12 col-md-4 p-0 mt-3 mt-md-0">
+                        <div class="col-8 col-md-4">
                             <p class="text-center">
 
                                 <span class="me-1" *ngIf="paginaLancamentos?.number > 0">
-                                    <a (click)="retrocederAnterior()" class="btn btn-outline-secondary"><i class="fas fa-caret-left fx-3"></i></a>
+                                    <a (click)="retrocederAnterior()" class="btn btn-sm btn-outline-secondary"><i class="fas fa-caret-left fx-3"></i></a>
                                 </span>
 
                                 <span>{{paginaLancamentos?.number+1}} de {{paginaLancamentos?.totalPages}}</span>
 
                                 <span class="ms-1" *ngIf="(paginaLancamentos?.number+1) < paginaLancamentos?.totalPages">
-                                    <a (click)="avancarPagina()" class="btn btn-outline-secondary"><i class="fas fa-caret-right"></i></a>
+                                    <a (click)="avancarPagina()" class="btn btn-sm btn-outline-secondary"><i class="fas fa-caret-right"></i></a>
                                 </span>
 
                             </p>
                         </div>
 
-                        <div class="col-12 col-md-4 mt-3 text-start text-md-end fst-italic d-none d-xxl-block">
+                        <div class="col-xxl-4 mt-3 text-start text-md-end fst-italic d-none d-xxl-block">
                             Legenda:
                             <span class="text-success">
                                 <i class="fas fa-square me-1"></i>Provento
@@ -103,7 +102,7 @@
                     </div>
                     
                     <!--Lista de Lançamentos-->
-                    <div class="row mt-1" *ngIf="paginaLancamentos?.content.length > 0">
+                    <div class="row" *ngIf="paginaLancamentos?.content.length > 0">
 
                         <div class="col-12 mt-2" *ngFor="let lancamento of paginaLancamentos?.content">
                             <div class="card">
