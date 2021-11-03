@@ -1,0 +1,55 @@
+<!--Lista de Lançamentos-->
+<div class="row" *ngIf="lancamentos.length > 0">
+
+    <div class="col-12 mt-2" *ngFor="let lancamento of lancamentos">
+        <div class="card">
+            <div class="card-body px-1 py-2">
+                <div class="row">
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start text-xxl-center ms-2">
+                            <h6 class="mb-0"><small>Tipo:</small></h6>
+                            <span class="text-success" style="font-size: 17px;" *ngIf="lancamento.tipo.valor == PROVENTO"><i class="fas fa-square me-1"></i><span class="d-xxl-none">Provento</span></span>
+                            <span class="text-danger" style="font-size: 17px;" *ngIf="lancamento.tipo.valor == DESPESA"><i class="fas fa-square me-1"></i><span class="d-xxl-none">Despesa</span></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Data:</small></h6>
+                            <span style="font-size: 17px;">{{lancamento?.dataCadastro | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Valor:</small></h6>
+                            <span class="text-success" style="font-size: 17px;" *ngIf="lancamento?.tipo.valor == 0">+ {{lancamento?.valor | currency: 'BRL'}}</span>
+                            <span class="text-danger" style="font-size: 17px;" *ngIf="lancamento?.tipo.valor == 1">- {{lancamento?.valor | currency: 'BRL'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-6">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Nome/Descrição:</small></h6>
+                            <span style="font-size: 17px;">{{lancamento?.nome}} - {{lancamento?.descricao}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-1"><small>Ações:</small></h6>
+                            <btn-editar rota="lancamento/atualizar" [id]="lancamento?.id" [parametros]="parametrosEditar" ></btn-editar>
+                            <btn-excluir [id]="lancamento?.id" (excluir)="onExcluir($event)"></btn-excluir>
+                        </div>                                    
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5" *ngIf="lancamentos.length == 0">
+    <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não há nenhum lançamento!</div>
+</div>

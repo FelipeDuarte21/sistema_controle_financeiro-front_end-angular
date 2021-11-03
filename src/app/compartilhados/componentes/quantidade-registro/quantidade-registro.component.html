@@ -1,0 +1,10 @@
+<select id="size" class="form-select form-select-sm" (change)="onChange($event.target)">
+    <ng-container *ngFor="let op of qtdOpcoes">
+        <ng-container *ngIf="opcaoEscolhida == op">
+            <option [value]="op" selected>{{op}}</option>
+        </ng-container>
+        <ng-container *ngIf="opcaoEscolhida != op">
+            <option [value]="op">{{op}}</option>
+        </ng-container>
+    </ng-container>
+</select>

@@ -1,0 +1,13 @@
+<p class="text-center">
+
+    <span *ngIf="paginaAtual > 0" class="me-1">
+        <a (click)="onAnterior()" class="btn btn-sm btn-outline-secondary"><i class="fas fa-caret-left fx-3"></i></a>
+    </span>
+
+    <span>{{paginaAtual+1}} de {{totalPagina}}</span>
+
+    <span *ngIf="(paginaAtual+1) < totalPagina" class="ms-1">
+        <a (click)="onProximo()" class="btn btn-sm btn-outline-secondary"><i class="fas fa-caret-right"></i></a>
+    </span>
+
+</p>

@@ -1,0 +1,40 @@
+<div class="row mt-4">
+
+    <!--Nome da Categoria-->
+    <div class="col-12 col-md-4 text-start">
+        <div class="d-flex justify-content-start">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-tags me-1" style="font-size: 12px;"></i>Categoria:</small></h6>
+                <span style="font-size: 20px;">{{balanco?.categoria.nome}}</span>
+            </div>
+        </div>
+    </div>
+
+    <!--Paginação dos Balanços-->
+    <div class="col-12 col-md-4 mt-3 mt-md-0">
+        <div class="d-flex justify-content-start justify-content-md-center">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-calendar-alt me-1" style="font-size: 12px;"></i>Data:</small></h6>
+                <span style="font-size: 20px;">
+                    <button type="button" *ngIf="isAnterior()" (click)="buscarPorMesAnterior()" class="btn btn-outline-secondary btn-sm"><i class="fas fa-caret-left"></i></button>
+                    {{balanco?.mes | converteMes}}/{{balanco?.ano}}
+                    <button type="button" *ngIf="isPosteriorEAtual()" class="btn btn-outline-secondary btn-sm" (click)="buscarPorMesPosterior()"><i class="fas fa-caret-right"></i></button>
+                    <button type="button" *ngIf="isPosteriorEAtual()" class="btn btn-outline-secondary btn-sm ms-2" (click)="buscarBalancoAtual()">Atual</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!--Saldo do Balanço-->
+    <div class="col-12 col-md-4 mt-3 mt-md-0">
+        <div class="d-flex justify-content-start justify-content-md-end">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-comment-dollar me-1" style="font-size: 12px;"></i>Saldo:</small></h6>
+                <span class="text-primary" style="font-size: 20px;" *ngIf="balanco?.saldoAtual>0">+ {{balanco?.saldoAtual | currency:'R$'}}</span>
+                <span class="text-danger" style="font-size: 20px;" *ngIf="balanco?.saldoAtual<0">- {{balanco?.saldoAtual | currency:'R$'}}</span>
+                <span style="font-size: 20px;" *ngIf="balanco?.saldoAtual==0">{{balanco?.saldoAtual | currency:'R$'}}</span>
+            </div>
+        </div>
+    </div>
+    
+</div>

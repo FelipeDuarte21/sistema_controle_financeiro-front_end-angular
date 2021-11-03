@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { PaginaCategoria } from "src/app/modelos/pagina-categoria.model";
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
 
@@ -9,64 +10,56 @@ import { CategoriaService } from "src/app/servicos/http/categoria.service";
 })
 export class CategoriaListarComponent implements OnInit{
 
-    public painelCard:boolean = true;
-    public painelTabela:boolean = false;
+    public escolhaGrid:object;
 
     public paginaCategoria: PaginaCategoria;
 
     public qtdOpcoes = [4,8,12];
+    public quantidadeAtual = this.qtdOpcoes[0];
 
     private paginaAtual = 0;
-    private quantidadeAtual = this.qtdOpcoes[0];
     private ordem = 1;
 
     public tamanho:number = 0;
 
-    public exibeSpinner:boolean;
-
+    public exibeCategorias:boolean = false;
 
     constructor(
-        private categoriaService: CategoriaService
+        private categoriaService: CategoriaService,
+        private spinnerService: SpinnerService
     ){}
 
     ngOnInit(): void {
+       this.escolhaGrid = {gridCard:true,gridTabela:false};
        this.listarCategorias();
     }
 
     private listarCategorias(){
-        this.exibeSpinner = true;
+        this.spinnerService.setOpcao(3);
+        this.spinnerService.startSpinner();
+        this.exibeCategorias = !this.spinnerService.getControle();
         this.categoriaService.listar(this.paginaAtual,this.quantidadeAtual,this.ordem).subscribe(
             pgCategoria => {
                 this.paginaCategoria = pgCategoria;
-                this.exibeSpinner = false;
+                this.spinnerService.stopSpinner();
+                this.exibeCategorias = !this.spinnerService.getControle();
             }
         );
     }
 
-    public retrocederAnterior(){
-        this.paginaAtual -= 1;
-        this.listarCategorias();
-    }
-    
-    public avancarPagina(){
-        this.paginaAtual += 1;
+    public mudarPagina(pagina:number){
+        this.paginaAtual = pagina;
         this.listarCategorias();
     }
 
-    public mudarQuantidade(evento:any){
+    public mudarQuantidade(opcao:number){
         this.paginaAtual = 0;
-        this.quantidadeAtual = evento.value;
+        this.quantidadeAtual = opcao;
         this.listarCategorias();
     }
 
-    public onPainelCard(){
-        this.painelCard = true;
-        this.painelTabela = false;
-    }
-
-    public onPainelTabela(){
-        this.painelTabela = true;
-        this.painelCard = false;
+    public alternarGrid(escolha: object){
+        this.escolhaGrid = escolha;
     }
 
     public excluir(id: number){

@@ -1,0 +1,11 @@
+<div class="mt-1 mt-md-2" *ngIf="categorias?.length>0">
+
+    <grid-card *ngIf="escolhaGrid['gridCard']" [categorias]="categorias" (excluir)="onExcluir($event)" ></grid-card>
+
+    <grid-tabela *ngIf="escolhaGrid['gridTabela']" [categorias]="categorias"  (excluir)="onExcluir($event)"></grid-tabela>
+
+</div>
+
+<div class="mt-5" *ngIf="categorias?.length == 0">
+    <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não há nenhuma categoria cadastrada!</div>
+</div>

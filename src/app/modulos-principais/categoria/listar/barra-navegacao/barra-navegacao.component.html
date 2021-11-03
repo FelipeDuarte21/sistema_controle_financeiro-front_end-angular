@@ -1,0 +1,26 @@
+<!--Barra de utilitários-->
+<div class="row mt-5">
+
+    <!--Quantidade de categorias na página-->
+    <div class="col-3 col-md-4">
+        <div class="row justify-content-start">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3">
+                <quantidade-registro [qtdOpcoes]="qtdOpcoes" [opcaoEscolhida]="quantidadeAtual" (change)="onMudarQuantidade($event)"></quantidade-registro>
+            </div>
+        </div>
+    </div>
+    
+    <!--Paginação-->
+    <div class="col-5 col-md-4">
+        <paginacao [paginaAtual]="paginaAtual" [totalPagina]="totalPagina"
+            (anterior)="onMudarPagina($event)" (proximo)="onMudarPagina($event)"></paginacao>
+    </div>
+
+    <!--Formas de Visualização das categorias-->
+    <div class="col-4 col-md-4">
+        <div class=" d-flex justify-content-end">
+            <grid-switch [escolhaGrid]="escolhaGrid" (toogle)="onAlternarGrid($event)"></grid-switch>
+        </div>
+    </div>
+    
+</div>

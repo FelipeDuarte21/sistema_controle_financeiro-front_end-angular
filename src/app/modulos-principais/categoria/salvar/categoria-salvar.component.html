@@ -5,10 +5,11 @@
         <div class="col-11 col-md-8" *ngIf="exibeSpinner == false">
 
             <!--Nome da Página-->
-            <h5 class="mt-3 text-center">Sistema de Controle Financeiro - {{titulo}} Categoria</h5>
+            <titulo-pagina titulo="Sistema de Controle Financeiro" [subtitulo]="titulo" [icone]="null"></titulo-pagina>
 
-            <a routerLink="/categoria" class="btn btn-outline-primary mt-4"><i class="fas fa-undo-alt me-1"></i>Voltar</a>
-
+            <!--Botão Voltar-->
+            <btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
+      
             <form [formGroup]="formCategoria" (submit)="enviar()" class="mt-4">
 
                 <div class="form-group">

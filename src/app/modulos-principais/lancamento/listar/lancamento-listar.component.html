@@ -5,157 +5,30 @@
         <div class="col-11" *ngIf="exibeSpinner == false">
 
             <!--Nome da Página-->
-            <h5 class="mt-3 text-center">Sistema de Controle Financeiro - <i class="fas fa-hand-holding-usd me-1"></i>Lançamentos</h5>
+            <titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Lançamentos" icone="fa-hand-holding-usd"></titulo-pagina>
 
             <!--Botão Voltar-->
-            <a routerLink="/categoria" class="btn btn-outline-primary mt-4 mb-2"><i class="fas fa-undo-alt me-1"></i>Voltar</a>
+            <btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
 
             <!--Informações da Categoria-->
-            <div class="row mt-4">
+            <info-balanco [balanco]="balanco" (mudarBalanco)="mudarBalanco($event)"></info-balanco>
 
-                <div class="col-12 col-md-4 text-start">
-                    <div class="d-flex justify-content-start">
-                        <div class="text-start">
-                            <h6 class="mb-0"><small><i class="fas fa-tags me-1" style="font-size: 12px;"></i>Categoria:</small></h6>
-                            <span style="font-size: 20px;">{{balanco?.categoria.nome}}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4 mt-3 mt-md-0">
-                    <div class="d-flex justify-content-start justify-content-md-center">
-                        <div class="text-start">
-                            <h6 class="mb-0"><small><i class="fas fa-calendar-alt me-1" style="font-size: 12px;"></i>Data:</small></h6>
-                            <span style="font-size: 20px;">
-                                <button type="button" *ngIf="balancoAnterior" (click)="buscarPorMesAnterior()" class="btn btn-outline-secondary btn-sm"><i class="fas fa-caret-left"></i></button>
-                                {{balanco?.mes | converteMes}}/{{balanco?.ano}}
-                                <button type="button" *ngIf="balancoPosterior" class="btn btn-outline-secondary btn-sm" (click)="buscarPorMesPosterior()"><i class="fas fa-caret-right"></i></button>
-                                <button type="button" *ngIf="balancoAtual" class="btn btn-outline-secondary btn-sm ms-2" (click)="buscarBalancoAtual()">Atual</button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4 mt-3 mt-md-0">
-                    <div class="d-flex justify-content-start justify-content-md-end">
-                        <div class="text-start">
-                            <h6 class="mb-0"><small><i class="fas fa-comment-dollar me-1" style="font-size: 12px;"></i>Saldo:</small></h6>
-                            <span class="text-primary" style="font-size: 20px;" *ngIf="balanco?.saldoAtual>0">+ {{balanco?.saldoAtual | currency:'R$'}}</span>
-                            <span class="text-danger" style="font-size: 20px;" *ngIf="balanco?.saldoAtual<0">- {{balanco?.saldoAtual | currency:'R$'}}</span>
-                            <span style="font-size: 20px;" *ngIf="balanco?.saldoAtual==0">{{balanco?.saldoAtual | currency:'R$'}}</span>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-
-            <div class="position-relative mt-5">
+            <div class="position-relative mt-4">
 
                 <div *ngIf="exibeSpinnerLancamento == false">
 
                     <!--Botão para novo lançamento-->
-                    <button [disabled]="balanco?.fechado==true" (click)="redirecionar(1,0)" type="button" class="btn btn-primary"><i class="fas fa-plus me-1"></i>Novo Lançamento</button>
+                    <btn-cadastrar titulo="Novo Lançamento" rota="lancamento/lancar" [parametros]="{categoria:this.idCategoria,balanco:this.balanco?.id}"></btn-cadastrar>
 
-                    <!--Barra de utilitários-->
-                    <div class="row mt-5" *ngIf="paginaLancamentos?.content.length > 0">
-
-                        <!--Quantidade de categorias na página-->
-                        <div class="col-4 col-md-4">
-                            <div class="row justify-content-start">
-                                <div class="col-12 col-md-5 col-lg-4 col-xl-3">
-                                    <select id="size" class="form-select form-select-sm" (change)="mudarQuantidade($event.target)">
-                                        <ng-container *ngFor="let opt of qtdOpcoes">
-                                            <option [value]="opt">{{opt}}</option>
-                                        </ng-container>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!--Paginação-->
-                        <div class="col-8 col-md-4">
-                            <p class="text-center">
-
-                                <span class="me-1" *ngIf="paginaLancamentos?.number > 0">
-                                    <a (click)="retrocederAnterior()" class="btn btn-sm btn-outline-secondary"><i class="fas fa-caret-left fx-3"></i></a>
-                                </span>
-
-                                <span>{{paginaLancamentos?.number+1}} de {{paginaLancamentos?.totalPages}}</span>
-
-                                <span class="ms-1" *ngIf="(paginaLancamentos?.number+1) < paginaLancamentos?.totalPages">
-                                    <a (click)="avancarPagina()" class="btn btn-sm btn-outline-secondary"><i class="fas fa-caret-right"></i></a>
-                                </span>
-
-                            </p>
-                        </div>
-
-                        <div class="col-xxl-4 mt-3 text-start text-md-end fst-italic d-none d-xxl-block">
-                            Legenda:
-                            <span class="text-success">
-                                <i class="fas fa-square me-1"></i>Provento
-                            </span>
-                            <span class="text-danger">
-                                <i class="fas fa-square me-1"></i>Despesa
-                            </span>
-                        </div>
-
-                    </div>
+                    <!--Barra de navegação-->
+                    <barra-navegacao *ngIf="paginaLancamentos?.content.length > 0" 
+                        [qtdOpcoes]="qtdOpcoes" [qtdAtual]="quantidadeAtual" (mudarQuantidade)="mudarQuantidade($event)"
+                        [totalPagina]="paginaLancamentos?.totalPages" [paginaAtual]="paginaLancamentos?.number" 
+                            (mudarPagina)="mudarPagina($event)"></barra-navegacao>
                     
                     <!--Lista de Lançamentos-->
-                    <div class="row" *ngIf="paginaLancamentos?.content.length > 0">
-
-                        <div class="col-12 mt-2" *ngFor="let lancamento of paginaLancamentos?.content">
-                            <div class="card">
-                                <div class="card-body px-1 py-2">
-                                    <div class="row">
-
-                                        <div class="col-12 col-xxl-1">
-                                            <div class="text-start text-xxl-center ms-2">
-                                                <h6 class="mb-0"><small>Tipo:</small></h6>
-                                                <span class="text-success" style="font-size: 17px;" *ngIf="lancamento.tipo.valor == PROVENTO"><i class="fas fa-square me-1"></i><span class="d-xxl-none">Provento</span></span>
-                                                <span class="text-danger" style="font-size: 17px;" *ngIf="lancamento.tipo.valor == DESPESA"><i class="fas fa-square me-1"></i><span class="d-xxl-none">Despesa</span></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-xxl-1">
-                                            <div class="text-start ms-2 mt-2 mt-xxl-0">
-                                                <h6 class="mb-0"><small>Data:</small></h6>
-                                                <span style="font-size: 17px;">{{lancamento?.dataCadastro | date: 'dd/MM/yyyy'}}</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-xxl-2">
-                                            <div class="text-start ms-2 mt-2 mt-xxl-0">
-                                                <h6 class="mb-0"><small>Valor:</small></h6>
-                                                <span class="text-success" style="font-size: 17px;" *ngIf="lancamento?.tipo.valor == 0">+ {{lancamento?.valor | currency: 'BRL'}}</span>
-                                                <span class="text-danger" style="font-size: 17px;" *ngIf="lancamento?.tipo.valor == 1">- {{lancamento?.valor | currency: 'BRL'}}</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-xxl-6">
-                                            <div class="text-start ms-2 mt-2 mt-xxl-0">
-                                                <h6 class="mb-0"><small>Nome/Descrição:</small></h6>
-                                                <span style="font-size: 17px;">{{lancamento?.nome}} - {{lancamento?.descricao}}</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-xxl-2">
-                                            <div class="text-start ms-2 mt-2 mt-xxl-0">
-                                                <h6 class="mb-1"><small>Ações:</small></h6>
-                                                <button [disabled]="balanco?.fechado==true" (click)="redirecionar(2,lancamento?.id)" type="button" class="btn btn-primary btn-sm me-1"><i class="fas fa-edit me-1"></i>Editar</button>
-                                                <button [disabled]="balanco?.fechado==true" (click)="excluir(lancamento?.id)" type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash me-1"></i>Excluir</button>
-                                            </div>                                    
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5" *ngIf="paginaLancamentos?.content.length == 0">
-                        <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não há nenhum lançamento!</div>
-                    </div>
+                    <grid-card [lancamentos]="paginaLancamentos.content" [balancoFechado]="balanco.fechado"
+                        [parametrosEditar]="{categoria:this.idCategoria,balanco:this.balanco?.id}" (excluir)="excluir($event)"></grid-card>
 
                 </div>
 
