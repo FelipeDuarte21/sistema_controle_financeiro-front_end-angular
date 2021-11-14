@@ -34,4 +34,8 @@ export class LancamentoService{
         return this.http.get<PaginaLancamento>(`${this.baseURL}/balanco?balanco=${idBalanco}&page=${page}&size=${size}&order=${order}`);
     }
 
+    public buscarArquivoCSV(idBalanco:number):Observable<any>{
+        return this.http.get(`${this.baseURL}/arquivo?balanco=${idBalanco}`,{responseType: "blob",observe: 'response'});
+    }
+
 }
