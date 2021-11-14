@@ -20,6 +20,7 @@ import { TituloPaginaModule } from "src/app/compartilhados/componentes/titulo-pa
 import { GridCardComponent } from "./listar/grid-card/grid.component";
 import { BarraNavegacaoComponent } from "./listar/barra-navegacao/barra-navegacao.component";
 import { InformacoesBalancoComponent } from "./listar/informacoes-balanco/informacoes-balanco.component";
+import { BotaoDownloadCsvComponent } from "./listar/botao-download-csv/botao-download-csv.component";
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { InformacoesBalancoComponent } from "./listar/informacoes-balanco/inform
         ConverteMesPipe,
         GridCardComponent,
         BarraNavegacaoComponent,
-        InformacoesBalancoComponent
+        InformacoesBalancoComponent,
+        BotaoDownloadCsvComponent
     ],
     imports: [
         CommonModule,

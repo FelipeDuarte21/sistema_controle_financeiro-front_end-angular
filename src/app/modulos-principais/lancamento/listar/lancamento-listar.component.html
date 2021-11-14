@@ -20,6 +20,9 @@
                     <!--Botão para novo lançamento-->
                     <btn-cadastrar titulo="Novo Lançamento" rota="lancamento/lancar" [parametros]="{categoria:this.idCategoria,balanco:this.balanco?.id}"></btn-cadastrar>
 
+                    <!--Botão para baixar lançamentos em arquivo csv-->
+                    <btn-download-csv [idBalanco]="balanco.id"></btn-download-csv>
+
                     <!--Barra de navegação-->
                     <barra-navegacao *ngIf="paginaLancamentos?.content.length > 0" 
                         [qtdOpcoes]="qtdOpcoes" [qtdAtual]="quantidadeAtual" (mudarQuantidade)="mudarQuantidade($event)"
