@@ -121,7 +121,7 @@ export class LancamentoListarComponent implements OnInit{
                     alert("Lançamento Excluído Com Sucesso!");
                     this.paginaAtual = 0;
                     this.quantidadeAtual = this.qtdOpcoes[0];
-                    this.listarLancamentos();
+                    this.buscarBalancoAtual(this.idCategoria);
                 },
                 error => {
                     console.log(error);
