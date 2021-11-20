@@ -9,7 +9,7 @@ export class BtnExcluirComponent{
 
     @Input() id:number;
     @Output() excluir: EventEmitter<number> = new EventEmitter();
-    @Input() habilita:boolean = true;
+    @Input() desativado:boolean = false;
 
     onClick(){
         this.excluir.emit(this.id);
