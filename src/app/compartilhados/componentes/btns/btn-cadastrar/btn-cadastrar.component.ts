@@ -11,6 +11,7 @@ export class BtnCadastrarComponent{
     @Input() titulo:string;
     @Input() rota:string;
     @Input() parametros:object;
+    @Input() habilita:boolean = true;
 
     constructor(
         private router: Router

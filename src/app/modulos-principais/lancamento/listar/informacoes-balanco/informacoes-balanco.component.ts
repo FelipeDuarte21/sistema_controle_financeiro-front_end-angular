@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { Balanco } from "src/app/modelos/balanco.model";
 
 @Component({
@@ -6,7 +7,7 @@ import { Balanco } from "src/app/modelos/balanco.model";
     templateUrl: './informacoes-balanco.component.html',
     styleUrls: ['./informacoes-balanco.component.css']
 })
-export class InformacoesBalancoComponent{
+export class InformacoesBalancoComponent implements OnInit{
 
     @Input() balanco: Balanco;
     @Output() mudarBalanco: EventEmitter<object> = new EventEmitter();
@@ -14,33 +15,28 @@ export class InformacoesBalancoComponent{
     public balancoAnterior:boolean = true;
     public balancoPosterior:boolean = true;
     public balancoAtual:boolean = true;
- 
-    public isAnterior():boolean{
-        if(this.balanco == null) return false;
-        return true;
-    }
 
-    public isPosteriorEAtual():boolean{
-        let dataAtual = new Date();
-        if(this.balanco.mes == dataAtual.getMonth()+1) return false;
-        return true;
-    }
+    public formPesquisaBalanco: FormGroup;
 
-    public buscarPorMesAnterior(){
-        let data = new Date(this.balanco.ano,this.balanco.mes-1,1);
-        data.setMonth(data.getMonth()-1);
-        this.mudarBalanco.emit({mes:data.getMonth()+1,ano:data.getFullYear()});
-    }
+    constructor(
+        private formBuilder: FormBuilder
+    ){}
 
-    public buscarPorMesPosterior(){
-        let data = new Date(this.balanco.ano,this.balanco.mes-1,1);
-        data.setMonth(data.getMonth()+1);
-        this.mudarBalanco.emit({mes:data.getMonth()+1,ano:data.getFullYear()});
+    ngOnInit(): void {
+        this.formPesquisaBalanco = this.formBuilder.group({
+            mesAno: []
+        });
     }
 
     public buscarBalancoAtual(){
         let data = new Date();
         this.mudarBalanco.emit({mes:data.getMonth()+1,ano:data.getFullYear()});
+    }
+
+    public pesquisarBalanco(){
+        let anoMes = this.formPesquisaBalanco.get("mesAno").value as string;
+        let partes = anoMes.split("-");
+        this.mudarBalanco.emit({ano: partes[0], mes: partes[1]});
     }
 
 }
