@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { RodapeModule } from './compartilhados/rodape/rodape.module';
 
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
@@ -17,7 +16,6 @@ registerLocaleData(ptBr);
   ],
   imports: [
     BrowserModule,
-    RodapeModule,
     AppRoutingModule,
     AutenticacaoModule
   ],

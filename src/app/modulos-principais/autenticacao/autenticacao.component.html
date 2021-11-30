@@ -1,48 +1,79 @@
+<cabecalho></cabecalho>
 <div class="container-fluid">
 
-    <div class="row justify-content-center">
+    <div class="row align-items-center">
+
+        <div class="col-12 col-lg-6 text-center mt-5">
+            <i class="fas fa-hand-holding-usd logo mb-1 text-secondary"></i>
+            <h3 class=""><i class="fas fa-hand-holding-usd me-1"></i>Sistema de Controle Financeiro</h3>
+            <p>Para Saber Mais Sobre O Sistema <a (click)="redirecionaSaibaMais()" class="btn btn-outline-secondary">Clique Aqui!</a></p>
+        </div>
+
+        <div class="col-12 col-lg-6 mt-3 mt-md-5">
+
+            <div class="row justify-content-center">
+                <div class="col-11 col-md-8">
+
+                    <form [formGroup]="formAutenticacao" (submit)="enviar()" class="mt-5">
+
+                        <div class="form-floating mb-4 mt-5">
+                            <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email"
+                                [ngClass]="{'is-invalid': verificaCampo('email')}" autocomplete="off">
+                            <label for="email"><i class="fas fa-user me-1"></i>Email</label>
         
-        <div class="col-11 col-md-7 col-lg-4 col-xl-3 mt-5 border px-4 px-lg-5 pb-3 pt-5">
+                            <div class="invalid-feedback" *ngIf="formAutenticacao.get('email').errors?.required">Email é
+                                requerido!</div>
+                            <div class="invalid-feedback" *ngIf="formAutenticacao.get('email').errors?.maxlength">Email é maior
+                                que 80 caracteres!</div>
+                            <div class="invalid-feedback" *ngIf="formAutenticacao.get('email').errors?.email">Email incorreto!
+                            </div>
+                        </div>
+        
+                        <div class="form-floating mt-5">
+                            <input type="password" class="form-control" id="senha" formControlName="senha" placeholder="Senha"
+                                [ngClass]="{'is-invalid': verificaCampo('senha')}" autocomplete="off">
+                            <label for="floatingPassword"><i class="fas fa-lock me-1"></i>Senha</label>
+        
+                            <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.required">Senha é
+                                requerido!</div>
+                            <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.minlength">Senha é menor
+                                que 6 caracteres!</div>
+                            <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.maxlength">Senha é maior
+                                que 15 caracteres!</div>
+                        </div>
+        
+                        <a href="#" class="d-block text-end mt-0 mb-0"><small><i class="fas fa-question-circle me-1"></i>Esqueci
+                                minha senha</small></a>
+        
+                        <div class="d-flex justify-content-center mt-4" *ngIf="exibeSpinner">
+                            <div class="spinner-border text-secondary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+        
+                        <div class="d-grid gap-2 mb-4 mt-5">
+                            <button [disabled]="formAutenticacao.invalid" class="btn btn-primary btn-lg" type="submit"><i
+                                    class="fas fa-sign-in-alt me-1"></i>Entrar</button>
+                        </div>
+        
+                        <div class="d-grid gap-2 mb-4">
+                            <button (click)="redirecionaCadastro()" class="btn btn-outline-primary btn-lg" type="button"><i
+                                    class="fas fa-user-plus me-1"></i>Inscreva-se</button>
+                        </div>
+        
+                        <p class="text-danger text-center mt-3" *ngIf="mostraErro">Email ou Senha Incorretos!</p>
+        
+                    </form>
 
-            <h5 class="text-center"><i class="fas fa-hand-holding-usd me-1"></i>Sistema de Controle Financeiro</h5>
-
-            <form [formGroup]="formAutenticacao" (submit)="enviar()" class="mt-5">
-
-                <div class="form-floating mb-4">
-                    <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email" [ngClass]="{'is-invalid': verificaCampo('email')}" autocomplete="off">
-                    <label for="email"><i class="fas fa-user me-1"></i>Email</label>
-
-                    <div class="invalid-feedback" *ngIf="formAutenticacao.get('email').errors?.required">Email é requerido!</div>
-                    <div class="invalid-feedback" *ngIf="formAutenticacao.get('email').errors?.maxlength">Email é maior que 80 caracteres!</div>
-                    <div class="invalid-feedback" *ngIf="formAutenticacao.get('email').errors?.email">Email incorreto!</div>
                 </div>
-                
-                <div class="form-floating">
-                    <input type="password" class="form-control" id="senha" formControlName="senha" placeholder="Senha" [ngClass]="{'is-invalid': verificaCampo('senha')}" autocomplete="off">
-                    <label for="floatingPassword"><i class="fas fa-lock me-1"></i>Password</label>
-                
-                    <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.required">Senha é requerido!</div>
-                    <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.minlength">Senha é menor que 6 caracteres!</div>
-                    <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.maxlength">Senha é maior que 15 caracteres!</div>
-                </div>
+            </div>
 
-                <a href="#" class="d-block text-end mt-0 mb-0"><small><i class="fas fa-question-circle me-1"></i>Esqueci minha senha</small></a>
+            
 
-                <div class="d-flex justify-content-center mt-4" *ngIf="exibeSpinner">
-                    <div class="spinner-border text-secondary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
 
-                <div class="d-grid gap-2 mb-4 mt-5">
-                    <button [disabled]="formAutenticacao.invalid" class="btn btn-primary" type="submit"><i class="fas fa-sign-in-alt me-1"></i>Entrar</button>
-                </div>
 
-                <p class="text-center mt-"><small>Ainda não tem cadastro? <a routerLink="/usuario/cadastro" href="#">Cadastra-se</a></small></p>
 
-                <p class="text-danger text-center mt-3" *ngIf="mostraErro">Email ou Senha Incorretos!</p>
 
-            </form>
 
         </div>
 

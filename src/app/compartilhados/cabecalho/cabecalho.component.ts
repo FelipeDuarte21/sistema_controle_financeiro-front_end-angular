@@ -10,7 +10,7 @@ import { UsuarioLogadoService } from "src/app/servicos/internos/usuario-logado.s
 })
 export class CabecalhoComponent implements OnInit{
 
-    public usuario: Usuario;
+    public usuario: Usuario = null;
 
     public exibeMenuLancamento:boolean = false;
     public idCategoria:number=0;
