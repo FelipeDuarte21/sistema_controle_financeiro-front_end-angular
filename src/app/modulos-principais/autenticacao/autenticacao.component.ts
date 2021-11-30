@@ -59,9 +59,18 @@ export class AutenticacaoComponent implements OnInit{
                 console.log(error);
                 this.formAutenticacao.reset();
                 this.mostraErro = true;
+                this.exibeSpinner = false;
             }
         );
 
+    }
+
+    public redirecionaSaibaMais(){
+       this.router.navigate(['/sobre']);
+    }
+
+    public redirecionaCadastro(){
+        this.router.navigate(['/usuario/cadastro']);
     }
 
 }

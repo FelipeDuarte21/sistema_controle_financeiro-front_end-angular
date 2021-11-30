@@ -18,7 +18,7 @@
                 <div *ngIf="exibeSpinnerLancamento == false">
 
                     <!--Botão para novo lançamento-->
-                    <btn-cadastrar titulo="Novo Lançamento" rota="lancamento/lancar" [parametros]="{categoria:this.idCategoria,balanco:this.balanco?.id}"></btn-cadastrar>
+                    <btn-cadastrar [desativado]="balanco.fechado" titulo="Novo Lançamento" rota="lancamento/lancar" [parametros]="{categoria:this.idCategoria,balanco:this.balanco?.id}"></btn-cadastrar>
 
                     <!--Botão para baixar lançamentos em arquivo csv-->
                     <btn-download-csv [idBalanco]="balanco.id"></btn-download-csv>

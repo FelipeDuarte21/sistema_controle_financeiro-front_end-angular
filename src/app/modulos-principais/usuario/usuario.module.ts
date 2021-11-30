@@ -2,6 +2,8 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
+import { BtnsModule } from "src/app/compartilhados/componentes/btns/btns.module";
 import { UsuarioService } from "src/app/servicos/http/usuario.service";
 import { UsuarioCadastroComponent } from "./cadastro/usuario-cadastro.component";
 import { UsuarioRoutingModule } from "./usuario-routing.module";
@@ -17,7 +19,9 @@ import { UsuarioComponent } from "./usuario.component";
         UsuarioRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CabecalhoModule,
+        BtnsModule
     ],
     exports: [
         UsuarioComponent

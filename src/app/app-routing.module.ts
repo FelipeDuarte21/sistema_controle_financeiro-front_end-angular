@@ -23,6 +23,10 @@ const routes: Routes = [
     {
         path: 'lancamento',
         loadChildren: () => import('./modulos-principais/lancamento/lancamento.module').then(m => m.LancamentoModule)
+    },
+    {
+        path: 'sobre',
+        loadChildren: () => import('./modulos-principais/sobre/sobre.module').then(m => m.SobreModule)
     }
 ];
 

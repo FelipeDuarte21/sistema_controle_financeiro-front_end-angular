@@ -11,6 +11,7 @@ export class BtnEditarComponent{
     @Input() rota:string;
     @Input() id:number;
     @Input() parametros:object;
+    @Input() desativado:boolean = false;
 
     constructor(
         private router: Router

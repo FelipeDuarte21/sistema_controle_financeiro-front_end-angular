@@ -8,6 +8,7 @@ import { InterceptorService } from "src/app/servicos/internos/interceptador.serv
 import { UsuarioService } from "src/app/servicos/http/usuario.service";
 import { AutenticacaoRoutingModule } from "./autenticacao-routing.module";
 import { AutenticacaoComponent } from "./autenticacao.component";
+import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { AutenticacaoComponent } from "./autenticacao.component";
         AutenticacaoRoutingModule,
         HttpClientModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CabecalhoModule
     ],
     exports: [
         AutenticacaoComponent

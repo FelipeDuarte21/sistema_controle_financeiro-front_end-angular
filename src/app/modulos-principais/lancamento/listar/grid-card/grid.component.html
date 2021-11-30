@@ -39,8 +39,8 @@
                     <div class="col-12 col-xxl-2">
                         <div class="text-start ms-2 mt-2 mt-xxl-0">
                             <h6 class="mb-1"><small>Ações:</small></h6>
-                            <btn-editar rota="lancamento/atualizar" [id]="lancamento?.id" [parametros]="parametrosEditar" ></btn-editar>
-                            <btn-excluir [id]="lancamento?.id" (excluir)="onExcluir($event)"></btn-excluir>
+                            <btn-editar [desativado]="balancoFechado" rota="lancamento/atualizar" [id]="lancamento?.id" [parametros]="parametrosEditar" ></btn-editar>
+                            <btn-excluir [desativado]="balancoFechado" [id]="lancamento?.id" (excluir)="onExcluir($event)"></btn-excluir>
                         </div>                                    
                     </div>
 

@@ -43,19 +43,23 @@ export class LancamentoListarComponent implements OnInit{
             if(this.idCategoria==undefined || this.idCategoria==null 
                 || this.idCategoria==0) this.router.navigate(['/categoria']);
 
-            this.exibeSpinner=true;
-            this.balancoService.buscarAtual(this.idCategoria).subscribe(
-                balanco => {
-                    this.balanco = balanco;
-                    this.listarLancamentos();
-                    this.exibeSpinner = false;
-                },
-                error => {
-                    this.router.navigate(['/categoria']);
-                }
-            );
+            this.buscarBalancoAtual(this.idCategoria);
 
         });
+    }
+
+    private buscarBalancoAtual(idCategoria: number){
+        this.exibeSpinner=true;
+        this.balancoService.buscarAtual(idCategoria).subscribe(
+            balanco => {
+                this.balanco = balanco;
+                this.listarLancamentos();
+                this.exibeSpinner = false;
+            },
+            error => {
+                this.router.navigate(['/categoria']);
+            }
+        );
     }
 
     private listarLancamentos(){
@@ -69,6 +73,15 @@ export class LancamentoListarComponent implements OnInit{
     }
 
     public mudarBalanco(data:object){
+
+        let dataAgora = new Date();
+
+        if(data['mes'] > dataAgora.getMonth()+1){
+            alert("Balanco ainda não cadastrado!");
+            this.buscarBalancoAtual(this.idCategoria);
+            return;
+        }
+
         this.balancoService.buscarPorData(this.idCategoria,data['mes'],data['ano']).subscribe(
             balanco => {
                 this.balanco = balanco;
@@ -76,8 +89,12 @@ export class LancamentoListarComponent implements OnInit{
                 this.quantidadeAtual = this.qtdOpcoes[0];
                 this.listarLancamentos();
             },
-            error => {
-                console.log(error);
+            respError => {
+                if(respError.error.code == 404){
+                    alert("Balanco não encontrado!");
+                    this.buscarBalancoAtual(this.idCategoria);
+                }
+                console.log(respError);
             }
         );
     }
@@ -104,7 +121,7 @@ export class LancamentoListarComponent implements OnInit{
                     alert("Lançamento Excluído Com Sucesso!");
                     this.paginaAtual = 0;
                     this.quantidadeAtual = this.qtdOpcoes[0];
-                    this.listarLancamentos();
+                    this.buscarBalancoAtual(this.idCategoria);
                 },
                 error => {
                     console.log(error);
