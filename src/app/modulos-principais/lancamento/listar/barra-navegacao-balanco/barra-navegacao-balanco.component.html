@@ -1,7 +1,7 @@
 <div class="row mt-4">
 
     <div class="col-12 col-lg-6 col-xl-8">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs flex-column flex-md-row">
             <ng-container *ngFor="let b of balancos; let i = index">
                 <li class="nav-item cursor-mouse" *ngIf="b.atual">
                     <a class="nav-link active" aria-current="page" (click)="navegarBalanco(b?.ano,b?.mes)">{{b?.mes |

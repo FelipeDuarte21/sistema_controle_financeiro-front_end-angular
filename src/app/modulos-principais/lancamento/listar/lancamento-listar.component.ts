@@ -80,20 +80,10 @@ export class LancamentoListarComponent implements OnInit{
     }
 
     private buscarResumoBalanco(idCategoria: number,ano:number, mes:number){
+ 
+        const qtdMes = 3; //Quantidade mês para aparacer na barra de navegação
 
-        let tamanhoTela = window.innerWidth;
-        
-        let qtdMes = 3; //Quantidade mês para aparacer na barra de navegação
-
-        if(tamanhoTela < 576){
-            qtdMes = 3;
-        }else if(tamanhoTela >= 576 && tamanhoTela < 768){
-            qtdMes = 5;
-        }else if(tamanhoTela >= 1400){
-            qtdMes = 7;
-        }
-
-        this.balancoService.buscarResumo(idCategoria,this.balanco?.ano,this.balanco?.mes,qtdMes).subscribe(
+        this.balancoService.buscarResumo(idCategoria,ano,mes,qtdMes).subscribe(
             balancosDTO => {
                 this.balancosDTO = balancosDTO;
             },
@@ -106,8 +96,11 @@ export class LancamentoListarComponent implements OnInit{
     public mudarBalanco(data:object){
 
         let dataAgora = new Date();
+        dataAgora.setDate(1);
 
-        if(data['mes'] > dataAgora.getMonth()+1){
+        let dataRecebida = new Date(`${data['ano']}/${data['mes']}/1`);
+        
+        if(dataRecebida.getTime() > dataAgora.getTime()){
             alert("Balanco ainda não cadastrado!");
             this.buscarBalancoAtual(this.idCategoria);
             return;
