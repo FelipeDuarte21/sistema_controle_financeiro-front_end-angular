@@ -1,6 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { PlatformLocation } from "@angular/common";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { element } from "protractor";
 import { Balanco } from "src/app/modelos/balanco.model";
+import { BalancoDTO } from "src/app/modelos/balancoDTO.models";
 import { PaginaLancamento } from "src/app/modelos/pagina-lancamento.model";
 import { BalancoService } from "src/app/servicos/http/balanco.service";
 import { LancamentoService } from "src/app/servicos/http/lancamento.service";
@@ -27,11 +30,13 @@ export class LancamentoListarComponent implements OnInit{
     public exibeSpinner:boolean;
     public exibeSpinnerLancamento:boolean = true;
 
+    public balancosDTO:BalancoDTO[] = [];
+
     constructor(
         private balancoService: BalancoService,
         private lancamentoService: LancamentoService,
         private activetedRoute: ActivatedRoute,
-        private router: Router,
+        private router: Router
     ){}
 
     ngOnInit(): void {
@@ -46,6 +51,7 @@ export class LancamentoListarComponent implements OnInit{
             this.buscarBalancoAtual(this.idCategoria);
 
         });
+
     }
 
     private buscarBalancoAtual(idCategoria: number){
@@ -53,6 +59,7 @@ export class LancamentoListarComponent implements OnInit{
         this.balancoService.buscarAtual(idCategoria).subscribe(
             balanco => {
                 this.balanco = balanco;
+                this.buscarResumoBalanco(this.idCategoria,balanco.ano,balanco.mes);
                 this.listarLancamentos();
                 this.exibeSpinner = false;
             },
@@ -72,6 +79,30 @@ export class LancamentoListarComponent implements OnInit{
         );
     }
 
+    private buscarResumoBalanco(idCategoria: number,ano:number, mes:number){
+
+        let tamanhoTela = window.innerWidth;
+        
+        let qtdMes = 3; //Quantidade mês para aparacer na barra de navegação
+
+        if(tamanhoTela < 576){
+            qtdMes = 3;
+        }else if(tamanhoTela >= 576 && tamanhoTela < 768){
+            qtdMes = 5;
+        }else if(tamanhoTela >= 1400){
+            qtdMes = 7;
+        }
+
+        this.balancoService.buscarResumo(idCategoria,this.balanco?.ano,this.balanco?.mes,qtdMes).subscribe(
+            balancosDTO => {
+                this.balancosDTO = balancosDTO;
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    }
+
     public mudarBalanco(data:object){
 
         let dataAgora = new Date();
@@ -87,6 +118,7 @@ export class LancamentoListarComponent implements OnInit{
                 this.balanco = balanco;
                 this.paginaAtual = 0;
                 this.quantidadeAtual = this.qtdOpcoes[0];
+                this.buscarResumoBalanco(this.idCategoria,balanco.ano,balanco.mes)
                 this.listarLancamentos();
             },
             respError => {

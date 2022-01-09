@@ -21,6 +21,7 @@ import { GridCardComponent } from "./listar/grid-card/grid.component";
 import { BarraNavegacaoComponent } from "./listar/barra-navegacao/barra-navegacao.component";
 import { InformacoesBalancoComponent } from "./listar/informacoes-balanco/informacoes-balanco.component";
 import { BotaoDownloadCsvComponent } from "./listar/botao-download-csv/botao-download-csv.component";
+import { BarraNavegacaoBalancoComponent } from "./listar/barra-navegacao-balanco/barra-navegacao-balanco.component";
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { BotaoDownloadCsvComponent } from "./listar/botao-download-csv/botao-dow
         GridCardComponent,
         BarraNavegacaoComponent,
         InformacoesBalancoComponent,
-        BotaoDownloadCsvComponent
+        BotaoDownloadCsvComponent,
+        BarraNavegacaoBalancoComponent
     ],
     imports: [
         CommonModule,

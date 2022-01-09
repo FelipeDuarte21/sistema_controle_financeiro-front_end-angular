@@ -22,8 +22,6 @@ export class SpinnerComponent implements OnInit{
                 this.exibe = controle;
             }
         );
-        console.log(this.opcao);
-        console.log(this.exibe);
     }
 
 }
