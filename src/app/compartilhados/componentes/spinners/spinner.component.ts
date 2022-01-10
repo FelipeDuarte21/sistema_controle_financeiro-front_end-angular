@@ -8,19 +8,15 @@ import { SpinnerService } from "./spinner.service";
 })
 export class SpinnerComponent implements OnInit{
 
-    public opcao:number = 0;
-    public exibe:boolean = false;
+    public ativo:boolean = false;
 
     constructor(
         private service:SpinnerService
     ){}
 
     ngOnInit(): void {
-        this.opcao = this.service.getOpcao();
-        this.service.getControleSpinner().subscribe(
-            controle => {
-                this.exibe = controle;
-            }
+        this.service.getEventoSpinner().subscribe(
+            ativa => this.ativo = ativa
         );
     }
 

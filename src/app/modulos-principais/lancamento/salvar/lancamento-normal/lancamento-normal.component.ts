@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { LancamentoSalvar } from "src/app/modelos/lancamento.model";
 import { Tipo } from "src/app/modelos/tipo.model";
 import { LancamentoService } from "src/app/servicos/http/lancamento.service";
@@ -27,7 +28,8 @@ export class LancamentoNormalComponent implements OnInit {
         private formBuilder: FormBuilder,
         private lancamentoService: LancamentoService,
         private router: Router,
-        private activedRoute: ActivatedRoute
+        private activedRoute: ActivatedRoute,
+        private spinnerService: SpinnerService
     ) { }
 
     ngOnInit(): void {
@@ -102,6 +104,8 @@ export class LancamentoNormalComponent implements OnInit {
 
     public enviar() {
 
+        this.spinnerService.ativarSpinner();
+
         let lancamento = this.formLancamento.getRawValue() as LancamentoSalvar;
 
         this.desativaBotaoSalvar = true;
@@ -112,9 +116,11 @@ export class LancamentoNormalComponent implements OnInit {
                 lancamento => {
                     this.formLancamento.reset();
                     this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                    this.spinnerService.desativarSpinner();
                     alert("Lançamento Realizado Com Sucesso!");
                 },
                 error => {
+                    this.spinnerService.desativarSpinner();
                     console.log(error);
                     alert("Erro ao Tentar Realizar Lançamento!");
                     this.desativaBotaoSalvar = false;
@@ -130,9 +136,11 @@ export class LancamentoNormalComponent implements OnInit {
                 lancamento => {
                     this.formLancamento.reset();
                     this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                    this.spinnerService.desativarSpinner();
                     alert("Lançamento Atualizado Com Sucesso!");
                 },
                 error => {
+                    this.spinnerService.desativarSpinner();
                     console.log(error);
                     alert("Erro ao Tentar Atualizar Lançamento!");
                     this.desativaBotaoSalvar = false;

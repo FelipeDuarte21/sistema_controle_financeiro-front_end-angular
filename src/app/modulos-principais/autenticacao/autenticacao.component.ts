@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { Autenticacao } from "src/app/modelos/autenticacao.model";
 import { AutenticacaoService } from "src/app/servicos/http/autenticacao.service";
 import { UsuarioLogadoService } from "src/app/servicos/internos/usuario-logado.service";
@@ -16,13 +17,14 @@ export class AutenticacaoComponent implements OnInit{
 
     public mostraErro: boolean = false;
 
-    public exibeSpinner:boolean = false;
+    public desativaBotaoLogin:boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
         private autenticacaoService: AutenticacaoService,
         private usuarioLogadoService: UsuarioLogadoService,
-        private router: Router
+        private router: Router,
+        private spinnerService: SpinnerService
     ){}
 
     ngOnInit(): void {
@@ -40,9 +42,11 @@ export class AutenticacaoComponent implements OnInit{
 
     public enviar(){
 
+        this.desativaBotaoLogin = true;
+
         let autenticacao = this.formAutenticacao.getRawValue() as Autenticacao;
 
-        this.exibeSpinner = true;
+        this.spinnerService.ativarSpinner();
 
         this.autenticacaoService.login(autenticacao).subscribe(
             resp => {
@@ -51,15 +55,16 @@ export class AutenticacaoComponent implements OnInit{
                 
                 this.usuarioLogadoService.logarUsuario(autenticacao.email,token);
 
-                this.exibeSpinner = false;
-                
                 this.router.navigate(['/categoria']);
+
+                this.spinnerService.desativarSpinner();
+
             },
             error => {
                 console.log(error);
                 this.formAutenticacao.reset();
+                this.spinnerService.desativarSpinner();
                 this.mostraErro = true;
-                this.exibeSpinner = false;
             }
         );
 

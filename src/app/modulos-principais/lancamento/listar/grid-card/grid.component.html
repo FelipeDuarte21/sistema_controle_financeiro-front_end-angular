@@ -1,5 +1,5 @@
 <!--Lista de Lançamentos-->
-<div class="row" *ngIf="lancamentos.length > 0">
+<div class="row" *ngIf="lancamentos?.length > 0">
 
     <div class="col-12 mt-2" *ngFor="let lancamento of lancamentos">
         <div class="card">
@@ -50,6 +50,6 @@
     </div>
 </div>
 
-<div class="mt-5" *ngIf="lancamentos.length == 0">
+<div class="mt-5" *ngIf="lancamentos?.length == 0">
     <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não há nenhum lançamento!</div>
 </div>

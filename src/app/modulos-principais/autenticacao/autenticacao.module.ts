@@ -9,6 +9,7 @@ import { UsuarioService } from "src/app/servicos/http/usuario.service";
 import { AutenticacaoRoutingModule } from "./autenticacao-routing.module";
 import { AutenticacaoComponent } from "./autenticacao.component";
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
+import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.modu
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        CabecalhoModule
+        CabecalhoModule,
+        SpinnerModule
     ],
     exports: [
         AutenticacaoComponent

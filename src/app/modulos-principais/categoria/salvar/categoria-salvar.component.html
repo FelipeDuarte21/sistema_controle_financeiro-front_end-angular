@@ -2,7 +2,7 @@
 
     <div class="row justify-content-center">
 
-        <div class="col-11 col-md-8" *ngIf="exibeSpinner == false">
+        <div class="col-11 col-md-8">
 
             <!--Nome da Página-->
             <titulo-pagina titulo="Sistema de Controle Financeiro" [subtitulo]="titulo" [icone]="null"></titulo-pagina>
@@ -30,25 +30,11 @@
                 </div>
 
                 <button [disabled]="formCategoria.invalid || desativaBotaoSalvar" type="submit" class="btn btn-primary mt-4">
-                    <ng-container *ngIf="exibeSpinnerSalvar == false">
-                        <i class="far fa-save me-1"></i>Salvar
-                    </ng-container>
-                    <ng-container *ngIf="exibeSpinnerSalvar">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Salvando...
-                    </ng-container>
+                    <i class="far fa-save me-1"></i>Salvar
                 </button>
 
             </form>
 
-        </div>
-
-        <div class="col-11 col-md-8" *ngIf="exibeSpinner">
-            <div class="spinner">
-                <div class="spinner-grow text-sencondary"  style="width: 3.5rem; height: 3.5rem;" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
         </div>
 
     </div>

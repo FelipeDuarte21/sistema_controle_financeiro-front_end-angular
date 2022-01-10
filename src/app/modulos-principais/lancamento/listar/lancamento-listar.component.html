@@ -2,7 +2,7 @@
 
     <div class="row justify-content-center">
 
-        <div class="col-11" *ngIf="exibeSpinner == false">
+        <div class="col-11">
 
             <!--Nome da Página-->
             <titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Lançamentos" icone="fa-hand-holding-usd">
@@ -12,51 +12,34 @@
             <btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
 
             <!--Barra de Navegação dos balanços-->
-            <barra-navegacao-balanco [balancoAtual]="balanco" [balancos]="balancosDTO" (mudarBalanco)="mudarBalanco($event)"></barra-navegacao-balanco>
+            <barra-navegacao-balanco [balancoAtual]="balanco" [balancos]="balancosDTO"
+                (mudarBalanco)="mudarBalanco($event)"></barra-navegacao-balanco>
 
             <!--Informações da Categoria-->
             <info-balanco [balanco]="balanco" (mudarBalanco)="mudarBalanco($event)"></info-balanco>
 
             <div class="position-relative">
 
-                <div *ngIf="exibeSpinnerLancamento == false">
+                <!--Botão para novo lançamento-->
+                <btn-cadastrar [desativado]="balanco?.fechado" titulo="Novo Lançamento" rota="lancamento/lancar"
+                    [parametros]="{categoria:this.idCategoria,balanco:this.balanco?.id}"></btn-cadastrar>
 
-                    <!--Botão para novo lançamento-->
-                    <btn-cadastrar [desativado]="balanco.fechado" titulo="Novo Lançamento" rota="lancamento/lancar"
-                        [parametros]="{categoria:this.idCategoria,balanco:this.balanco?.id}"></btn-cadastrar>
+                <!--Botão para baixar lançamentos em arquivo csv-->
+                <btn-download-csv [idBalanco]="balanco?.id"></btn-download-csv>
 
-                    <!--Botão para baixar lançamentos em arquivo csv-->
-                    <btn-download-csv [idBalanco]="balanco.id"></btn-download-csv>
+                <!--Barra de navegação-->
+                <barra-navegacao *ngIf="paginaLancamentos?.content.length > 0" [qtdOpcoes]="qtdOpcoes"
+                    [qtdAtual]="quantidadeAtual" (mudarQuantidade)="mudarQuantidade($event)"
+                    [totalPagina]="paginaLancamentos?.totalPages" [paginaAtual]="paginaLancamentos?.number"
+                    (mudarPagina)="mudarPagina($event)"></barra-navegacao>
 
-                    <!--Barra de navegação-->
-                    <barra-navegacao *ngIf="paginaLancamentos?.content.length > 0" [qtdOpcoes]="qtdOpcoes"
-                        [qtdAtual]="quantidadeAtual" (mudarQuantidade)="mudarQuantidade($event)"
-                        [totalPagina]="paginaLancamentos?.totalPages" [paginaAtual]="paginaLancamentos?.number"
-                        (mudarPagina)="mudarPagina($event)"></barra-navegacao>
-
-                    <!--Lista de Lançamentos-->
-                    <grid-card [lancamentos]="paginaLancamentos.content" [balancoFechado]="balanco.fechado"
-                        [parametrosEditar]="{categoria:this.idCategoria,balanco:this.balanco?.id}"
-                        (excluir)="excluir($event)"></grid-card>
-
-                </div>
-
-                <div class="spinner spinner-menor" *ngIf="exibeSpinnerLancamento">
-                    <div class="spinner-grow text-sencondary" style="width: 2.5rem; height: 2.5rem;" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
+                <!--Lista de Lançamentos-->
+                <grid-card [lancamentos]="paginaLancamentos?.content" [balancoFechado]="balanco?.fechado"
+                    [parametrosEditar]="{categoria:this.idCategoria,balanco:this.balanco?.id}"
+                    (excluir)="excluir($event)"></grid-card>
 
             </div>
 
-        </div>
-
-        <div class="col-11" *ngIf="exibeSpinner">
-            <div class="spinner">
-                <div class="spinner-grow text-sencondary" style="width: 3.5rem; height: 3.5rem;" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
         </div>
 
     </div>

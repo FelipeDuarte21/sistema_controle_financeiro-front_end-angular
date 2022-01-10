@@ -1,7 +1,6 @@
-import { PlatformLocation } from "@angular/common";
-import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { element } from "protractor";
+import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { Balanco } from "src/app/modelos/balanco.model";
 import { BalancoDTO } from "src/app/modelos/balancoDTO.models";
 import { PaginaLancamento } from "src/app/modelos/pagina-lancamento.model";
@@ -27,26 +26,28 @@ export class LancamentoListarComponent implements OnInit{
 
     public idCategoria:number = 0;
 
-    public exibeSpinner:boolean;
-    public exibeSpinnerLancamento:boolean = true;
-
     public balancosDTO:BalancoDTO[] = [];
 
     constructor(
         private balancoService: BalancoService,
         private lancamentoService: LancamentoService,
         private activetedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private spinnerService: SpinnerService
     ){}
 
     ngOnInit(): void {
         
+        this.spinnerService.ativarSpinner();
+
         this.activetedRoute.queryParams.subscribe(queryParams => {
 
             this.idCategoria = queryParams.categoria
 
-            if(this.idCategoria==undefined || this.idCategoria==null 
-                || this.idCategoria==0) this.router.navigate(['/categoria']);
+            if(this.idCategoria==undefined || this.idCategoria==null || this.idCategoria==0) {
+                this.spinnerService.desativarSpinner();
+                this.router.navigate(['/categoria']);
+            }
 
             this.buscarBalancoAtual(this.idCategoria);
 
@@ -55,39 +56,48 @@ export class LancamentoListarComponent implements OnInit{
     }
 
     private buscarBalancoAtual(idCategoria: number){
-        this.exibeSpinner=true;
+       
         this.balancoService.buscarAtual(idCategoria).subscribe(
             balanco => {
                 this.balanco = balanco;
+                this.spinnerService.desativarSpinner();
                 this.buscarResumoBalanco(this.idCategoria,balanco.ano,balanco.mes);
                 this.listarLancamentos();
-                this.exibeSpinner = false;
             },
             error => {
                 this.router.navigate(['/categoria']);
+                this.spinnerService.desativarSpinner();
             }
         );
     }
 
     private listarLancamentos(){
-        this.exibeSpinnerLancamento = true;
+        this.spinnerService.ativarSpinner();
         this.lancamentoService.buscarPorBalanco(this.balanco.id,this.paginaAtual,this.quantidadeAtual,this.ordem).subscribe(
             paginaLancamentos => {
                 this.paginaLancamentos = paginaLancamentos;
-                this.exibeSpinnerLancamento = false;
+                this.spinnerService.desativarSpinner();
+            },
+            error => {
+                console.log(error);
+                this.spinnerService.desativarSpinner();
             }
         );
     }
 
     private buscarResumoBalanco(idCategoria: number,ano:number, mes:number){
+
+        this.spinnerService.ativarSpinner();
  
         const qtdMes = 3; //Quantidade mês para aparacer na barra de navegação
 
         this.balancoService.buscarResumo(idCategoria,ano,mes,qtdMes).subscribe(
             balancosDTO => {
                 this.balancosDTO = balancosDTO;
+                this.spinnerService.desativarSpinner();
             },
             error => {
+                this.spinnerService.desativarSpinner();
                 console.log(error);
             }
         );
@@ -106,15 +116,18 @@ export class LancamentoListarComponent implements OnInit{
             return;
         }
 
+        this.spinnerService.ativarSpinner();
         this.balancoService.buscarPorData(this.idCategoria,data['mes'],data['ano']).subscribe(
             balanco => {
                 this.balanco = balanco;
                 this.paginaAtual = 0;
                 this.quantidadeAtual = this.qtdOpcoes[0];
+                this.spinnerService.desativarSpinner();
                 this.buscarResumoBalanco(this.idCategoria,balanco.ano,balanco.mes)
                 this.listarLancamentos();
             },
             respError => {
+                this.spinnerService.desativarSpinner();
                 if(respError.error.code == 404){
                     alert("Balanco não encontrado!");
                     this.buscarBalancoAtual(this.idCategoria);
@@ -141,14 +154,18 @@ export class LancamentoListarComponent implements OnInit{
 
         if(c == true){
 
+            this.spinnerService.ativarSpinner();
+
             this.lancamentoService.excluir(id).subscribe(
                 resp => {
+                    this.spinnerService.desativarSpinner();
                     alert("Lançamento Excluído Com Sucesso!");
                     this.paginaAtual = 0;
                     this.quantidadeAtual = this.qtdOpcoes[0];
                     this.buscarBalancoAtual(this.idCategoria);
                 },
                 error => {
+                    this.spinnerService.desativarSpinner();
                     console.log(error);
                     alert("Erro ao excluir Lançamento");
                 }

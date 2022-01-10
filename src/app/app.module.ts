@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { AutenticacaoModule } from './modulos-principais/autenticacao/autenticacao.module';
+import { SpinnerModule } from './compartilhados/componentes/spinners/spinner.module';
 
 registerLocaleData(ptBr);
 

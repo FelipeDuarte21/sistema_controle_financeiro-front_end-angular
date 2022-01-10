@@ -25,6 +25,7 @@ import { BarraNavegacaoBalancoComponent } from "./listar/barra-navegacao-balanco
 import { LancamentoNormalComponent } from "./salvar/lancamento-normal/lancamento-normal.component";
 import { TransferenciaComponent } from "./salvar/transferencia/transferencia.component";
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
+import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import { CategoriaService } from "src/app/servicos/http/categoria.service";
         QuantidadeRegistroModule,
         PaginacaoModule,
         BtnsModule,
-        TituloPaginaModule
+        TituloPaginaModule,
+        SpinnerModule
     ],
     exports: [
         LancamentoComponent
