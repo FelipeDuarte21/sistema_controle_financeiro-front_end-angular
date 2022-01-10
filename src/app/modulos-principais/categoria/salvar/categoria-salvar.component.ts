@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { Categoria } from "src/app/modelos/categoria.model";
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
 
@@ -17,16 +18,14 @@ export class CategoriaSalvarComponent implements OnInit{
 
     public categoria: Categoria;
 
-    public exibeSpinner:boolean = false;
-    public exibeSpinnerSalvar:boolean = false;
-
     public desativaBotaoSalvar:boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
         private activedRoute: ActivatedRoute,
-        private categoriaService: CategoriaService
+        private categoriaService: CategoriaService,
+        private spinnerService: SpinnerService
     ){}
 
     ngOnInit(): void {
@@ -43,14 +42,13 @@ export class CategoriaSalvarComponent implements OnInit{
                 this.titulo = "Cadastrar";
             }else{
                 this.titulo = "Atualizar";
-                this.exibeSpinner = true;
+
                 this.categoriaService.buscarPorId(id).subscribe(
                     categoria => {
                         this.formCategoria.get("id").setValue(categoria.id);
                         this.formCategoria.get("nome").setValue(categoria.nome);
                         this.formCategoria.get("descricao").setValue(categoria.descricao);
                         this.formCategoria.get("dataCadastro").setValue(categoria.dataCadastro);
-                        this.exibeSpinner = false;
                     },
                     error => {
                         this.router.navigate(['/categoria']);
@@ -74,11 +72,12 @@ export class CategoriaSalvarComponent implements OnInit{
     }
 
     public enviar(){
+
+        this.desativaBotaoSalvar = true;
        
         let categoria = this.formCategoria.getRawValue() as Categoria;
 
-        this.exibeSpinnerSalvar = true;
-        this.desativaBotaoSalvar = true;
+        this.spinnerService.ativarSpinner();
 
         if(categoria.id == 0){
 
@@ -86,13 +85,14 @@ export class CategoriaSalvarComponent implements OnInit{
                 resp => {
                     this.formCategoria.reset();
                     this.router.navigate(['/categoria']);
+                    this.spinnerService.desativarSpinner();
                     alert("Categoria Cadastrada com Sucesso!");
                 },
                 error => {
-                    alert("Erro ao Tentar Cadastrar Categoria!");
-                    console.log(error);
-                    this.exibeSpinnerSalvar = false;
                     this.desativaBotaoSalvar = false;
+                    this.spinnerService.desativarSpinner();
+                    alert("Erro ao Tentar Cadastrar Categoria!");
+                    console.log(error);        
                 }
             );
             
@@ -102,13 +102,14 @@ export class CategoriaSalvarComponent implements OnInit{
                 resp => {
                     this.formCategoria.reset();
                     this.router.navigate(['/categoria']);
+                    this.spinnerService.desativarSpinner();
                     alert("Categoria Atualizada com Sucesso!");
                 },
                 error => {
+                    this.desativaBotaoSalvar = false;
+                    this.spinnerService.desativarSpinner();
                     alert("Erro ao Tentar Atualizar Categoria!");
                     console.log(error);
-                    this.exibeSpinnerSalvar = false;
-                    this.desativaBotaoSalvar = false;
                 }
             );
 

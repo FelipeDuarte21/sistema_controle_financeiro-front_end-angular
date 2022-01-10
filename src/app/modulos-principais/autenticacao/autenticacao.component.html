@@ -1,3 +1,4 @@
+<spinner></spinner>
 <cabecalho></cabecalho>
 <div class="container-fluid">
 
@@ -45,14 +46,9 @@
                         <a href="#" class="d-block text-end mt-0 mb-0"><small><i class="fas fa-question-circle me-1"></i>Esqueci
                                 minha senha</small></a>
         
-                        <div class="d-flex justify-content-center mt-4" *ngIf="exibeSpinner">
-                            <div class="spinner-border text-secondary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-        
+                       
                         <div class="d-grid gap-2 mb-4 mt-5">
-                            <button [disabled]="formAutenticacao.invalid" class="btn btn-primary btn-lg" type="submit"><i
+                            <button [disabled]="formAutenticacao.invalid || desativaBotaoLogin" class="btn btn-primary btn-lg" type="submit"><i
                                     class="fas fa-sign-in-alt me-1"></i>Entrar</button>
                         </div>
         
@@ -68,15 +64,7 @@
                 </div>
             </div>
 
-            
-
-
-
-
-
-
         </div>
-
 
     </div>
 

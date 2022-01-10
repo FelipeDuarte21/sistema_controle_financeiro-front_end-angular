@@ -21,6 +21,11 @@ import { GridCardComponent } from "./listar/grid-card/grid.component";
 import { BarraNavegacaoComponent } from "./listar/barra-navegacao/barra-navegacao.component";
 import { InformacoesBalancoComponent } from "./listar/informacoes-balanco/informacoes-balanco.component";
 import { BotaoDownloadCsvComponent } from "./listar/botao-download-csv/botao-download-csv.component";
+import { BarraNavegacaoBalancoComponent } from "./listar/barra-navegacao-balanco/barra-navegacao-balanco.component";
+import { LancamentoNormalComponent } from "./salvar/lancamento-normal/lancamento-normal.component";
+import { TransferenciaComponent } from "./salvar/transferencia/transferencia.component";
+import { CategoriaService } from "src/app/servicos/http/categoria.service";
+import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
 
 @NgModule({
     declarations: [
@@ -31,7 +36,10 @@ import { BotaoDownloadCsvComponent } from "./listar/botao-download-csv/botao-dow
         GridCardComponent,
         BarraNavegacaoComponent,
         InformacoesBalancoComponent,
-        BotaoDownloadCsvComponent
+        BotaoDownloadCsvComponent,
+        BarraNavegacaoBalancoComponent,
+        LancamentoNormalComponent,
+        TransferenciaComponent
     ],
     imports: [
         CommonModule,
@@ -43,7 +51,8 @@ import { BotaoDownloadCsvComponent } from "./listar/botao-download-csv/botao-dow
         QuantidadeRegistroModule,
         PaginacaoModule,
         BtnsModule,
-        TituloPaginaModule
+        TituloPaginaModule,
+        SpinnerModule
     ],
     exports: [
         LancamentoComponent
@@ -51,6 +60,7 @@ import { BotaoDownloadCsvComponent } from "./listar/botao-download-csv/botao-dow
     providers: [
         BalancoService,
         LancamentoService,
+        CategoriaService,
         TipoService,
         {
             provide: HTTP_INTERCEPTORS,

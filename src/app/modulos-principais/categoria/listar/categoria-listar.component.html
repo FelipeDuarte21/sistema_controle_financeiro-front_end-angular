@@ -2,7 +2,7 @@
 
     <div class="row justify-content-center">
 
-        <div class="col-11" *ngIf="exibeCategorias">
+        <div class="col-11">
 
             <!--Nome da Página--> 
             <titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Categorias" icone="fa-tags"></titulo-pagina>
@@ -19,11 +19,7 @@
             <grids [escolhaGrid]="escolhaGrid" [categorias]="paginaCategoria?.content" (excluir)="excluir($event)"></grids>
 
         </div>
-
-        <div class="col-11">
-            <spinner></spinner>
-        </div>
-
+        
     </div>
 
 </div>

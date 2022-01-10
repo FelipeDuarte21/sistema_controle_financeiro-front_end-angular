@@ -1,0 +1,109 @@
+import { Component } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
+import { Categoria } from "src/app/modelos/categoria.model";
+import { Transferencia } from "src/app/modelos/transferencia.model";
+import { CategoriaService } from "src/app/servicos/http/categoria.service";
+import { LancamentoService } from "src/app/servicos/http/lancamento.service";
+
+@Component({
+    selector: 'transferencia',
+    templateUrl: './transferencia.component.html',
+    styleUrls: ['./transferencia.component.css']
+})
+export class TransferenciaComponent{
+
+    public idCategoria: number = 0;
+
+    public formTransferir: FormGroup;
+
+    public desativaBotaoTransferir:boolean = false;
+
+    public categorias: Array<Categoria> = [];
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private categoriaService: CategoriaService,
+        private lancamentoService: LancamentoService,
+        private router: Router,
+        private activedRoute: ActivatedRoute,
+        private spinnerService: SpinnerService
+    ) { }
+
+    ngOnInit(): void {
+
+        this.categoriaService.listar(0,1,1).subscribe(
+            pag => {
+                this.categoriaService.listar(0,pag.totalElements,1).subscribe(
+                    pag => {
+                        this.categorias = pag.content;
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            },
+            error => {
+                console.log(error);
+            }
+        );
+
+        this.activedRoute.queryParams.subscribe(
+            queryParams => {
+                this.idCategoria = queryParams.categoria;
+            }
+        );
+        
+        this.formTransferir = this.formBuilder.group({
+            idCategoriaDestino: ['', [Validators.required]],
+            nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
+            descricao: ['', [Validators.maxLength(255)]],
+            valor: ['', [Validators.required, Validators.min(0)]]
+        });
+
+    }
+
+    public verificaCampo(campo: string): boolean {
+        return this.formTransferir.get(campo).errors && this.formTransferir.get(campo).touched;
+    }
+
+    public tamanhoCampo(campo: string): number {
+        let valor = this.formTransferir.get(campo).value as string;
+        if (valor == null) {
+            return 0;
+        }
+        return valor.length;
+    }
+
+    public transferir() {
+
+        this.spinnerService.ativarSpinner();
+
+        let transferencia = this.formTransferir.getRawValue() as Transferencia;
+
+        transferencia.idCategoriaOrigem = this.idCategoria;
+
+        this.desativaBotaoTransferir = true;
+
+        this.lancamentoService.transferir(transferencia).subscribe(
+            resp => {
+                this.formTransferir.reset();
+                this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                this.spinnerService.desativarSpinner();
+                alert("Transferência Realizada Com Sucesso!");
+            },
+            error => {
+                this.spinnerService.desativarSpinner();
+                console.log(error);
+                alert("Erro ao Tentar Realizar Transferência!");
+                this.desativaBotaoTransferir = false;
+                if (error.error.code == 403) {
+                    this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                }
+            }
+        );
+
+    }
+
+}

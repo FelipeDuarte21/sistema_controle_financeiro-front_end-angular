@@ -4,36 +4,26 @@ import { Observable, Subject } from "rxjs";
 @Injectable()
 export class SpinnerService{
 
-    private controleSpinner = new Subject<boolean>();
+    private eventoSpinner = new Subject<boolean>();
 
-    private controle:boolean = false;
+    private ativa:boolean = false;
 
-    private opcao:number = 0;
-
-    public startSpinner(){
-        this.controle = true;
-        this.controleSpinner.next(true);
+    public ativarSpinner(){
+        this.ativa = true;
+        this.setEventoSpinner(this.ativa);
     }
     
-    public stopSpinner(){
-        this.controle = false;
-        this.controleSpinner.next(false);
+    public desativarSpinner(){
+        this.ativa = false;
+        this.setEventoSpinner(this.ativa);
     }
 
-    public getControle():boolean{
-        return this.controle;
+    private setEventoSpinner(ativa: boolean){
+        this.eventoSpinner.next(ativa);
     }
 
-    public getOpcao():number{
-        return this.opcao;
-    }
-
-    public setOpcao(opcao:number){
-        this.opcao = opcao;
-    }
-
-    public getControleSpinner():Observable<boolean>{
-        return this.controleSpinner.asObservable();
+    public getEventoSpinner():Observable<boolean>{
+        return this.eventoSpinner.asObservable();
     }
 
 }

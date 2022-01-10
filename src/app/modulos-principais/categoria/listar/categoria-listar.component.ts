@@ -8,65 +8,64 @@ import { CategoriaService } from "src/app/servicos/http/categoria.service";
     templateUrl: './categoria-listar.component.html',
     styleUrls: ['./categoria-listar.component.css']
 })
-export class CategoriaListarComponent implements OnInit{
+export class CategoriaListarComponent implements OnInit {
 
-    public escolhaGrid:object;
+    public escolhaGrid: object;
 
     public paginaCategoria: PaginaCategoria;
 
-    public qtdOpcoes = [4,8,12];
+    public qtdOpcoes = [4, 8, 12];
     public quantidadeAtual = this.qtdOpcoes[0];
 
     private paginaAtual = 0;
     private ordem = 1;
 
-    public tamanho:number = 0;
-
-    public exibeCategorias:boolean = false;
+    public tamanho: number = 0;
 
     constructor(
         private categoriaService: CategoriaService,
         private spinnerService: SpinnerService
-    ){}
+    ) { }
 
     ngOnInit(): void {
-       this.escolhaGrid = {gridCard:true,gridTabela:false};
-       this.listarCategorias();
+        this.spinnerService.ativarSpinner();
+        this.escolhaGrid = { gridCard: true, gridTabela: false };
+        this.listarCategorias();
     }
 
-    private listarCategorias(){
-        this.spinnerService.setOpcao(3);
-        this.spinnerService.startSpinner();
-        this.exibeCategorias = !this.spinnerService.getControle();
-        this.categoriaService.listar(this.paginaAtual,this.quantidadeAtual,this.ordem).subscribe(
+    private listarCategorias() {
+        this.categoriaService.listar(this.paginaAtual, this.quantidadeAtual, this.ordem).subscribe(
             pgCategoria => {
                 this.paginaCategoria = pgCategoria;
-                this.spinnerService.stopSpinner();
-                this.exibeCategorias = !this.spinnerService.getControle();
+                this.spinnerService.desativarSpinner();
+            },
+            error => {
+                console.log(error);
+                this.spinnerService.desativarSpinner();
             }
         );
     }
 
-    public mudarPagina(pagina:number){
+    public mudarPagina(pagina: number) {
         this.paginaAtual = pagina;
         this.listarCategorias();
     }
 
-    public mudarQuantidade(opcao:number){
+    public mudarQuantidade(opcao: number) {
         this.paginaAtual = 0;
         this.quantidadeAtual = opcao;
         this.listarCategorias();
     }
 
-    public alternarGrid(escolha: object){
+    public alternarGrid(escolha: object) {
         this.escolhaGrid = escolha;
     }
 
-    public excluir(id: number){
+    public excluir(id: number) {
 
         let c = confirm("Deseja Realmente Excluir a Categoria?");
 
-        if(c == true){
+        if (c == true) {
 
             this.categoriaService.excluir(id).subscribe(
                 resp => {
@@ -79,7 +78,7 @@ export class CategoriaListarComponent implements OnInit{
                     alert("Erro ao Excluir Categoria!");
                 }
             );
-            
+
         }
 
     }

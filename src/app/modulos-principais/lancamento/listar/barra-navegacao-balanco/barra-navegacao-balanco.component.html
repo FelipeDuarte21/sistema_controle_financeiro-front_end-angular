@@ -1,0 +1,30 @@
+<div class="row mt-4">
+
+    <div class="col-12 col-lg-6 col-xl-8">
+        <ul class="nav nav-tabs flex-column flex-md-row">
+            <ng-container *ngFor="let b of balancos; let i = index">
+                <li class="nav-item cursor-mouse" *ngIf="b.atual">
+                    <a class="nav-link active" aria-current="page" (click)="navegarBalanco(b?.ano,b?.mes)">{{b?.mes |
+                        converteMes}} {{b?.ano}}</a>
+                </li>
+                <li class="nav-item cursor-mouse" *ngIf="!b.atual">
+                    <a class="nav-link" aria-current="page" (click)="navegarBalanco(b?.ano,b?.mes)">{{b?.mes |
+                        converteMes}} {{b?.ano}}</a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4 mt-4 mt-lg-0">
+        <form [formGroup]="formBuscaBalanco" (ngSubmit)="escolheBalanco()" class="d-flex flex-row mt-2">
+            <div class="col-8 me-1">
+                <input formControlName="data" type="month" class="form-control form-control-sm">
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-outline-secondary btn-sm"><i
+                        class="fas fa-search me-1"></i>Buscar</button>
+            </div>
+        </form>
+    </div>
+
+</div>

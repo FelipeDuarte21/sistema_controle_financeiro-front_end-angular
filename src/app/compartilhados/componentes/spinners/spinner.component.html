@@ -1,17 +1,10 @@
-<!--Spinner de Giro botão-->
-<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="opcao == 1 && exibe"></span>
+<div class="painel-spinner" *ngIf="ativo">
 
-<!--Spinner de Giro-->
-<div class="spinner-border text-secondary" role="status" *ngIf="opcao == 2 && exibe">
-    <span class="visually-hidden">Loading...</span>
-</div>
+    <div class="caixa-spinner">
+        <div class="spinner-grow spinner text-secondary">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+        <span>Carregando...</span>
+    </div>
 
-<!--Spinner de Bolinha maior-->
-<div class="spinner-grow text-sencondary spinner spinner-maior" role="status" *ngIf="opcao == 3 && exibe">
-    <span class="visually-hidden">Loading...</span>
-</div>
-
-<!--Spinner de Bolinha menor-->
-<div class="spinner-grow text-sencondary spinner spinner-menor" role="status" *ngIf="opcao == 4 && exibe">
-    <span class="visually-hidden">Loading...</span>
 </div>
