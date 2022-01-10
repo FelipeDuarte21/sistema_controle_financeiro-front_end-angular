@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { UsuarioCadastro } from "src/app/modelos/usuario-cadastro.model";
 import { UsuarioService } from "src/app/servicos/http/usuario.service";
 
@@ -19,7 +20,8 @@ export class UsuarioCadastroComponent implements OnInit{
     constructor(
         private formBuilder: FormBuilder,
         private usuarioService: UsuarioService,
-        private router: Router
+        private router: Router,
+        private spinnerService: SpinnerService
     ){}
 
     ngOnInit(): void {
@@ -46,15 +48,19 @@ export class UsuarioCadastroComponent implements OnInit{
 
     public enviar(){
 
+        this.spinnerService.ativarSpinner();
+
         let usuario = this.formCadastroUsuario.getRawValue() as UsuarioCadastro;
 
         this.usuarioService.cadastrar(usuario).subscribe(
             resp => {
-                alert("Cadastro Realizado Com Sucesso!");
                 this.formCadastroUsuario.reset();
                 this.router.navigate(['/']);
+                this.spinnerService.desativarSpinner();
+                alert("Cadastro Realizado Com Sucesso!");
             },
             error => {
+                this.spinnerService.desativarSpinner();
                 console.log(error);
                 this.exibeErro = true;
                 if(error.error.code == 400){
