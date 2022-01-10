@@ -12,6 +12,7 @@ export class LancamentoSalvarComponent implements OnInit {
 
     public idCategoria: number = 0;
     public idBalanco:number = 0;
+    public id:number = 0;
 
     constructor(
         private router: Router,
@@ -46,6 +47,7 @@ export class LancamentoSalvarComponent implements OnInit {
                 if (id == null) {
                     this.titulo = "Lançar";
                 } else {
+                    this.id = id;
                     this.titulo = "Atualizar Lançamento";
                 }
 

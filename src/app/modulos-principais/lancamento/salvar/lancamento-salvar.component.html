@@ -12,24 +12,30 @@
             <btn-voltar rota="/lancamento" [parametros]="{categoria:idCategoria}"></btn-voltar>
             
             <!-- Painel de navegação entre modos de lançamentos-->
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#lancamentoTab"
-                        type="button">Lançamento</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#transferenciaTab"
-                        type="button">Transferência</button>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="lancamentoTab">
-                    <lancamento-normal></lancamento-normal>
+            <ng-container *ngIf="id == 0">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#lancamentoTab"
+                            type="button">Lançamento</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#transferenciaTab"
+                            type="button">Transferência</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="lancamentoTab">
+                        <lancamento-normal></lancamento-normal>
+                    </div>
+                    <div class="tab-pane fade" id="transferenciaTab">
+                        <transferencia></transferencia>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="transferenciaTab">
-                    <transferencia></transferencia>
-                </div>
-            </div>
+            </ng-container>
+            
+            <ng-container *ngIf="id != 0">
+                <lancamento-normal></lancamento-normal>
+            </ng-container>
 
         </div>
 
