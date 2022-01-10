@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Transferencia } from "src/app/modelos/transferencia.model";
 import { environment } from "src/environments/environment";
 import { Lancamento, LancamentoSalvar } from "../../modelos/lancamento.model";
 import { PaginaLancamento } from "../../modelos/pagina-lancamento.model";
@@ -36,6 +37,10 @@ export class LancamentoService{
 
     public buscarArquivoCSV(idBalanco:number):Observable<any>{
         return this.http.get(`${this.baseURL}/arquivo?balanco=${idBalanco}`,{responseType: "blob",observe: 'response'});
+    }
+
+    public transferir(transferencia: Transferencia): Observable<any>{
+        return this.http.post(`${this.baseURL}/transferencia`,transferencia);
     }
 
 }

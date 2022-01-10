@@ -22,6 +22,9 @@ import { BarraNavegacaoComponent } from "./listar/barra-navegacao/barra-navegaca
 import { InformacoesBalancoComponent } from "./listar/informacoes-balanco/informacoes-balanco.component";
 import { BotaoDownloadCsvComponent } from "./listar/botao-download-csv/botao-download-csv.component";
 import { BarraNavegacaoBalancoComponent } from "./listar/barra-navegacao-balanco/barra-navegacao-balanco.component";
+import { LancamentoNormalComponent } from "./salvar/lancamento-normal/lancamento-normal.component";
+import { TransferenciaComponent } from "./salvar/transferencia/transferencia.component";
+import { CategoriaService } from "src/app/servicos/http/categoria.service";
 
 @NgModule({
     declarations: [
@@ -33,7 +36,9 @@ import { BarraNavegacaoBalancoComponent } from "./listar/barra-navegacao-balanco
         BarraNavegacaoComponent,
         InformacoesBalancoComponent,
         BotaoDownloadCsvComponent,
-        BarraNavegacaoBalancoComponent
+        BarraNavegacaoBalancoComponent,
+        LancamentoNormalComponent,
+        TransferenciaComponent
     ],
     imports: [
         CommonModule,
@@ -53,6 +58,7 @@ import { BarraNavegacaoBalancoComponent } from "./listar/barra-navegacao-balanco
     providers: [
         BalancoService,
         LancamentoService,
+        CategoriaService,
         TipoService,
         {
             provide: HTTP_INTERCEPTORS,
