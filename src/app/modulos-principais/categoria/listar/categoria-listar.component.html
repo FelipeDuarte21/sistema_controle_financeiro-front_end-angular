@@ -1,25 +1,14 @@
-<div class="container-fluid">
+<!--Nome da Página-->
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Categorias" icone="fa-tags"></titulo-pagina>
 
-    <div class="row justify-content-center">
+<!--Botão para Cadastrar nova categoria-->
+<btn-cadastrar rota="categoria/cadastrar" titulo="Nova Categoria"></btn-cadastrar>
 
-        <div class="col-11">
+<!--Barra de utilitários-->
+<barra-navegacao *ngIf="paginaCategoria?.content.length > 0" [qtdOpcoes]="qtdOpcoes" [quantidadeAtual]="quantidadeAtual"
+    (mudarQuantidade)="mudarQuantidade($event)" [paginaAtual]="paginaCategoria?.number"
+    [totalPagina]="paginaCategoria?.totalPages" (mudarPagina)="mudarPagina($event)" [escolhaGrid]="escolhaGrid"
+    (alternarGrid)="alternarGrid($event)"></barra-navegacao>
 
-            <!--Nome da Página--> 
-            <titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Categorias" icone="fa-tags"></titulo-pagina>
-
-            <!--Botão para Cadastrar nova categoria-->
-            <btn-cadastrar rota="categoria/cadastrar" titulo="Nova Categoria"></btn-cadastrar>
-
-            <!--Barra de utilitários-->
-            <barra-navegacao *ngIf="paginaCategoria?.content.length > 0" [qtdOpcoes]="qtdOpcoes" [quantidadeAtual]="quantidadeAtual" (mudarQuantidade)="mudarQuantidade($event)"
-                [paginaAtual]="paginaCategoria?.number" [totalPagina]="paginaCategoria?.totalPages" (mudarPagina)="mudarPagina($event)"
-                    [escolhaGrid]="escolhaGrid" (alternarGrid)="alternarGrid($event)"></barra-navegacao>
-
-            <!--Controla a exibição das categorias-->
-            <grids [escolhaGrid]="escolhaGrid" [categorias]="paginaCategoria?.content" (excluir)="excluir($event)"></grids>
-
-        </div>
-        
-    </div>
-
-</div>
+<!--Controla a exibição das categorias-->
+<grids [escolhaGrid]="escolhaGrid" [categorias]="paginaCategoria?.content" (excluir)="excluir($event)"></grids>

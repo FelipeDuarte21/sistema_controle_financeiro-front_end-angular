@@ -1,47 +1,34 @@
-<div class="container-fluid">
+<!--Nome da Página-->
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Lançamentos" icone="fa-hand-holding-usd">
+</titulo-pagina>
 
-    <div class="row justify-content-center">
+<!--Botão Voltar-->
+<btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
 
-        <div class="col-11">
+<!--Barra de Navegação dos balanços-->
+<barra-navegacao-balanco [balancoAtual]="balanco" [balancos]="balancosDTO" (mudarBalanco)="mudarBalanco($event)">
+</barra-navegacao-balanco>
 
-            <!--Nome da Página-->
-            <titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Lançamentos" icone="fa-hand-holding-usd">
-            </titulo-pagina>
+<!--Informações da Categoria-->
+<info-balanco [balanco]="balanco" (mudarBalanco)="mudarBalanco($event)"></info-balanco>
 
-            <!--Botão Voltar-->
-            <btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
+<div class="position-relative">
 
-            <!--Barra de Navegação dos balanços-->
-            <barra-navegacao-balanco [balancoAtual]="balanco" [balancos]="balancosDTO"
-                (mudarBalanco)="mudarBalanco($event)"></barra-navegacao-balanco>
+    <!--Botão para novo lançamento-->
+    <btn-cadastrar [desativado]="balanco?.fechado" titulo="Novo Lançamento" rota="lancamento/lancar"
+        [parametros]="{categoria:this.idCategoria,balanco:this.balanco?.id}"></btn-cadastrar>
 
-            <!--Informações da Categoria-->
-            <info-balanco [balanco]="balanco" (mudarBalanco)="mudarBalanco($event)"></info-balanco>
+    <!--Botão para baixar lançamentos em arquivo csv-->
+    <btn-download-csv [idBalanco]="balanco?.id"></btn-download-csv>
 
-            <div class="position-relative">
+    <!--Barra de navegação-->
+    <barra-navegacao *ngIf="paginaLancamentos?.content.length > 0" [qtdOpcoes]="qtdOpcoes" [qtdAtual]="quantidadeAtual"
+        (mudarQuantidade)="mudarQuantidade($event)" [totalPagina]="paginaLancamentos?.totalPages"
+        [paginaAtual]="paginaLancamentos?.number" (mudarPagina)="mudarPagina($event)"></barra-navegacao>
 
-                <!--Botão para novo lançamento-->
-                <btn-cadastrar [desativado]="balanco?.fechado" titulo="Novo Lançamento" rota="lancamento/lancar"
-                    [parametros]="{categoria:this.idCategoria,balanco:this.balanco?.id}"></btn-cadastrar>
-
-                <!--Botão para baixar lançamentos em arquivo csv-->
-                <btn-download-csv [idBalanco]="balanco?.id"></btn-download-csv>
-
-                <!--Barra de navegação-->
-                <barra-navegacao *ngIf="paginaLancamentos?.content.length > 0" [qtdOpcoes]="qtdOpcoes"
-                    [qtdAtual]="quantidadeAtual" (mudarQuantidade)="mudarQuantidade($event)"
-                    [totalPagina]="paginaLancamentos?.totalPages" [paginaAtual]="paginaLancamentos?.number"
-                    (mudarPagina)="mudarPagina($event)"></barra-navegacao>
-
-                <!--Lista de Lançamentos-->
-                <grid-card [lancamentos]="paginaLancamentos?.content" [balancoFechado]="balanco?.fechado"
-                    [parametrosEditar]="{categoria:this.idCategoria,balanco:this.balanco?.id}"
-                    (excluir)="excluir($event)"></grid-card>
-
-            </div>
-
-        </div>
-
-    </div>
+    <!--Lista de Lançamentos-->
+    <grid-card [lancamentos]="paginaLancamentos?.content" [balancoFechado]="balanco?.fechado"
+        [parametrosEditar]="{categoria:this.idCategoria,balanco:this.balanco?.id}" (excluir)="excluir($event)">
+    </grid-card>
 
 </div>

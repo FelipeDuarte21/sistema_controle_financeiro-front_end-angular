@@ -10,6 +10,7 @@ import { AutenticacaoRoutingModule } from "./autenticacao-routing.module";
 import { AutenticacaoComponent } from "./autenticacao.component";
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
+import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.module";
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinn
         FormsModule,
         ReactiveFormsModule,
         CabecalhoModule,
-        SpinnerModule
+        SpinnerModule,
+        LayoutModule
     ],
     exports: [
         AutenticacaoComponent

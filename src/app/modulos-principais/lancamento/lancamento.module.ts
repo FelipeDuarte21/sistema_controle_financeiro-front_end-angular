@@ -27,6 +27,7 @@ import { TransferenciaComponent } from "./salvar/transferencia/transferencia.com
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
 import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alertas.module";
+import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.module";
 
 @NgModule({
     declarations: [
@@ -54,7 +55,8 @@ import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alerta
         BtnsModule,
         TituloPaginaModule,
         SpinnerModule,
-        AlertasModule
+        AlertasModule,
+        LayoutModule
     ],
     exports: [
         LancamentoComponent

@@ -1,44 +1,32 @@
-<div class="container-fluid">
+<!--Nome da Página-->
+<h5 class="mt-3 text-center">Sistema de Controle Financeiro - <i class="fas fa-hand-holding-usd me-1"></i>Lançamentos -
+    {{titulo}}</h5>
 
-    <div class="row justify-content-center">
+<!--Botão Voltar-->
+<btn-voltar rota="/lancamento" [parametros]="{categoria:idCategoria}"></btn-voltar>
 
-        <div class="col-11 col-md-8">
-
-            <!--Nome da Página-->
-            <h5 class="mt-3 text-center">Sistema de Controle Financeiro - <i
-                    class="fas fa-hand-holding-usd me-1"></i>Lançamentos - {{titulo}}</h5>
-
-            <!--Botão Voltar-->
-            <btn-voltar rota="/lancamento" [parametros]="{categoria:idCategoria}"></btn-voltar>
-            
-            <!-- Painel de navegação entre modos de lançamentos-->
-            <ng-container *ngIf="id == 0">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#lancamentoTab"
-                            type="button">Lançamento</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#transferenciaTab"
-                            type="button">Transferência</button>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="lancamentoTab">
-                        <lancamento-normal></lancamento-normal>
-                    </div>
-                    <div class="tab-pane fade" id="transferenciaTab">
-                        <transferencia></transferencia>
-                    </div>
-                </div>
-            </ng-container>
-            
-            <ng-container *ngIf="id != 0">
-                <lancamento-normal></lancamento-normal>
-            </ng-container>
-
+<!-- Painel de navegação entre modos de lançamentos-->
+<ng-container *ngIf="id == 0">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#lancamentoTab"
+                type="button">Lançamento</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#transferenciaTab"
+                type="button">Transferência</button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="lancamentoTab">
+            <lancamento-normal></lancamento-normal>
         </div>
-
+        <div class="tab-pane fade" id="transferenciaTab">
+            <transferencia></transferencia>
+        </div>
     </div>
+</ng-container>
 
-</div>
+<ng-container *ngIf="id != 0">
+    <lancamento-normal></lancamento-normal>
+</ng-container>

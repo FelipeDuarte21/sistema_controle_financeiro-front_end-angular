@@ -21,6 +21,7 @@ import { BtnsModule } from "src/app/compartilhados/componentes/btns/btns.module"
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
 import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alertas.module";
+import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.module";
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alerta
         PaginacaoModule,
         BtnsModule,
         SpinnerModule,
-        AlertasModule
+        AlertasModule,
+        LayoutModule
     ],
     exports: [
         CategoriaComponent
