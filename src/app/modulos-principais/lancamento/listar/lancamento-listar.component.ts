@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { Balanco } from "src/app/modelos/balanco.model";
 import { BalancoDTO } from "src/app/modelos/balancoDTO.models";
@@ -33,7 +34,8 @@ export class LancamentoListarComponent implements OnInit{
         private lancamentoService: LancamentoService,
         private activetedRoute: ActivatedRoute,
         private router: Router,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService
     ){}
 
     ngOnInit(): void {
@@ -159,15 +161,14 @@ export class LancamentoListarComponent implements OnInit{
             this.lancamentoService.excluir(id).subscribe(
                 resp => {
                     this.spinnerService.desativarSpinner();
-                    alert("Lançamento Excluído Com Sucesso!");
+                    this.alertaService.alertaSucesso("Lançamento excluído com sucesso!");
                     this.paginaAtual = 0;
                     this.quantidadeAtual = this.qtdOpcoes[0];
                     this.buscarBalancoAtual(this.idCategoria);
                 },
                 error => {
                     this.spinnerService.desativarSpinner();
-                    console.log(error);
-                    alert("Erro ao excluir Lançamento");
+                    this.alertaService.alertaErro("Erro ao excluir alerta!");
                 }
             );
 

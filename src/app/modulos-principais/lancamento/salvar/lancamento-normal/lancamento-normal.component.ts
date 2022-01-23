@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { LancamentoSalvar } from "src/app/modelos/lancamento.model";
 import { Tipo } from "src/app/modelos/tipo.model";
@@ -29,7 +30,8 @@ export class LancamentoNormalComponent implements OnInit {
         private lancamentoService: LancamentoService,
         private router: Router,
         private activedRoute: ActivatedRoute,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService
     ) { }
 
     ngOnInit(): void {
@@ -117,13 +119,12 @@ export class LancamentoNormalComponent implements OnInit {
                     this.formLancamento.reset();
                     this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
                     this.spinnerService.desativarSpinner();
-                    alert("Lançamento Realizado Com Sucesso!");
+                    this.alertaService.alertaSucesso("Lançamento realizado com sucesso!");
                 },
                 error => {
                     this.spinnerService.desativarSpinner();
-                    console.log(error);
-                    alert("Erro ao Tentar Realizar Lançamento!");
                     this.desativaBotaoSalvar = false;
+                    this.alertaService.alertaErro("Erro ao realizar lançamento!",false);
                     if (error.error.code == 403) {
                         this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
                     }
@@ -137,13 +138,12 @@ export class LancamentoNormalComponent implements OnInit {
                     this.formLancamento.reset();
                     this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
                     this.spinnerService.desativarSpinner();
-                    alert("Lançamento Atualizado Com Sucesso!");
+                    this.alertaService.alertaSucesso("Lançamento atualizado com sucesso!");
                 },
                 error => {
                     this.spinnerService.desativarSpinner();
-                    console.log(error);
-                    alert("Erro ao Tentar Atualizar Lançamento!");
                     this.desativaBotaoSalvar = false;
+                    this.alertaService.alertaErro("Erro ao atualizar lançamento!",false);
                     if (error.error.code == 403) {
                         this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
                     }

@@ -26,6 +26,7 @@ import { LancamentoNormalComponent } from "./salvar/lancamento-normal/lancamento
 import { TransferenciaComponent } from "./salvar/transferencia/transferencia.component";
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
+import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alertas.module";
 
 @NgModule({
     declarations: [
@@ -52,7 +53,8 @@ import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinn
         PaginacaoModule,
         BtnsModule,
         TituloPaginaModule,
-        SpinnerModule
+        SpinnerModule,
+        AlertasModule
     ],
     exports: [
         LancamentoComponent

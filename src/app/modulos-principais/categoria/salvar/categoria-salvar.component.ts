@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { Categoria } from "src/app/modelos/categoria.model";
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
@@ -25,7 +26,8 @@ export class CategoriaSalvarComponent implements OnInit{
         private router: Router,
         private activedRoute: ActivatedRoute,
         private categoriaService: CategoriaService,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService
     ){}
 
     ngOnInit(): void {
@@ -84,15 +86,15 @@ export class CategoriaSalvarComponent implements OnInit{
             this.categoriaService.cadastrar(categoria).subscribe(
                 resp => {
                     this.formCategoria.reset();
+                    this.desativaBotaoSalvar = false;
                     this.router.navigate(['/categoria']);
                     this.spinnerService.desativarSpinner();
-                    alert("Categoria Cadastrada com Sucesso!");
+                    this.alertaService.alertaSucesso("Categoria cadastrada com sucesso!");
                 },
                 error => {
                     this.desativaBotaoSalvar = false;
                     this.spinnerService.desativarSpinner();
-                    alert("Erro ao Tentar Cadastrar Categoria!");
-                    console.log(error);        
+                    this.alertaService.alertaErro("Erro ao cadastrar categoria!",false);        
                 }
             );
             
@@ -101,15 +103,15 @@ export class CategoriaSalvarComponent implements OnInit{
             this.categoriaService.alterar(categoria).subscribe(
                 resp => {
                     this.formCategoria.reset();
+                    this.desativaBotaoSalvar = false;
                     this.router.navigate(['/categoria']);
                     this.spinnerService.desativarSpinner();
-                    alert("Categoria Atualizada com Sucesso!");
+                    this.alertaService.alertaSucesso("Categoria atualizada com sucesso!");
                 },
                 error => {
                     this.desativaBotaoSalvar = false;
                     this.spinnerService.desativarSpinner();
-                    alert("Erro ao Tentar Atualizar Categoria!");
-                    console.log(error);
+                    this.alertaService.alertaErro("Erro ao atualizar categoria!",false);
                 }
             );
 

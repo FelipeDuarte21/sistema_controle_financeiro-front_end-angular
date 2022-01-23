@@ -9,7 +9,7 @@
 
             <!--Botão para Cadastrar nova categoria-->
             <btn-cadastrar rota="categoria/cadastrar" titulo="Nova Categoria"></btn-cadastrar>
-            
+
             <!--Barra de utilitários-->
             <barra-navegacao *ngIf="paginaCategoria?.content.length > 0" [qtdOpcoes]="qtdOpcoes" [quantidadeAtual]="quantidadeAtual" (mudarQuantidade)="mudarQuantidade($event)"
                 [paginaAtual]="paginaCategoria?.number" [totalPagina]="paginaCategoria?.totalPages" (mudarPagina)="mudarPagina($event)"

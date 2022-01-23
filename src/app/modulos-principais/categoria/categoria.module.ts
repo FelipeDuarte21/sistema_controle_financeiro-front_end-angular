@@ -20,6 +20,7 @@ import { TituloPaginaModule } from "src/app/compartilhados/componentes/titulo-pa
 import { BtnsModule } from "src/app/compartilhados/componentes/btns/btns.module";
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
+import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alertas.module";
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinn
         QuantidadeRegistroModule,
         PaginacaoModule,
         BtnsModule,
-        SpinnerModule
+        SpinnerModule,
+        AlertasModule
     ],
     exports: [
         CategoriaComponent

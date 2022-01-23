@@ -1,0 +1,6 @@
+<ng-container *ngIf="exibe == true">
+    <div class="alert fs-5 text-center aumenta-fonte alert-dismissible fade show mt-5 mb-3" [ngClass]="alerta">
+        <i class="fas me-1" [ngClass]="icone"></i>{{mensagem}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</ng-container>

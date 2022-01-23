@@ -1,4 +1,6 @@
+import { NumberFormatStyle } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { PaginaCategoria } from "src/app/modelos/pagina-categoria.model";
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
@@ -24,12 +26,14 @@ export class CategoriaListarComponent implements OnInit {
 
     constructor(
         private categoriaService: CategoriaService,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService
     ) { }
 
     ngOnInit(): void {
         this.spinnerService.ativarSpinner();
         this.escolhaGrid = { gridCard: true, gridTabela: false };
+        
         this.listarCategorias();
     }
 
@@ -69,13 +73,13 @@ export class CategoriaListarComponent implements OnInit {
 
             this.categoriaService.excluir(id).subscribe(
                 resp => {
-                    alert("Categoria Excluída Com Sucesso!");
+                    this.alertaService.alertaSucesso("Categoria excluída com sucesso!");
                     this.paginaAtual = 0;
                     this.quantidadeAtual = this.qtdOpcoes[0];
                     this.listarCategorias();
                 },
                 error => {
-                    alert("Erro ao Excluir Categoria!");
+                    this.alertaService.alertaErro("Erro ao excluir categoria!");
                 }
             );
 

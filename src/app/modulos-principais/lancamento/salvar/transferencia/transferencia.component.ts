@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { Categoria } from "src/app/modelos/categoria.model";
 import { Transferencia } from "src/app/modelos/transferencia.model";
@@ -28,7 +29,8 @@ export class TransferenciaComponent{
         private lancamentoService: LancamentoService,
         private router: Router,
         private activedRoute: ActivatedRoute,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService
     ) { }
 
     ngOnInit(): void {
@@ -89,15 +91,15 @@ export class TransferenciaComponent{
         this.lancamentoService.transferir(transferencia).subscribe(
             resp => {
                 this.formTransferir.reset();
+                this.desativaBotaoTransferir = false;
                 this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
                 this.spinnerService.desativarSpinner();
-                alert("Transferência Realizada Com Sucesso!");
+                this.alertaService.alertaSucesso("Transferência realizada com sucesso!");
             },
             error => {
                 this.spinnerService.desativarSpinner();
-                console.log(error);
-                alert("Erro ao Tentar Realizar Transferência!");
                 this.desativaBotaoTransferir = false;
+                this.alertaService.alertaErro("Erro ao realizar transferência!",false);
                 if (error.error.code == 403) {
                     this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
                 }
