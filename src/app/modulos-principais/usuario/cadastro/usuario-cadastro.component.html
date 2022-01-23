@@ -39,16 +39,13 @@
         <span class="float-end text-end">{{tamanhoCampo('senha')}}/15</span>
 
         <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.required">Senha é requerido!</div>
-        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.minlength">Senha é menor que 6
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.minlength">Senha é menor que 8
             caracteres!</div>
         <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.maxlength">Senha é maior que 15
             caracteres!</div>
     </div>
 
-    <button [disabled]="formCadastroUsuario.invalid" type="submit" class="btn btn-primary mt-4"><i
+    <button [disabled]="formCadastroUsuario.invalid && desativaBotaoForm" type="submit" class="btn btn-primary mt-4"><i
             class="fas fa-user-plus me-1"></i>Cadastrar</button>
 
 </form>
-
-<div class="alert alert-danger mt-3 text-center" *ngIf="exibeErro"><i class="fas fa-times me-1"></i>{{messagemErro}}
-</div>

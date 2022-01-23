@@ -2,6 +2,8 @@
 <cabecalho></cabecalho>
 <layout>
 
+    <alertas></alertas>
+
     <div class="row align-items-center">
 
         <div class="col-12 col-lg-6 text-center mt-5">
@@ -38,7 +40,7 @@
                             <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.required">Senha é
                                 requerido!</div>
                             <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.minlength">Senha é menor
-                                que 6 caracteres!</div>
+                                que 8 caracteres!</div>
                             <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.maxlength">Senha é maior
                                 que 15 caracteres!</div>
                         </div>
@@ -48,7 +50,7 @@
         
                        
                         <div class="d-grid gap-2 mb-4 mt-5">
-                            <button [disabled]="formAutenticacao.invalid || desativaBotaoLogin" class="btn btn-primary btn-lg" type="submit"><i
+                            <button [disabled]="formAutenticacao.invalid && desativaBotaoLogin" class="btn btn-primary btn-lg" type="submit"><i
                                     class="fas fa-sign-in-alt me-1"></i>Entrar</button>
                         </div>
         
@@ -56,9 +58,7 @@
                             <button (click)="redirecionaCadastro()" class="btn btn-outline-primary btn-lg" type="button"><i
                                     class="fas fa-user-plus me-1"></i>Inscreva-se</button>
                         </div>
-        
-                        <p class="text-danger text-center mt-3" *ngIf="mostraErro">Email ou Senha Incorretos!</p>
-        
+
                     </form>
 
                 </div>

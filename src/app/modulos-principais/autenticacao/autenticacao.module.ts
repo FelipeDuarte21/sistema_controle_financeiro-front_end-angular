@@ -11,6 +11,7 @@ import { AutenticacaoComponent } from "./autenticacao.component";
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
 import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.module";
+import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alertas.module";
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.m
         ReactiveFormsModule,
         CabecalhoModule,
         SpinnerModule,
-        LayoutModule
+        LayoutModule,
+        AlertasModule
     ],
     exports: [
         AutenticacaoComponent

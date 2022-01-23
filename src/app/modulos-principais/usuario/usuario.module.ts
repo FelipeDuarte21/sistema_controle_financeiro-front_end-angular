@@ -3,6 +3,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
+import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alertas.module";
 import { BtnsModule } from "src/app/compartilhados/componentes/btns/btns.module";
 import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.module";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
@@ -25,7 +26,8 @@ import { UsuarioComponent } from "./usuario.component";
         CabecalhoModule,
         BtnsModule,
         SpinnerModule,
-        LayoutModule
+        LayoutModule,
+        AlertasModule
     ],
     exports: [
         UsuarioComponent

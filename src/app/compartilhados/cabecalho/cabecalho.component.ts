@@ -29,7 +29,7 @@ export class CabecalhoComponent implements OnInit{
 
         let url = window.sessionStorage.getItem("rota");
 
-        if(url.match('/lancamento')){
+        if(url != null && url.match('/lancamento')){
             this.exibeMenuLancamento = true;
             let partes = url.split('?');
             partes = partes[1].split('=');
