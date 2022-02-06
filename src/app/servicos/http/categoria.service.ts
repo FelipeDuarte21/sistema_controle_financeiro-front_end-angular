@@ -14,12 +14,15 @@ export class CategoriaService{
         private http: HttpClient
     ){}
 
-    public cadastrar(categoria: Categoria):Observable<Categoria>{
-        return this.http.post<Categoria>(this.baseURL,categoria);
-    }
+    public salvar(categoria: Categoria):Observable<Categoria>{
 
-    public alterar(categoria: Categoria):Observable<Categoria>{
+        //Cadastrar
+        if(!categoria.id)
+            return this.http.post<Categoria>(this.baseURL,categoria);
+        
+        //Aterar
         return this.http.put<Categoria>(this.baseURL,categoria);
+
     }
 
     public excluir(id: number):Observable<any>{

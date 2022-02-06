@@ -81,41 +81,20 @@ export class CategoriaSalvarComponent implements OnInit{
 
         this.spinnerService.ativarSpinner();
 
-        if(categoria.id == 0){
-
-            this.categoriaService.cadastrar(categoria).subscribe(
-                resp => {
-                    this.formCategoria.reset();
-                    this.desativaBotaoSalvar = false;
-                    this.router.navigate(['/categoria']);
-                    this.spinnerService.desativarSpinner();
-                    this.alertaService.alertaSucesso("Categoria cadastrada com sucesso!");
-                },
-                error => {
-                    this.desativaBotaoSalvar = false;
-                    this.spinnerService.desativarSpinner();
-                    this.alertaService.alertaErro("Erro ao cadastrar categoria!",false);        
-                }
-            );
-            
-        }else{
-            
-            this.categoriaService.alterar(categoria).subscribe(
-                resp => {
-                    this.formCategoria.reset();
-                    this.desativaBotaoSalvar = false;
-                    this.router.navigate(['/categoria']);
-                    this.spinnerService.desativarSpinner();
-                    this.alertaService.alertaSucesso("Categoria atualizada com sucesso!");
-                },
-                error => {
-                    this.desativaBotaoSalvar = false;
-                    this.spinnerService.desativarSpinner();
-                    this.alertaService.alertaErro("Erro ao atualizar categoria!",false);
-                }
-            );
-
-        }
+        this.categoriaService.salvar(categoria).subscribe(
+            resp => {
+                this.formCategoria.reset();
+                this.desativaBotaoSalvar = false;
+                this.router.navigate(['/categoria']);
+                this.spinnerService.desativarSpinner();
+                this.alertaService.alertaSucesso("Categoria salva com sucesso!");
+            },
+            error => {
+                this.desativaBotaoSalvar = false;
+                this.spinnerService.desativarSpinner();
+                this.alertaService.alertaErro("Erro ao salvar categoria!",false); 
+            }
+        );
 
     }
 

@@ -15,12 +15,15 @@ export class LancamentoService{
         private http: HttpClient
     ){}
 
-    public cadastrar(lancamento: LancamentoSalvar):Observable<Lancamento>{
-        return this.http.post<Lancamento>(this.baseURL,lancamento);
-    }
+    public salvar(lancamento: LancamentoSalvar):Observable<Lancamento>{
 
-    public alterar(lancamento: LancamentoSalvar):Observable<Lancamento>{
+        //Cadastrar
+        if(!lancamento.id)
+            return this.http.post<Lancamento>(this.baseURL,lancamento);
+
+        //Alterar
         return this.http.put<Lancamento>(this.baseURL,lancamento);
+
     }
 
     public excluir(id: number):Observable<any>{

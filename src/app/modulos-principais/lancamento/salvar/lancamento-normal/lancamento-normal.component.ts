@@ -112,45 +112,30 @@ export class LancamentoNormalComponent implements OnInit {
 
         this.desativaBotaoSalvar = true;
 
-        if (lancamento.id == 0) {
-
-            this.lancamentoService.cadastrar(lancamento).subscribe(
-                lancamento => {
-                    this.formLancamento.reset();
-                    this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
-                    this.spinnerService.desativarSpinner();
+        this.lancamentoService.salvar(lancamento).subscribe(
+            lan => {
+                this.formLancamento.reset();
+                this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                this.spinnerService.desativarSpinner();
+                if(!lancamento.id){
                     this.alertaService.alertaSucesso("Lançamento realizado com sucesso!");
-                },
-                error => {
-                    this.spinnerService.desativarSpinner();
-                    this.desativaBotaoSalvar = false;
-                    this.alertaService.alertaErro("Erro ao realizar lançamento!",false);
-                    if (error.error.code == 403) {
-                        this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
-                    }
-                }
-            );
-
-        } else {
-
-            this.lancamentoService.alterar(lancamento).subscribe(
-                lancamento => {
-                    this.formLancamento.reset();
-                    this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
-                    this.spinnerService.desativarSpinner();
+                }else{
                     this.alertaService.alertaSucesso("Lançamento atualizado com sucesso!");
-                },
-                error => {
-                    this.spinnerService.desativarSpinner();
-                    this.desativaBotaoSalvar = false;
-                    this.alertaService.alertaErro("Erro ao atualizar lançamento!",false);
-                    if (error.error.code == 403) {
-                        this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
-                    }
                 }
-            );
-
-        }
+            },
+            error => {
+                this.spinnerService.desativarSpinner();
+                this.desativaBotaoSalvar = false;
+                if(!lancamento.id){
+                    this.alertaService.alertaErro("Erro ao realizar lançamento!",false);
+                }else{
+                    this.alertaService.alertaErro("Erro ao atualizar lançamento!",false);
+                }
+                if (error.error.code == 403) {
+                    this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                }
+            }
+        );
 
     }
 
