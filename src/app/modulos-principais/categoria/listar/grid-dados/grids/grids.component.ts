@@ -8,7 +8,6 @@ import { Categoria } from "src/app/modelos/categoria.model";
 })
 export class GridsComponent{
     
-    @Input() escolhaGrid:object;
     @Input() categorias: Array<Categoria>;
     @Output() excluir: EventEmitter<number> = new EventEmitter();
 

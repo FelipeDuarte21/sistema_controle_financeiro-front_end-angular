@@ -7,8 +7,8 @@
 <!--Barra de utilitários-->
 <barra-navegacao *ngIf="paginaCategoria?.content.length > 0" [qtdOpcoes]="qtdOpcoes" [quantidadeAtual]="quantidadeAtual"
     (mudarQuantidade)="mudarQuantidade($event)" [paginaAtual]="paginaCategoria?.number"
-    [totalPagina]="paginaCategoria?.totalPages" (mudarPagina)="mudarPagina($event)" [escolhaGrid]="escolhaGrid"
+    [totalPagina]="paginaCategoria?.totalPages" (mudarPagina)="mudarPagina($event)"
     (alternarGrid)="alternarGrid($event)"></barra-navegacao>
 
 <!--Controla a exibição das categorias-->
-<grids [escolhaGrid]="escolhaGrid" [categorias]="paginaCategoria?.content" (excluir)="excluir($event)"></grids>
+<grids [categorias]="paginaCategoria?.content" (excluir)="excluir($event)"></grids>

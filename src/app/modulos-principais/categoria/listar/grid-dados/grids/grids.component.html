@@ -1,8 +1,6 @@
 <div class="mt-1 mt-md-2" *ngIf="categorias?.length>0">
 
-    <grid-card *ngIf="escolhaGrid['gridCard']" [categorias]="categorias" (excluir)="onExcluir($event)" ></grid-card>
-
-    <grid-tabela *ngIf="escolhaGrid['gridTabela']" [categorias]="categorias"  (excluir)="onExcluir($event)"></grid-tabela>
+    <grid-card [categorias]="categorias" (excluir)="onExcluir($event)"></grid-card>
 
 </div>
 

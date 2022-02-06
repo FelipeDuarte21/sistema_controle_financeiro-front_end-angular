@@ -17,10 +17,6 @@ export class BarraNavegacaoComponent{
     @Input() totalPagina:number;
     @Output() mudarPagina: EventEmitter<number> = new EventEmitter();
 
-    //Grid
-    @Input() escolhaGrid:object;
-    @Output() alternarGrid:EventEmitter<object> = new EventEmitter();
-
     onMudarQuantidade(qtd: number){
         this.mudarQuantidade.emit(qtd);
     }
@@ -28,10 +24,5 @@ export class BarraNavegacaoComponent{
     onMudarPagina(pagina:number){
         this.mudarPagina.emit(pagina);
     }
-    
-    onAlternarGrid(opcao:object){
-        this.alternarGrid.emit(opcao);
-    }
-
 
 }
