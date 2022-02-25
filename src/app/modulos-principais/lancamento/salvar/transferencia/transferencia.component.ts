@@ -1,3 +1,4 @@
+import { DatePipe } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -11,11 +12,15 @@ import { LancamentoService } from "src/app/servicos/http/lancamento.service";
 @Component({
     selector: 'transferencia',
     templateUrl: './transferencia.component.html',
-    styleUrls: ['./transferencia.component.css']
+    styleUrls: ['./transferencia.component.css'],
+    providers: [
+        DatePipe
+    ]
 })
 export class TransferenciaComponent{
 
     public idCategoria: number = 0;
+    private idBalanco: number = 0;
 
     public formTransferir: FormGroup;
 
@@ -30,7 +35,8 @@ export class TransferenciaComponent{
         private router: Router,
         private activedRoute: ActivatedRoute,
         private spinnerService: SpinnerService,
-        private alertaService: AlertasService
+        private alertaService: AlertasService,
+        private formatadorData: DatePipe
     ) { }
 
     ngOnInit(): void {
@@ -54,14 +60,16 @@ export class TransferenciaComponent{
         this.activedRoute.queryParams.subscribe(
             queryParams => {
                 this.idCategoria = queryParams.categoria;
+                this.idBalanco = queryParams.balanco;
             }
         );
-        
+
         this.formTransferir = this.formBuilder.group({
-            idCategoriaDestino: ['', [Validators.required]],
+            categoriaDestino: ['', [Validators.required]],
             nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
             descricao: ['', [Validators.maxLength(255)]],
-            valor: ['', [Validators.required, Validators.min(0)]]
+            valor: ['', [Validators.required, Validators.min(0)]],
+            data: [this.formatadorData.transform(new Date(),'yyyy-MM-dd'),[Validators.required]]
         });
 
     }
@@ -84,11 +92,11 @@ export class TransferenciaComponent{
 
         let transferencia = this.formTransferir.getRawValue() as Transferencia;
 
-        transferencia.idCategoriaOrigem = this.idCategoria;
+        transferencia.categoriaOrigem = this.idCategoria;
 
         this.desativaBotaoTransferir = true;
 
-        this.lancamentoService.transferir(transferencia).subscribe(
+        this.lancamentoService.transferir(this.idCategoria,this.idBalanco,transferencia).subscribe(
             resp => {
                 this.formTransferir.reset();
                 this.desativaBotaoTransferir = false;

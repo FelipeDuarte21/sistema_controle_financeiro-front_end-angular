@@ -1,7 +1,8 @@
 export interface Transferencia{
-	idCategoriaOrigem: number,
-	idCategoriaDetino:number;
+	categoriaOrigem: number,
+	categoriaDetino:number;
 	nome: string;
+	data: string;
 	descricao: string;
 	valor: number;
 }

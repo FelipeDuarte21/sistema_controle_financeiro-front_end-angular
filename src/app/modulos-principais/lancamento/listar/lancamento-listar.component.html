@@ -6,7 +6,7 @@
 <btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
 
 <!--Barra de Navegação dos balanços-->
-<barra-navegacao-balanco [balancoAtual]="balanco" [balancos]="balancosDTO" (mudarBalanco)="mudarBalanco($event)">
+<barra-navegacao-balanco [balancoAtual]="balanco" [balancos]="balancosFaixas" (mudarBalanco)="mudarBalanco($event)">
 </barra-navegacao-balanco>
 
 <!--Informações da Categoria-->
@@ -19,7 +19,7 @@
         [parametros]="{categoria:this.idCategoria,balanco:this.balanco?.id}"></btn-cadastrar>
 
     <!--Botão para baixar lançamentos em arquivo csv-->
-    <btn-download-csv [idBalanco]="balanco?.id"></btn-download-csv>
+    <btn-download-csv [idCategoria]="idCategoria" [idBalanco]="balanco?.id"></btn-download-csv>
 
     <!--Barra de navegação-->
     <barra-navegacao *ngIf="paginaLancamentos?.content.length > 0" [qtdOpcoes]="qtdOpcoes" [qtdAtual]="quantidadeAtual"

@@ -4,25 +4,29 @@ import { Categoria } from "../../modelos/categoria.model";
 import { Observable } from "rxjs";
 import { PaginaCategoria } from "../../modelos/pagina-categoria.model";
 import { environment } from "src/environments/environment";
+import { CategoriaSalvar } from "src/app/modelos/categoria-salvar.model";
 
 @Injectable()
 export class CategoriaService{
 
-    private baseURL:string = `${environment.apiURL}/categoria`;
+    private baseURL:string = `${environment.apiURL}/api/categorias`;
 
     constructor(
         private http: HttpClient
     ){}
 
-    public salvar(categoria: Categoria):Observable<Categoria>{
+    public salvar(id:number, categoria: CategoriaSalvar):Observable<Categoria>{
 
-        //Cadastrar
-        if(!categoria.id)
+        if(id == 0){//Salvar
+
             return this.http.post<Categoria>(this.baseURL,categoria);
-        
-        //Aterar
-        return this.http.put<Categoria>(this.baseURL,categoria);
 
+        }else{//Atualizar
+
+            return this.http.put<Categoria>(`${this.baseURL}/${id}`,categoria);
+
+        }
+     
     }
 
     public excluir(id: number):Observable<any>{

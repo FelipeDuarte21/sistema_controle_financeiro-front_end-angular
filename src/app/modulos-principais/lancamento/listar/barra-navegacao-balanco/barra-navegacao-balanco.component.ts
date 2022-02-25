@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { BalancoFaixa } from "src/app/modelos/balanco-faixa";
 import { Balanco } from "src/app/modelos/balanco.model";
-import { BalancoDTO } from "src/app/modelos/balancoDTO.models";
-import { BalancoService } from "src/app/servicos/http/balanco.service";
 
 @Component({
     selector: 'barra-navegacao-balanco',
@@ -11,7 +10,7 @@ import { BalancoService } from "src/app/servicos/http/balanco.service";
 })
 export class BarraNavegacaoBalancoComponent implements OnInit{
     
-    @Input() balancos: BalancoDTO[] = [];
+    @Input() balancos: BalancoFaixa[] = [];
     @Input() balancoAtual: Balanco = null;
 
     @Output() mudarBalanco:EventEmitter<Object> = new EventEmitter();
@@ -28,8 +27,8 @@ export class BarraNavegacaoBalancoComponent implements OnInit{
         });
     }
 
-    public navegarBalanco(ano:number,mes:number){
-        let data = {ano:ano,mes:mes};
+    public navegarBalanco(ano:number, mes: number){
+        let data = {ano,mes};
         this.mudarBalanco.emit(data);
     }
 

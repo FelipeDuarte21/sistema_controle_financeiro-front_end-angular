@@ -1,5 +1,6 @@
 export interface Usuario{
     id: number,
     nome:string,
-    email:string
+    email:string,
+    tipo: Set<string>
 }

@@ -12,8 +12,6 @@ import { CategoriaService } from "src/app/servicos/http/categoria.service";
 })
 export class CategoriaListarComponent implements OnInit {
 
-    public escolhaGrid: object;
-
     public paginaCategoria: PaginaCategoria;
 
     public qtdOpcoes = [4, 8, 12];
@@ -32,7 +30,6 @@ export class CategoriaListarComponent implements OnInit {
 
     ngOnInit(): void {
         this.spinnerService.ativarSpinner();
-        this.escolhaGrid = { gridCard: true, gridTabela: false };
         
         this.listarCategorias();
     }
@@ -59,10 +56,6 @@ export class CategoriaListarComponent implements OnInit {
         this.paginaAtual = 0;
         this.quantidadeAtual = opcao;
         this.listarCategorias();
-    }
-
-    public alternarGrid(escolha: object) {
-        this.escolhaGrid = escolha;
     }
 
     public excluir(id: number) {

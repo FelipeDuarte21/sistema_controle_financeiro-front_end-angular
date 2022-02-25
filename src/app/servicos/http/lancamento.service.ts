@@ -1,49 +1,65 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { LancamentoSalvar } from "src/app/modelos/lancamento-salvar.model";
+import { Lancamento } from "src/app/modelos/lancamento.model";
 import { Transferencia } from "src/app/modelos/transferencia.model";
 import { environment } from "src/environments/environment";
-import { Lancamento, LancamentoSalvar } from "../../modelos/lancamento.model";
 import { PaginaLancamento } from "../../modelos/pagina-lancamento.model";
 
 @Injectable()
 export class LancamentoService{
 
-    private baseURL:string = `${environment.apiURL}/lancamento`;
+    private baseURL:string = `${environment.apiURL}/api/categorias/`;
+    private recursoBalanco = `/balancos/`;
+    private recurso = `/lancamentos`;
 
     constructor(
         private http: HttpClient
     ){}
 
-    public salvar(lancamento: LancamentoSalvar):Observable<Lancamento>{
+    public salvar(idCategoria:number, idBalanco:number, id:number, lancamento: LancamentoSalvar):
+        Observable<Lancamento>{
 
-        //Cadastrar
-        if(!lancamento.id)
-            return this.http.post<Lancamento>(this.baseURL,lancamento);
+        let url = `${this.baseURL}${idCategoria}${this.recursoBalanco}${idBalanco}${this.recurso}`;
 
-        //Alterar
-        return this.http.put<Lancamento>(this.baseURL,lancamento);
+        if(id == 0){//Cadastrar
+            return this.http.post<Lancamento>(url,lancamento);
+
+        }else{//Atualizar
+            return this.http.put<Lancamento>(`${url}/${id}`,lancamento);
+
+        }
 
     }
 
-    public excluir(id: number):Observable<any>{
-        return this.http.delete(`${this.baseURL}/${id}`);
+    public excluir(idCategoria:number, idBalanco:number, id:number):Observable<any>{
+        let url = this.getURL(idCategoria,idBalanco);
+        return this.http.delete(`${url}/${id}`);
     }
 
-    public buscarPorId(id:number):Observable<Lancamento>{
-        return this.http.get<Lancamento>(`${this.baseURL}/${id}`);
+    public buscarPorId(idCategoria:number, idBalanco:number, id:number):Observable<Lancamento>{
+        let url = this.getURL(idCategoria,idBalanco);
+        return this.http.get<Lancamento>(`${url}/${id}`);
     }
 
-    public buscarPorBalanco(idBalanco:number,page:number,size:number,order:number):Observable<PaginaLancamento>{
-        return this.http.get<PaginaLancamento>(`${this.baseURL}/balanco?balanco=${idBalanco}&page=${page}&size=${size}&order=${order}`);
+    public listarPorBalanco(idCategoria:number, idBalanco:number,page:number,size:number,order:number):Observable<PaginaLancamento>{
+        let url = this.getURL(idCategoria,idBalanco);
+        return this.http.get<PaginaLancamento>(`${url}?page=${page}&size=${size}&order=${order}`);
     }
 
-    public buscarArquivoCSV(idBalanco:number):Observable<any>{
-        return this.http.get(`${this.baseURL}/arquivo?balanco=${idBalanco}`,{responseType: "blob",observe: 'response'});
+    public buscarArquivoCSV(idCategoria:number, idBalanco:number):Observable<any>{
+        let url = this.getURL(idCategoria,idBalanco);
+        return this.http.get(`${url}/arquivo`,{responseType: "blob",observe: 'response'});
     }
 
-    public transferir(transferencia: Transferencia): Observable<any>{
-        return this.http.post(`${this.baseURL}/transferencia`,transferencia);
+    public transferir(idCategoria:number, idBalanco:number,transferencia: Transferencia): Observable<any>{
+        let url = this.getURL(idCategoria,idBalanco);
+        return this.http.post(`${url}/transferencia`,transferencia);
+    }
+
+    private getURL(idCategoria:number, idBalanco:number):string{
+        return `${this.baseURL}${idCategoria}${this.recursoBalanco}${idBalanco}${this.recurso}`;
     }
 
 }

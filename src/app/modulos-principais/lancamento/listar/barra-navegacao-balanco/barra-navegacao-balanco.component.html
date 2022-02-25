@@ -4,11 +4,11 @@
         <ul class="nav nav-tabs flex-column flex-md-row">
             <ng-container *ngFor="let b of balancos; let i = index">
                 <li class="nav-item cursor-mouse" *ngIf="b.atual">
-                    <a class="nav-link active" aria-current="page" (click)="navegarBalanco(b?.ano,b?.mes)">{{b?.mes |
+                    <a class="nav-link active" aria-current="page" (click)="navegarBalanco(b.ano,b.mes)">{{b?.mes |
                         converteMes}} {{b?.ano}}</a>
                 </li>
                 <li class="nav-item cursor-mouse" *ngIf="!b.atual">
-                    <a class="nav-link" aria-current="page" (click)="navegarBalanco(b?.ano,b?.mes)">{{b?.mes |
+                    <a class="nav-link" aria-current="page" (click)="navegarBalanco(b.ano,b.mes)">{{b?.mes |
                         converteMes}} {{b?.ano}}</a>
                 </li>
             </ng-container>

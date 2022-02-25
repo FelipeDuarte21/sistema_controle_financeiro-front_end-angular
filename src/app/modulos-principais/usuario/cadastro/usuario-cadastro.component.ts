@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
-import { UsuarioCadastro } from "src/app/modelos/usuario-cadastro.model";
+import { UsuarioSalvar } from "src/app/modelos/usuario-salvar.model";
 import { UsuarioService } from "src/app/servicos/http/usuario.service";
 
 @Component({
@@ -56,7 +56,7 @@ export class UsuarioCadastroComponent implements OnInit{
 
         this.spinnerService.ativarSpinner();
 
-        let usuario = this.formCadastroUsuario.getRawValue() as UsuarioCadastro;
+        let usuario = this.formCadastroUsuario.getRawValue() as UsuarioSalvar
 
         this.usuarioService.cadastrar(usuario).subscribe(
             resp => {

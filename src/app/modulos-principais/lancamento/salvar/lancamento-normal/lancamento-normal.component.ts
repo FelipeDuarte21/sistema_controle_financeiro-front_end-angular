@@ -1,17 +1,23 @@
+import { DatePipe } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
-import { LancamentoSalvar } from "src/app/modelos/lancamento.model";
+import { LancamentoSalvar } from "src/app/modelos/lancamento-salvar.model";
+
 import { Tipo } from "src/app/modelos/tipo.model";
 import { LancamentoService } from "src/app/servicos/http/lancamento.service";
+
 import { TipoService } from "src/app/servicos/http/tipo.service";
 
 @Component({
     selector: 'lancamento-normal',
     templateUrl: './lancamento-normal.component.html',
-    styleUrls: ['./lancamento-normal.component.css']
+    styleUrls: ['./lancamento-normal.component.css'],
+    providers: [
+        DatePipe
+    ]
 })
 export class LancamentoNormalComponent implements OnInit {
 
@@ -24,6 +30,8 @@ export class LancamentoNormalComponent implements OnInit {
 
     public desativaBotaoSalvar: boolean = false;
 
+    private id:number = 0;
+
     constructor(
         private tipoService: TipoService,
         private formBuilder: FormBuilder,
@@ -31,7 +39,8 @@ export class LancamentoNormalComponent implements OnInit {
         private router: Router,
         private activedRoute: ActivatedRoute,
         private spinnerService: SpinnerService,
-        private alertaService: AlertasService
+        private alertaService: AlertasService,
+        private formatadorData: DatePipe
     ) { }
 
     ngOnInit(): void {
@@ -55,14 +64,11 @@ export class LancamentoNormalComponent implements OnInit {
         );
 
         this.formLancamento = this.formBuilder.group({
-            id: [0],
             nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
             descricao: ['', [Validators.maxLength(255)]],
             valor: ['', [Validators.required, Validators.min(0)]],
-            dataCadastro: [''],
-            sugestao: [false],
-            balanco: [this.idBalanco],
-            tipo: ['', [Validators.required]]
+            tipo: ['', [Validators.required]],
+            data: [this.formatadorData.transform(new Date(),'yyyy-MM-dd'),[Validators.required]],
         });
 
         this.activedRoute.params.subscribe(
@@ -71,16 +77,14 @@ export class LancamentoNormalComponent implements OnInit {
                 let id = params.id;
                
                 if (id != null) {
-                    this.lancamentoService.buscarPorId(id).subscribe(
+                    this.id = id;
+                    this.lancamentoService.buscarPorId(this.idCategoria,this.idBalanco,id).subscribe(
                         lancamento => {
-                            this.formLancamento.get('id').setValue(lancamento.id);
                             this.formLancamento.get('nome').setValue(lancamento.nome);
                             this.formLancamento.get('descricao').setValue(lancamento.descricao);
                             this.formLancamento.get('valor').setValue(lancamento.valor);
-                            this.formLancamento.get('dataCadastro').setValue(lancamento.dataCadastro);
-                            this.formLancamento.get('sugestao').setValue(lancamento.sugestao);
-                            this.formLancamento.get('balanco').setValue(this.idBalanco);
                             this.formLancamento.get('tipo').setValue(lancamento.tipo.valor);
+                            this.formLancamento.get('data').setValue(lancamento.data);
                         },
                         error => {
                             this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
@@ -112,12 +116,12 @@ export class LancamentoNormalComponent implements OnInit {
 
         this.desativaBotaoSalvar = true;
 
-        this.lancamentoService.salvar(lancamento).subscribe(
+        this.lancamentoService.salvar(this.idCategoria,this.idBalanco,this.id,lancamento).subscribe(
             lan => {
                 this.formLancamento.reset();
                 this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
                 this.spinnerService.desativarSpinner();
-                if(!lancamento.id){
+                if(this.id == 0){
                     this.alertaService.alertaSucesso("Lançamento realizado com sucesso!");
                 }else{
                     this.alertaService.alertaSucesso("Lançamento atualizado com sucesso!");
@@ -126,7 +130,7 @@ export class LancamentoNormalComponent implements OnInit {
             error => {
                 this.spinnerService.desativarSpinner();
                 this.desativaBotaoSalvar = false;
-                if(!lancamento.id){
+                if(this.id == 0){
                     this.alertaService.alertaErro("Erro ao realizar lançamento!",false);
                 }else{
                     this.alertaService.alertaErro("Erro ao atualizar lançamento!",false);

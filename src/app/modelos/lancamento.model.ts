@@ -1,4 +1,4 @@
-import { Categoria } from "./categoria.model";
+import { Balanco } from "./balanco.model";
 import { Tipo } from "./tipo.model";
 
 export interface Lancamento {
@@ -6,19 +6,8 @@ export interface Lancamento {
     nome: string;
     descricao: string;
     valor: number;
-    dataCadastro: string;
-    sugestao: boolean;
+    data: string;
+    dataRegistro: string;
     tipo: Tipo;
-    categoria: Categoria
-}
-
-export interface LancamentoSalvar{
-    id: number;
-    nome: string;
-    descricao: string;
-    valor: number;
-    dataCadastro: string;
-    sugestao: boolean;
-    balanco: number;
-    tipo: number
+    balanco: Balanco
 }

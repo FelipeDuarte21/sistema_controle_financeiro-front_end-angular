@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
+import { BalancoFaixa } from "src/app/modelos/balanco-faixa";
 import { Balanco } from "src/app/modelos/balanco.model";
-import { BalancoDTO } from "src/app/modelos/balancoDTO.models";
 import { PaginaLancamento } from "src/app/modelos/pagina-lancamento.model";
 import { BalancoService } from "src/app/servicos/http/balanco.service";
 import { LancamentoService } from "src/app/servicos/http/lancamento.service";
@@ -27,7 +27,7 @@ export class LancamentoListarComponent implements OnInit{
 
     public idCategoria:number = 0;
 
-    public balancosDTO:BalancoDTO[] = [];
+    public balancosFaixas:BalancoFaixa[] = [];
 
     constructor(
         private balancoService: BalancoService,
@@ -63,7 +63,7 @@ export class LancamentoListarComponent implements OnInit{
             balanco => {
                 this.balanco = balanco;
                 this.spinnerService.desativarSpinner();
-                this.buscarResumoBalanco(this.idCategoria,balanco.ano,balanco.mes);
+                this.buscarFaixasBalanco(this.idCategoria,balanco.ano,balanco.mes);
                 this.listarLancamentos();
             },
             error => {
@@ -75,7 +75,8 @@ export class LancamentoListarComponent implements OnInit{
 
     private listarLancamentos(){
         this.spinnerService.ativarSpinner();
-        this.lancamentoService.buscarPorBalanco(this.balanco.id,this.paginaAtual,this.quantidadeAtual,this.ordem).subscribe(
+        this.lancamentoService.listarPorBalanco(this.idCategoria,this.balanco.id,this.paginaAtual,
+            this.quantidadeAtual,this.ordem).subscribe(
             paginaLancamentos => {
                 this.paginaLancamentos = paginaLancamentos;
                 this.spinnerService.desativarSpinner();
@@ -87,15 +88,15 @@ export class LancamentoListarComponent implements OnInit{
         );
     }
 
-    private buscarResumoBalanco(idCategoria: number,ano:number, mes:number){
+    private buscarFaixasBalanco(idCategoria: number,ano:number, mes:number){
 
         this.spinnerService.ativarSpinner();
  
         const qtdMes = 3; //Quantidade mês para aparacer na barra de navegação
 
         this.balancoService.buscarResumo(idCategoria,ano,mes,qtdMes).subscribe(
-            balancosDTO => {
-                this.balancosDTO = balancosDTO;
+            balancosFaixas => {
+                this.balancosFaixas = balancosFaixas;
                 this.spinnerService.desativarSpinner();
             },
             error => {
@@ -125,7 +126,7 @@ export class LancamentoListarComponent implements OnInit{
                 this.paginaAtual = 0;
                 this.quantidadeAtual = this.qtdOpcoes[0];
                 this.spinnerService.desativarSpinner();
-                this.buscarResumoBalanco(this.idCategoria,balanco.ano,balanco.mes)
+                this.buscarFaixasBalanco(this.idCategoria,balanco.ano,balanco.mes)
                 this.listarLancamentos();
             },
             respError => {
@@ -158,7 +159,7 @@ export class LancamentoListarComponent implements OnInit{
 
             this.spinnerService.ativarSpinner();
 
-            this.lancamentoService.excluir(id).subscribe(
+            this.lancamentoService.excluir(this.idCategoria, this.balanco.id,id).subscribe(
                 resp => {
                     this.spinnerService.desativarSpinner();
                     this.alertaService.alertaSucesso("Lançamento excluído com sucesso!");
