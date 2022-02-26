@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class LancamentoSalvarComponent implements OnInit {
 
-    public titulo: string = "Lançar";
+    public titulo: string = "Lancamentos - Lançar";
 
     public idCategoria: number = 0;
     public idBalanco:number = 0;
@@ -44,11 +44,9 @@ export class LancamentoSalvarComponent implements OnInit {
 
                 let id = params.id;
 
-                if (id == null) {
-                    this.titulo = "Lançar";
-                } else {
+                if (id != null) {
                     this.id = id;
-                    this.titulo = "Atualizar Lançamento";
+                    this.titulo = "Lançamentos - Atualizar";
                 }
 
             },

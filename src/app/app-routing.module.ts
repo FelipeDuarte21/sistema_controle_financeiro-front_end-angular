@@ -25,6 +25,10 @@ const routes: Routes = [
         loadChildren: () => import('./modulos-principais/lancamento/lancamento.module').then(m => m.LancamentoModule)
     },
     {
+        path: 'anotacoes',
+        loadChildren: () => import('./modulos-principais/anotacao-categoria/anotacao-categoria.module').then(m => m.AnotacaoCategoriaModule)
+    },
+    {
         path: 'sobre',
         loadChildren: () => import('./modulos-principais/sobre/sobre.module').then(m => m.SobreModule)
     }

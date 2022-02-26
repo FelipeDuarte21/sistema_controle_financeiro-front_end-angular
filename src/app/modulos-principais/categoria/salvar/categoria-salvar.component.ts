@@ -16,7 +16,7 @@ export class CategoriaSalvarComponent implements OnInit{
 
     public formCategoria: FormGroup;
 
-    public titulo:string = "Cadastrar";
+    public titulo:string = "Categorias - Cadastrar";
 
     public categoria: Categoria;
 
@@ -41,11 +41,10 @@ export class CategoriaSalvarComponent implements OnInit{
 
         this.activedRoute.params.subscribe(resp => {
             let id = resp.id;
-            if(id == null){
-                this.titulo = "Cadastrar";
-            }else{
+            if(id != null){
+
                 this.id = id;
-                this.titulo = "Atualizar";
+                this.titulo = "Categorias - Atualizar";
 
                 this.categoriaService.buscarPorId(id).subscribe(
                     categoria => {

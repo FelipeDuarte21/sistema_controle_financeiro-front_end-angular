@@ -1,0 +1,86 @@
+<!--Nome da Página-->
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Anotações da Categoria" icone="fas fa-book">
+</titulo-pagina>
+
+<!--Botão Voltar-->
+<btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
+
+<!--Nome da Categoria-->
+<div class="row mt-4 mt-md-5">
+    <div class="col-12 col-md-3 text-start">
+        <div class="d-flex justify-content-start">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-tags me-1" style="font-size: 12px;"></i>Categoria:</small></h6>
+                <span style="font-size: 20px;">{{categoria?.nome}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Botão de nova anotação-->
+<btn-cadastrar titulo="Nova Anotação" rota="anotacoes/cadastrar" [parametros]="{categoria:this.idCategoria}"></btn-cadastrar>
+
+<!--Barra de navegação-->
+<div class="row mt-5" *ngIf="paginaAnotacoes?.content.length != 0">
+
+    <!--Quantidade de categorias na página-->
+    <div class="col-4 col-md-4">
+        <div class="row justify-content-start">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3">
+                <quantidade-registro [qtdOpcoes]="qtdOpcoes" [opcaoEscolhida]="quantidadeAtual" (alteraQuantidade)="mudarQuantidade($event)"></quantidade-registro>
+            </div>
+        </div>
+    </div>
+    
+    <!--Paginação-->
+    <div class="col-8 col-md-4">
+        <paginacao [totalPagina]="paginaAnotacoes?.totalPages" [paginaAtual]="paginaAnotacoes?.number" 
+            (proximo)="mudarPagina($event)" (anterior)="mudarPagina($event)"></paginacao>
+    </div>
+
+</div>
+
+<!--Lista de Lançamentos-->
+<div class="row">
+
+    <div class="col-12 mt-2" *ngFor="let anotacao of paginaAnotacoes?.content">
+        <div class="card">
+            <div class="card-body px-1 py-2">
+                <div class="row">
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Data:</small></h6>
+                            <span style="font-size: 17px;">{{anotacao.data | date:'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-9">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Título/Descrição:</small></h6>
+                            <span [ngClass]="{'text-decoration-line-through': anotacao.riscado}" style="font-size: 17px;">{{anotacao.titulo}} - {{anotacao.descricao}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-1"><small>Ações:</small></h6>
+                            <button type="button" (click)="riscar(anotacao.id)" class="btn btn-primary btn-sm me-1"><i class="fas fa-marker me-1"></i>
+                                <ng-container *ngIf="anotacao.riscado">Desriscar</ng-container>
+                                <ng-container *ngIf="!anotacao.riscado">Riscar</ng-container>
+                            </button>
+                            <btn-editar rota="anotacoes/atualizar" [id]="anotacao.id" [parametros]="{categoria:this.idCategoria}"></btn-editar>
+                            <btn-excluir [id]="anotacao.id" (excluir)="excluir($event)"></btn-excluir>
+                        </div>                                    
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="mt-5" *ngIf="paginaAnotacoes?.content.length == 0">
+    <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não há nenhuma anotação!</div>
+</div>

@@ -21,6 +21,7 @@ export class BarraNavegacaoComponent{
     }
 
     onMudarPagina(pagina:number){
+        console.log(pagina);
         this.mudarPagina.emit(pagina);
     }
 
