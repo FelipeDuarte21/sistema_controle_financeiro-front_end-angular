@@ -28,6 +28,9 @@ import { CategoriaService } from "src/app/servicos/http/categoria.service";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
 import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alertas.module";
 import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.module";
+import { LancamentoNovoComponent } from "./salvar/lancamento-normal/lancamento-novo/lancamento-novo.component";
+import { LancamentoParceladoComponent } from "./salvar/lancamento-normal/lancamento-parcelado/lancamento-parcelado.component";
+import { ParceladoService } from "src/app/servicos/http/parcelados.service";
 
 @NgModule({
     declarations: [
@@ -41,7 +44,9 @@ import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.m
         BotaoDownloadCsvComponent,
         BarraNavegacaoBalancoComponent,
         LancamentoNormalComponent,
-        TransferenciaComponent
+        TransferenciaComponent,
+        LancamentoNovoComponent,
+        LancamentoParceladoComponent
     ],
     imports: [
         CommonModule,
@@ -71,7 +76,8 @@ import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.m
             useClass:  InterceptorService,
             multi: true
         },
-        ModuloGuardService
+        ModuloGuardService,
+        ParceladoService
     ]
 })
 export class LancamentoModule{

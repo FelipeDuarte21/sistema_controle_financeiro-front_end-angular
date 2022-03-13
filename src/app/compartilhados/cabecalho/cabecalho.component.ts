@@ -16,6 +16,8 @@ export class CabecalhoComponent implements OnInit{
 
     public exibeMenuAnotacoes:boolean = false;
 
+    public exibeMenuParcelados:boolean = false;
+
     public idCategoria:number=0;
 
     constructor(
@@ -41,6 +43,13 @@ export class CabecalhoComponent implements OnInit{
 
         if(url != null && url.match('/anotacoes')){
             this.exibeMenuAnotacoes = true;
+            let partes = url.split('?');
+            partes = partes[1].split('=');
+            this.idCategoria = parseInt(partes[1]);
+        }
+
+        if(url != null && url.match('/parcelados')){
+            this.exibeMenuParcelados = true;
             let partes = url.split('?');
             partes = partes[1].split('=');
             this.idCategoria = parseInt(partes[1]);

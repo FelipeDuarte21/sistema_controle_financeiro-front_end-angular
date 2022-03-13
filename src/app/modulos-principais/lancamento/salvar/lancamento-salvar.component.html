@@ -6,10 +6,10 @@
 
 <!-- Painel de navegação entre modos de lançamentos-->
 <ng-container *ngIf="id == 0">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs flex-column flex-md-row">
         <li class="nav-item">
             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#lancamentoTab"
-                type="button">Lançamento</button>
+                type="button">Lançamentos</button>
         </li>
         <li class="nav-item">
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#transferenciaTab"
@@ -27,5 +27,5 @@
 </ng-container>
 
 <ng-container *ngIf="id != 0">
-    <lancamento-normal></lancamento-normal>
+    <lancamento-novo></lancamento-novo>
 </ng-container>

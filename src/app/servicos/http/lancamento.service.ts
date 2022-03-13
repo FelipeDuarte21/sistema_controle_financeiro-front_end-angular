@@ -21,7 +21,7 @@ export class LancamentoService{
     public salvar(idCategoria:number, idBalanco:number, id:number, lancamento: LancamentoSalvar):
         Observable<Lancamento>{
 
-        let url = `${this.baseURL}${idCategoria}${this.recursoBalanco}${idBalanco}${this.recurso}`;
+        let url = this.getURL(idCategoria,idBalanco);
 
         if(id == 0){//Cadastrar
             return this.http.post<Lancamento>(url,lancamento);

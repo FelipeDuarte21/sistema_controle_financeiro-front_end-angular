@@ -29,6 +29,10 @@ const routes: Routes = [
         loadChildren: () => import('./modulos-principais/anotacao-categoria/anotacao-categoria.module').then(m => m.AnotacaoCategoriaModule)
     },
     {
+        path: 'parcelados',
+        loadChildren: () => import('./modulos-principais/parcelados/parcelados.module').then(m => m.ParceladosModule)
+    },
+    {
         path: 'sobre',
         loadChildren: () => import('./modulos-principais/sobre/sobre.module').then(m => m.SobreModule)
     }
