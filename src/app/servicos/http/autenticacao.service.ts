@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -16,6 +16,10 @@ export class AutenticacaoService{
 
     public login(autenticacao: Autenticacao):Observable<any>{
         return this.http.post<any>(`${this.baseURL}/login`,autenticacao,{observe: 'response'});
+    }
+
+    public refreshToken():Observable<any>{
+        return this.http.post<any>(`${this.baseURL}/api/auth/refresh-token`,null, {observe: 'response'});
     }
 
 }

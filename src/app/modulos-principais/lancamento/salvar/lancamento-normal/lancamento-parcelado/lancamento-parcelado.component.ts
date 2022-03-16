@@ -62,7 +62,7 @@ export class LancamentoParceladoComponent implements OnInit{
 
             },
             error => {
-                this.router.navigate(['/categoria']); 
+                this.router.navigate(['/categorias']); 
                 this.spinnerService.desativarSpinner();
             }
         );
@@ -75,11 +75,13 @@ export class LancamentoParceladoComponent implements OnInit{
 
         this.parceladoService.listar(this.idCategoria,0,1,1).subscribe(
             resp => {
-                this.parceladoService.listar(this.idCategoria,0,resp.totalElements,1).subscribe(
-                    pagParcelados => {
-                        this.parcelados = pagParcelados.content.filter(p => !p.quitado);
-                    }
-                );
+                if(resp.content.length != 0){
+                    this.parceladoService.listar(this.idCategoria,0,resp.totalElements,1).subscribe(
+                        pagParcelados => {
+                            this.parcelados = pagParcelados.content.filter(p => !p.quitado);
+                        }
+                    );
+                }
             }
         );
 
@@ -141,7 +143,7 @@ export class LancamentoParceladoComponent implements OnInit{
             this.idParcela,parcelaPagar).subscribe(
                 resp => {
                     this.formParcelado.reset();
-                    this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                    this.router.navigate(['/lancamentos'], { queryParams: { categoria: this.idCategoria } });
                     this.spinnerService.desativarSpinner();
                     this.alertaService.alertaSucesso("Lançamento realizado com sucesso!");
                 },
@@ -150,7 +152,7 @@ export class LancamentoParceladoComponent implements OnInit{
                     this.desativaBotaoEnviar = false;
                     this.alertaService.alertaErro("Erro ao realizar lançamento!",false);
                     if (error.error.code == 403) {
-                        this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                        this.router.navigate(['/lancamentos'], { queryParams: { categoria: this.idCategoria } });
                     }
                 }
         );

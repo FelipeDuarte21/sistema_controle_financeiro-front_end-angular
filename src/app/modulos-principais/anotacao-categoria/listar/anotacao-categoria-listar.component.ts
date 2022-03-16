@@ -91,11 +91,13 @@ export class AnotacaoCategoriaListarComponent implements OnInit{
     }
 
     public riscar(id:number){
+        this.spinnerService.ativarSpinner();
         this.anotacaoService.riscar(this.idCategoria,id).subscribe(
             resp => {
                 this.paginaAtual = 0;
                 this.quantidadeAtual = this.qtdOpcoes[0];
                 this.buscarAnotacoes();
+                this.spinnerService.desativarSpinner();
             },
             error => {
                 console.log(error);

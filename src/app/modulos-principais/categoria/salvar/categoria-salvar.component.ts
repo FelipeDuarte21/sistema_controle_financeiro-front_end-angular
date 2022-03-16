@@ -85,7 +85,7 @@ export class CategoriaSalvarComponent implements OnInit{
             resp => {
                 this.formCategoria.reset();
                 this.desativaBotaoSalvar = false;
-                this.router.navigate(['/categoria']);
+                this.router.navigate(['/categorias']);
                 this.spinnerService.desativarSpinner();
                 this.alertaService.alertaSucesso("Categoria salva com sucesso!");
             },

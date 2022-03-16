@@ -55,7 +55,7 @@ export class AutenticacaoComponent implements OnInit{
                 
                 this.usuarioLogadoService.logarUsuario(autenticacao.email,token);
 
-                this.router.navigate(['/categoria']);
+                this.router.navigate(['/categorias']);
 
                 this.spinnerService.desativarSpinner();
 
@@ -74,7 +74,7 @@ export class AutenticacaoComponent implements OnInit{
     }
 
     public redirecionaCadastro(){
-        this.router.navigate(['/usuario/cadastro']);
+        this.router.navigate(['/usuarios/cadastro']);
     }
 
 }

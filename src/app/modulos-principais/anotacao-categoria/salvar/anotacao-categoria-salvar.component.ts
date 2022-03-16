@@ -61,6 +61,7 @@ export class AnotacaoCategoriaSalvarComponent implements OnInit{
 
         this.activedRoute.params.subscribe(params => {
             if(params.id){
+                this.spinnerService.ativarSpinner();
                 this.id = params.id;
                 this.titulo = "Anotações da Categoria - Atualizar";
                 this.anotacaoService.buscarPorId(this.idCategoria,this.id).subscribe(
@@ -69,6 +70,8 @@ export class AnotacaoCategoriaSalvarComponent implements OnInit{
                         this.formAnotacao.get('data').setValue(anotacao.data);
                         this.formAnotacao.get('titulo').setValue(anotacao.titulo);
                         this.formAnotacao.get('descricao').setValue(anotacao.descricao);
+
+                        this.spinnerService.desativarSpinner();
 
                     },
                     error => {

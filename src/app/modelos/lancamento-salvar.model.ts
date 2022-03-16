@@ -3,5 +3,6 @@ export interface LancamentoSalvar{
     descricao: string;
     valor: number;
     data: string;
-    tipo: number
+    tipo: number;
+    salvar: boolean;
 }

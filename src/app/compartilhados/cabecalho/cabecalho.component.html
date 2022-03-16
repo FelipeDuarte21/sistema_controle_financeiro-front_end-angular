@@ -7,10 +7,13 @@
         <div class="collapse navbar-collapse" id="cabecalho">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item" *ngIf="usuario != null">
-                    <a class="nav-link" href="#" [routerLink]="['/categoria']" routerLinkActive="active"><i class="fas fa-tags me-1"></i>Categoria</a>
+                    <a class="nav-link" href="#" [routerLink]="['/categorias']" routerLinkActive="active"><i class="fas fa-tags me-1"></i>Categoria</a>
                 </li>
                 <li class="nav-item" *ngIf="exibeMenuLancamento && usuario != null">
-                    <a class="nav-link" href="#" [routerLink]="['/lancamento']" [queryParams]="{categoria:idCategoria}" routerLinkActive="active"><i class="fas fa-hand-holding-usd me-1"></i>Lançamento</a>
+                    <a class="nav-link" href="#" [routerLink]="['/lancamentos']" [queryParams]="{categoria:idCategoria}" routerLinkActive="active"><i class="fas fa-hand-holding-usd me-1"></i>Lançamento</a>
+                </li>
+                <li class="nav-item" *ngIf="exibeMenuLancamentoSalvo && usuario != null">
+                    <a class="nav-link" href="#" [routerLink]="['/lancamentos-salvos']" [queryParams]="{categoria:idCategoria}" routerLinkActive="active"><i class="fas fa-hand-holding-usd me-1"></i>Lançamentos Salvos</a>
                 </li>
                 <li class="nav-item" *ngIf="exibeMenuAnotacoes && usuario != null">
                     <a class="nav-link" href="#" [routerLink]="['/anotacoes']" [queryParams]="{categoria:idCategoria}" routerLinkActive="active"><i class="fas fa-book me-1"></i>Anotações</a>

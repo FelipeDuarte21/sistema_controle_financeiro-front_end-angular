@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AutenticacaoComponent } from "./modulos-principais/autenticacao/autenticacao.component";
 
 const routes: Routes = [
     {
@@ -13,15 +12,15 @@ const routes: Routes = [
         loadChildren: () => import('./modulos-principais/autenticacao/autenticacao.module').then(m => m.AutenticacaoModule)
     },
     {
-        path: 'usuario',
+        path: 'usuarios',
         loadChildren: () => import('./modulos-principais/usuario/usuario.module').then(m => m.UsuarioModule)
     },
     {
-        path: 'categoria',
+        path: 'categorias',
         loadChildren: () => import('./modulos-principais/categoria/categoria.module').then(m => m.CategoriaModule)
     },
     {
-        path: 'lancamento',
+        path: 'lancamentos',
         loadChildren: () => import('./modulos-principais/lancamento/lancamento.module').then(m => m.LancamentoModule)
     },
     {
@@ -31,6 +30,10 @@ const routes: Routes = [
     {
         path: 'parcelados',
         loadChildren: () => import('./modulos-principais/parcelados/parcelados.module').then(m => m.ParceladosModule)
+    },
+    {
+        path: 'lancamentos-salvos',
+        loadChildren: () => import('./modulos-principais/lancamento-salvo/lancamento-salvo.module').then(m => m.LancamentoSalvoModule)
     },
     {
         path: 'sobre',

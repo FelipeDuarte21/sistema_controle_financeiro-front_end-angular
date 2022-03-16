@@ -65,6 +65,8 @@ export class ParceladosSalvarComponent implements OnInit{
 
             if(params.id){
 
+                this.spinnerService.ativarSpinner();
+
                 this.id = params.id;
 
                 this.titulo = "Parcelados - Atualizar",
@@ -78,6 +80,8 @@ export class ParceladosSalvarComponent implements OnInit{
                         this.formParcelado.get('valor').setValue(parcelado.parcelas[0].valor);
                         this.formParcelado.get('dataVencimentoPrimeiraParcela').setValue(parcelado.parcelas[0].dataVencimento);
                         this.formParcelado.get('totalParcela').setValue(parcelado.parcelas.length);
+
+                        this.spinnerService.desativarSpinner();
 
                     },
                     error => {

@@ -28,14 +28,14 @@ export class LancamentoSalvarComponent implements OnInit {
                 this.idBalanco = queryParams.balanco;
                  
                 if (this.idCategoria == undefined || this.idCategoria == null || this.idCategoria == 0)
-                    this.router.navigate(['/categoria']);
+                    this.router.navigate(['/categorias']);
 
                 if (this.idBalanco == undefined || this.idBalanco == null || this.idBalanco == 0)
-                    this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idBalanco } });
+                    this.router.navigate(['/lancamentos'], { queryParams: { categoria: this.idBalanco } });
 
             },
             error => {
-                this.router.navigate(['/categoria']); 
+                this.router.navigate(['/categorias']); 
             }
         )
 
@@ -51,7 +51,7 @@ export class LancamentoSalvarComponent implements OnInit {
 
             },
             error => {
-                this.router.navigate(['/categoria']);   
+                this.router.navigate(['/categorias']);   
             }
         );
 

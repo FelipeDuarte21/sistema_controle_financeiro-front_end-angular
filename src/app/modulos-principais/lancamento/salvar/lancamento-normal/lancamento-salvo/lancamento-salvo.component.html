@@ -1,6 +1,20 @@
-<form [formGroup]="formLancamento" (submit)="enviar()" class="mt-4 mb-5">
+<form [formGroup]="formLancamento" class="mt-4 mb-5" (submit)="enviar()">
 
-    <div class="row float-none mt-4">
+    <div class="row">
+
+        <div class="col-12">
+            <label for="lancamento">Lancamento:</label>
+            <select id="lancamento" class="form-control" (change)="selecionaLancamentos($event)">
+                <option value="0">Selecione uma opção</option>
+                <ng-container *ngFor="let l of lancamentosSalvos" >
+                    <option [value]="l.id">{{l.nome}} - {{l.descricao}}</option>
+                </ng-container>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="row mt-3">
 
         <div class="col-12 col-md-4">
             <div class="form-group">
@@ -75,13 +89,6 @@
     
             <div class="invalid-feedback" *ngIf="formLancamento.get('descricao').errors?.maxlength">Descrição
                 maior que 255 caracteres</div>
-        </div>
-    </div>
-
-    <div class="row" *ngIf="id == 0">
-        <div class="col-12">
-            <input type="checkbox" id="salvar" class="ms-0 me-1" formControlName="salvar">
-            <label for="salvar">Deseja salvar este lançamento para usar depois?</label>
         </div>
     </div>
 

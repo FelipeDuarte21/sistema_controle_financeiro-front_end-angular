@@ -114,25 +114,37 @@ export class LancamentoListarComponent implements OnInit{
         let dataRecebida = new Date(`${data['ano']}/${data['mes']}/1`);
         
         if(dataRecebida.getTime() > dataAgora.getTime()){
-            alert("Balanco ainda não cadastrado!");
+            this.alertaService.alertaAviso("Aviso! Mês/Ano ainda não cadastrado!");
             this.buscarBalancoAtual(this.idCategoria);
             return;
         }
 
         this.spinnerService.ativarSpinner();
+
         this.balancoService.buscarPorData(this.idCategoria,data['mes'],data['ano']).subscribe(
             balanco => {
-                this.balanco = balanco;
-                this.paginaAtual = 0;
-                this.quantidadeAtual = this.qtdOpcoes[0];
-                this.spinnerService.desativarSpinner();
-                this.buscarFaixasBalanco(this.idCategoria,balanco.ano,balanco.mes)
-                this.listarLancamentos();
+
+                if(balanco.id){
+
+                    this.balanco = balanco;
+                    this.paginaAtual = 0;
+                    this.quantidadeAtual = this.qtdOpcoes[0];
+                    
+                    this.buscarFaixasBalanco(this.idCategoria,balanco.ano,balanco.mes)
+                    this.listarLancamentos();
+
+                }else{
+                    this.spinnerService.desativarSpinner();
+                    this.buscarFaixasBalanco(this.idCategoria,this.balanco.ano,this.balanco.mes)
+                    this.listarLancamentos();
+                    this.alertaService.alertaAviso("Aviso! Mês/Ano não encontrado!");
+                }
+
             },
             respError => {
                 this.spinnerService.desativarSpinner();
                 if(respError.error.code == 404){
-                    alert("Balanco não encontrado!");
+                    this.alertaService.alertaAviso("Aviso! Mês/Ano não encontrado!");
                     this.buscarBalancoAtual(this.idCategoria);
                 }
                 console.log(respError);

@@ -100,7 +100,7 @@ export class TransferenciaComponent{
             resp => {
                 this.formTransferir.reset();
                 this.desativaBotaoTransferir = false;
-                this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                this.router.navigate(['/lancamentos'], { queryParams: { categoria: this.idCategoria } });
                 this.spinnerService.desativarSpinner();
                 this.alertaService.alertaSucesso("Transferência realizada com sucesso!");
             },
@@ -109,7 +109,7 @@ export class TransferenciaComponent{
                 this.desativaBotaoTransferir = false;
                 this.alertaService.alertaErro("Erro ao realizar transferência!",false);
                 if (error.error.code == 403) {
-                    this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                    this.router.navigate(['/lancamentos'], { queryParams: { categoria: this.idCategoria } });
                 }
             }
         );

@@ -46,7 +46,7 @@ export class ParceladosListarComponent implements OnInit{
 
             if(this.idCategoria==undefined || this.idCategoria==null || this.idCategoria==0) {
                 this.spinnerService.desativarSpinner();
-                this.router.navigate(['/categoria']);
+                this.router.navigate(['/categorias']);
             }
 
             this.categoriaService.buscarPorId(this.idCategoria).subscribe(
@@ -72,7 +72,7 @@ export class ParceladosListarComponent implements OnInit{
                 this.spinnerService.desativarSpinner();
             },
             error => {
-                this.router.navigate(['/categoria']);
+                this.router.navigate(['/categorias']);
                 this.spinnerService.desativarSpinner();
             }
         );

@@ -68,8 +68,8 @@
             <div class="form-group">
                 <label for="totalParcelas">Total de Parcelas:</label>
                 <input type="number" id="totalParcelas" class="form-control" formControlName="totalParcela"  
-                   [disabled]="id!=0" [ngClass]="{'is-invalid': verificaCampo('totalParcela')}">
-                   <span class="float-end text-end text-secondary" style="font-size: 12px;" *ngIf="id!=0">Obs: Total de parcelas não é alterado!</span>
+                    [ngClass]="{'is-invalid': verificaCampo('totalParcela')}">
+                   <span class="float-end text-end text-secondary" style="font-size: 12px;">Obs: Total de parcelas não é alterado!</span>
 
                 <div class="invalid-feedback" *ngIf="formParcelado.get('totalParcela').errors?.required">Total de Parcelas é requerido!</div>
                 <div class="invalid-feedback" *ngIf="formParcelado.get('totalParcela').errors?.min">Total de Parcelas é menor que 2!</div>

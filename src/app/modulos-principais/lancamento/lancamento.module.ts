@@ -31,6 +31,8 @@ import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.m
 import { LancamentoNovoComponent } from "./salvar/lancamento-normal/lancamento-novo/lancamento-novo.component";
 import { LancamentoParceladoComponent } from "./salvar/lancamento-normal/lancamento-parcelado/lancamento-parcelado.component";
 import { ParceladoService } from "src/app/servicos/http/parcelados.service";
+import { LancamentoSalvoComponent } from "./salvar/lancamento-normal/lancamento-salvo/lancamento-salvo.component";
+import { LancamentoSalvoService } from "src/app/servicos/http/lancamento-salvo.service";
 
 @NgModule({
     declarations: [
@@ -46,7 +48,8 @@ import { ParceladoService } from "src/app/servicos/http/parcelados.service";
         LancamentoNormalComponent,
         TransferenciaComponent,
         LancamentoNovoComponent,
-        LancamentoParceladoComponent
+        LancamentoParceladoComponent,
+        LancamentoSalvoComponent
     ],
     imports: [
         CommonModule,
@@ -77,7 +80,8 @@ import { ParceladoService } from "src/app/servicos/http/parcelados.service";
             multi: true
         },
         ModuloGuardService,
-        ParceladoService
+        ParceladoService,
+        LancamentoSalvoService
     ]
 })
 export class LancamentoModule{
