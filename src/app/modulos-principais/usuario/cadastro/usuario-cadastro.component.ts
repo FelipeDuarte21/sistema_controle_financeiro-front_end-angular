@@ -66,6 +66,7 @@ export class UsuarioCadastroComponent implements OnInit{
                 this.alertaService.alertaSucesso("Seu cadastro foi realizado com sucesso!",false);
             },
             error => {
+                console.log(error);
                 this.desativaBotaoForm = false;
                 this.spinnerService.desativarSpinner();
                 if(error.error.code == 400){

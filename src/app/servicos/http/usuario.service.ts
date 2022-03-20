@@ -18,8 +18,20 @@ export class UsuarioService{
         return this.http.post<Usuario>(this.baseURL,usuario);
     }
 
+    public atualizar(id:number,usuario: UsuarioSalvar):Observable<Usuario>{
+        return this.http.put<Usuario>(`${this.baseURL}/${id}`,usuario);
+    }
+
     public buscarPorEmail(email:string):Observable<Usuario>{
         return this.http.get<Usuario>(`${this.baseURL}/email/${email}`);
+    }
+
+    public buscarPorId(id:number):Observable<Usuario>{
+        return this.http.get<Usuario>(`${this.baseURL}/${id}`);
+    }
+
+    public excluir(id:number):Observable<any>{
+        return this.http.delete<any>(`${this.baseURL}/${id}`);
     }
 
 }
