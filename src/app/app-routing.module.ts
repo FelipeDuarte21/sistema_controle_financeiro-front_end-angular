@@ -12,6 +12,10 @@ const routes: Routes = [
         loadChildren: () => import('./modulos-principais/autenticacao/autenticacao.module').then(m => m.AutenticacaoModule)
     },
     {
+        path: 'recuperacao-senha',
+        loadChildren: () => import('./modulos-principais/esqueci-senha/esqueci-senha.module').then(m => m.EsqueciSenhaModule)
+    },
+    {
         path: 'usuarios',
         loadChildren: () => import('./modulos-principais/usuario/usuario.module').then(m => m.UsuarioModule)
     },

@@ -6,7 +6,7 @@ import { AutenticacaoService } from "../http/autenticacao.service";
 import { TokenService } from "./token.service";
 import { UsuarioLogadoService } from "./usuario-logado.service";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class InterceptorService implements HttpInterceptor {
 
     constructor(
@@ -36,6 +36,10 @@ export class InterceptorService implements HttpInterceptor {
                 }
             });
 
+            return next.handle(req);
+        }
+
+        if(req.url.match('/api/auth/reset-senha')){
             return next.handle(req);
         }
 
