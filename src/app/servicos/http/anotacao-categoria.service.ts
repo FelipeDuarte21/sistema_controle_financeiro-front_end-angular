@@ -49,8 +49,8 @@ export class AnotacaoCategoriaService{
         return this.http.get<AnotacaoCategoria>(url);
     }
 
-    public listar(idCategoria:number,pagina:number,quantidade:number,ordem:number):Observable<PaginaAnotacaoCategoria>{
-        let url = `${this.getURL(idCategoria)}?page=${pagina}&size=${quantidade}&order=${ordem}`;
+    public listar(idCategoria:number,pagina:number,quantidade:number):Observable<PaginaAnotacaoCategoria>{
+        let url = `${this.getURL(idCategoria)}?page=${pagina}&size=${quantidade}`;
         return this.http.get<PaginaAnotacaoCategoria>(url);
     }
 

@@ -24,8 +24,6 @@ export class ParceladosListarComponent implements OnInit{
     public quantidadeAtual = this.qtdOpcoes[0];
 
     private paginaAtual = 0;
-    
-    private ordem = 2;
 
     constructor(
         private activetedRoute: ActivatedRoute,
@@ -66,7 +64,7 @@ export class ParceladosListarComponent implements OnInit{
 
     private buscarParcelados(){
 
-        this.parceladoService.listar(this.idCategoria,this.paginaAtual,this.quantidadeAtual,this.ordem).subscribe(
+        this.parceladoService.listar(this.idCategoria,this.paginaAtual,this.quantidadeAtual).subscribe(
             paginaParcelados => {
                 this.paginaParcelados = paginaParcelados;
                 this.spinnerService.desativarSpinner();

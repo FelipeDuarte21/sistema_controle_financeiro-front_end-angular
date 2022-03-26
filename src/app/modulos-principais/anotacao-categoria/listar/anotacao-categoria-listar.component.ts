@@ -23,8 +23,6 @@ export class AnotacaoCategoriaListarComponent implements OnInit{
     public quantidadeAtual = this.qtdOpcoes[0];
 
     private paginaAtual = 0;
-    
-    private ordem = 2;
 
     constructor(
         private activetedRoute: ActivatedRoute,
@@ -66,7 +64,7 @@ export class AnotacaoCategoriaListarComponent implements OnInit{
 
     private buscarAnotacoes(){
 
-        this.anotacaoService.listar(this.idCategoria,this.paginaAtual,this.quantidadeAtual,this.ordem).subscribe(
+        this.anotacaoService.listar(this.idCategoria,this.paginaAtual,this.quantidadeAtual).subscribe(
             paginaAnotacoes => {
                 this.paginaAnotacoes = paginaAnotacoes;
                 this.spinnerService.desativarSpinner();

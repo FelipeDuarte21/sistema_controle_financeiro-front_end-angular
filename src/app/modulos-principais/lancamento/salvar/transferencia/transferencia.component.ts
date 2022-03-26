@@ -41,9 +41,9 @@ export class TransferenciaComponent{
 
     ngOnInit(): void {
 
-        this.categoriaService.listar(0,1,1).subscribe(
+        this.categoriaService.listar(0,1).subscribe(
             pag => {
-                this.categoriaService.listar(0,pag.totalElements,1).subscribe(
+                this.categoriaService.listar(0,pag.totalElements).subscribe(
                     pag => {
                         this.categorias = pag.content;
                     },

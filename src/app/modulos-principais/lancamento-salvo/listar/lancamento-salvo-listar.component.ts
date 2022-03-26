@@ -20,8 +20,6 @@ export class LancamentoSalvoListarComponent implements OnInit{
     public quantidadeAtual = this.qtdOpcoes[0];
 
     private paginaAtual = 0;
-    
-    private ordem = 1;
 
     public paginaLancamentosSalvos: PaginaLancamentoSalvo;
 
@@ -71,7 +69,7 @@ export class LancamentoSalvoListarComponent implements OnInit{
 
     private buscarLancamentosSalvos(){
 
-        this.lancamentoSalvoService.listar(this.idCategoria,this.paginaAtual,this.quantidadeAtual,this.ordem)
+        this.lancamentoSalvoService.listar(this.idCategoria,this.paginaAtual,this.quantidadeAtual)
         .subscribe(
             paginaLancamentoSalvo => {
                 this.paginaLancamentosSalvos = paginaLancamentoSalvo;
@@ -105,7 +103,7 @@ export class LancamentoSalvoListarComponent implements OnInit{
 
         if(c){
 
-            this.lancamentoSalvoService.excluir(id).subscribe(
+            this.lancamentoSalvoService.excluir(this.idCategoria,id).subscribe(
                 resp => {
                     this.paginaAtual = 0;
                     this.quantidadeAtual = this.qtdOpcoes[0];

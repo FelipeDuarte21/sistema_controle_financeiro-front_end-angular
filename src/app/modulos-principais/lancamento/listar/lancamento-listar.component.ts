@@ -22,8 +22,6 @@ export class LancamentoListarComponent implements OnInit{
     public quantidadeAtual = this.qtdOpcoes[0];
 
     private paginaAtual = 0;
-    
-    private ordem = 2;
 
     public idCategoria:number = 0;
 
@@ -75,8 +73,8 @@ export class LancamentoListarComponent implements OnInit{
 
     private listarLancamentos(){
         this.spinnerService.ativarSpinner();
-        this.lancamentoService.listarPorBalanco(this.idCategoria,this.balanco.id,this.paginaAtual,
-            this.quantidadeAtual,this.ordem).subscribe(
+        this.lancamentoService.listar(this.idCategoria,this.balanco.id,this.paginaAtual,
+            this.quantidadeAtual).subscribe(
             paginaLancamentos => {
                 this.paginaLancamentos = paginaLancamentos;
                 this.spinnerService.desativarSpinner();

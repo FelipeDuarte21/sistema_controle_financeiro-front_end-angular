@@ -18,7 +18,6 @@ export class CategoriaListarComponent implements OnInit {
     public quantidadeAtual = this.qtdOpcoes[0];
 
     private paginaAtual = 0;
-    private ordem = 1;
 
     public tamanho: number = 0;
 
@@ -35,7 +34,7 @@ export class CategoriaListarComponent implements OnInit {
     }
 
     private listarCategorias() {
-        this.categoriaService.listar(this.paginaAtual, this.quantidadeAtual, this.ordem).subscribe(
+        this.categoriaService.listar(this.paginaAtual, this.quantidadeAtual).subscribe(
             pgCategoria => {
                 this.paginaCategoria = pgCategoria;
                 this.spinnerService.desativarSpinner();

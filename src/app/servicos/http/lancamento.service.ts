@@ -43,9 +43,9 @@ export class LancamentoService{
         return this.http.get<Lancamento>(`${url}/${id}`);
     }
 
-    public listarPorBalanco(idCategoria:number, idBalanco:number,page:number,size:number,order:number):Observable<PaginaLancamento>{
+    public listar(idCategoria:number, idBalanco:number,page:number,size:number):Observable<PaginaLancamento>{
         let url = this.getURL(idCategoria,idBalanco);
-        return this.http.get<PaginaLancamento>(`${url}?page=${page}&size=${size}&order=${order}`);
+        return this.http.get<PaginaLancamento>(`${url}?page=${page}&size=${size}`);
     }
 
     public buscarArquivoCSV(idCategoria:number, idBalanco:number):Observable<any>{

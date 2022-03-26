@@ -77,10 +77,10 @@ export class LancamentoSalvoComponent implements OnInit{
 
     public buscarLancamentoSalvos(){
 
-        this.lancamentoSalvoService.listar(this.idCategoria,0,1,1).subscribe(
+        this.lancamentoSalvoService.listar(this.idCategoria,0,1).subscribe(
             resp => {
                 if(resp.content.length != 0){
-                    this.lancamentoSalvoService.listar(this.idCategoria,0,resp.totalElements,1).subscribe(
+                    this.lancamentoSalvoService.listar(this.idCategoria,0,resp.totalElements).subscribe(
                         pagLancamentoSalvos => {
                             this.lancamentosSalvos = pagLancamentoSalvos.content;
                         },

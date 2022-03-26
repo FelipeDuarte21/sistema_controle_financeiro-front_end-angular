@@ -78,7 +78,7 @@ export class LancamentoSalvoSalvarComponent implements OnInit{
 
                     this.titulo = "Lançamentos Salvos - Atualizar"
 
-                    this.lancamentoSalvoService.buscarPorId(this.id).subscribe(
+                    this.lancamentoSalvoService.buscarPorId(this.idCategoria,this.id).subscribe(
                         lancamento => {
                             this.formLancamento.get('nome').setValue(lancamento.nome);
                             this.formLancamento.get('descricao').setValue(lancamento.descricao);

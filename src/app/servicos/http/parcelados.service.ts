@@ -45,8 +45,8 @@ export class ParceladoService{
         return this.http.get<Parcelado>(url);
     }
 
-    public listar(idCategoria:number,page:number,size:number,order:number):Observable<PaginaParcelado>{
-        let url = `${this.getUrl(idCategoria)}?page=${page}&size=${size}&order=${order}`;
+    public listar(idCategoria:number,page:number,size:number):Observable<PaginaParcelado>{
+        let url = `${this.getUrl(idCategoria)}?page=${page}&size=${size}`;
         return this.http.get<PaginaParcelado>(url);
     }
 
@@ -55,8 +55,8 @@ export class ParceladoService{
         return this.http.patch<Parcela>(url,parcelaPagar);
     }
 
-    public listarParcelas(idParcelado:number, idCategoria: number, page:number, size:number,order:number): Observable<PaginaParcela>{
-        let url = `${this.getUrl(idCategoria)}/${idParcelado}/parcelas?page=${page}&size=${size}&order=${order}`;
+    public listarParcelas(idParcelado:number, idCategoria: number, page:number, size:number): Observable<PaginaParcela>{
+        let url = `${this.getUrl(idCategoria)}/${idParcelado}/parcelas?page=${page}&size=${size}`;
         return this.http.get<PaginaParcela>(url);
     }
 

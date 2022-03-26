@@ -73,10 +73,10 @@ export class LancamentoParceladoComponent implements OnInit{
 
         this.spinnerService.desativarSpinner();
 
-        this.parceladoService.listar(this.idCategoria,0,1,1).subscribe(
+        this.parceladoService.listar(this.idCategoria,0,1).subscribe(
             resp => {
                 if(resp.content.length != 0){
-                    this.parceladoService.listar(this.idCategoria,0,resp.totalElements,1).subscribe(
+                    this.parceladoService.listar(this.idCategoria,0,resp.totalElements).subscribe(
                         pagParcelados => {
                             this.parcelados = pagParcelados.content.filter(p => !p.quitado);
                         }

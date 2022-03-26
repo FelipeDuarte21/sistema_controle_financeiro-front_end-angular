@@ -24,8 +24,6 @@ export class ParcelasListarComponent implements OnInit{
 
     private paginaAtual = 0;
     
-    private ordem = 1;
-
     constructor(
         private parceladoService: ParceladoService,
         private spinnerService: SpinnerService,
@@ -78,7 +76,7 @@ export class ParcelasListarComponent implements OnInit{
     private buscarPaginaParcelas(){
 
         this.parceladoService.listarParcelas(this.idParcelado,this.idCategoria, this.paginaAtual,
-            this.quantidadeAtual,this.ordem).subscribe(
+            this.quantidadeAtual).subscribe(
                 pagParcelas => {
                     this.paginaParcelas = pagParcelas;
                     this.spinnerService.desativarSpinner();

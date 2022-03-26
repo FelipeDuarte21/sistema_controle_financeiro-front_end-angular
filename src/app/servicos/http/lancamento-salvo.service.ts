@@ -9,7 +9,8 @@ import { environment } from "src/environments/environment";
 @Injectable()
 export class LancamentoSalvoService{
     
-    private baseURL:string = `${environment.apiURL}/api/lancamentos-salvos`;
+    private baseURL:string = `${environment.apiURL}/api/categorias/`;
+    private recurso:string = '/lancamentos-salvos';
 
     constructor(
         private http: HttpClient
@@ -17,7 +18,7 @@ export class LancamentoSalvoService{
 
     public salvar(idCategoria:number, id:number, lancamentoSalvoSalvar: LancamentoSalvoSalvar): Observable<LancamentoSalvo>{
 
-        let url = `${this.baseURL}`;
+        let url = this.getURL(idCategoria);
 
         if(id == 0){ //Cadastrar 
             url = `${url}?idCategoria=${idCategoria}`;
@@ -30,19 +31,23 @@ export class LancamentoSalvoService{
 
     }
 
-    public buscarPorId(id:number):Observable<LancamentoSalvo>{
-        let url = `${this.baseURL}/${id}`;
+    public buscarPorId(idCategoria:number, id:number):Observable<LancamentoSalvo>{
+        let url = `${this.getURL(idCategoria)}/${id}`;
         return this.http.get<LancamentoSalvo>(url);
     }
 
-    public excluir(id:number):Observable<any>{
-        let url = `${this.baseURL}/${id}`;
+    public excluir(idCategoria:number, id:number):Observable<any>{
+        let url = `${this.getURL(idCategoria)}/${id}`;
         return this.http.delete(url);
     }
 
-    public listar(idCategoria:number,page:number,size:number,ordem:number):Observable<PaginaLancamentoSalvo>{
-        let url = `${this.baseURL}?idCategoria=${idCategoria}&page=${page}&size=${size}&ordem=${ordem}`;
+    public listar(idCategoria:number,page:number,size:number):Observable<PaginaLancamentoSalvo>{
+        let url = `${this.getURL(idCategoria)}?page=${page}&size=${size}`;
         return this.http.get<PaginaLancamentoSalvo>(url);
+    }
+
+    private getURL(idCategoria:number):string{
+        return `${this.baseURL}${idCategoria}${this.recurso}`;
     }
 
 }
