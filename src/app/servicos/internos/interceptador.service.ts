@@ -50,7 +50,7 @@ export class InterceptorService implements HttpInterceptor {
         this.autenticacaoService.refreshToken().subscribe(
             resp => {
 
-                token = resp.headers.get('Authorization');
+                token = `${resp.tipo} ${resp.token}`;
 
                 this.tokenService.setToken(token);
 

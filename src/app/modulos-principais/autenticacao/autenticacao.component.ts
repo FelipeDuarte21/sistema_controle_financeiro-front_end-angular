@@ -51,7 +51,7 @@ export class AutenticacaoComponent implements OnInit{
         this.autenticacaoService.login(autenticacao).subscribe(
             resp => {
 
-                let token = resp.headers.get('Authorization');
+                let token = `${resp.tipo} ${resp.token}`;
                 
                 this.usuarioLogadoService.logarUsuario(autenticacao.email,token);
 
