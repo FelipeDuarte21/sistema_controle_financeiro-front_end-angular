@@ -1,6 +1,8 @@
 <spinner></spinner>
 <cabecalho></cabecalho>
-<div class="container-fluid">
+<layout>
+
+    <alertas></alertas>
 
     <div class="row align-items-center">
 
@@ -38,17 +40,17 @@
                             <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.required">Senha é
                                 requerido!</div>
                             <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.minlength">Senha é menor
-                                que 6 caracteres!</div>
+                                que 8 caracteres!</div>
                             <div class="invalid-feedback" *ngIf="formAutenticacao.get('senha').errors?.maxlength">Senha é maior
                                 que 15 caracteres!</div>
                         </div>
         
-                        <a href="#" class="d-block text-end mt-0 mb-0"><small><i class="fas fa-question-circle me-1"></i>Esqueci
+                        <a href="#" routerLink="/recuperacao-senha" class="d-block text-end mt-0 mb-0"><small><i class="fas fa-question-circle me-1"></i>Esqueci
                                 minha senha</small></a>
         
                        
                         <div class="d-grid gap-2 mb-4 mt-5">
-                            <button [disabled]="formAutenticacao.invalid || desativaBotaoLogin" class="btn btn-primary btn-lg" type="submit"><i
+                            <button [disabled]="formAutenticacao.invalid && desativaBotaoLogin" class="btn btn-primary btn-lg" type="submit"><i
                                     class="fas fa-sign-in-alt me-1"></i>Entrar</button>
                         </div>
         
@@ -56,9 +58,7 @@
                             <button (click)="redirecionaCadastro()" class="btn btn-outline-primary btn-lg" type="button"><i
                                     class="fas fa-user-plus me-1"></i>Inscreva-se</button>
                         </div>
-        
-                        <p class="text-danger text-center mt-3" *ngIf="mostraErro">Email ou Senha Incorretos!</p>
-        
+
                     </form>
 
                 </div>
@@ -68,4 +68,4 @@
 
     </div>
 
-</div>
+</layout>

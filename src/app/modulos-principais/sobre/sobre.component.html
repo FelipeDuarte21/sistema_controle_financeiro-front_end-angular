@@ -1,46 +1,26 @@
 <cabecalho></cabecalho>
+<layout>
 
-<div class="container-fluid">
+    <div style="text-align: justify;">
 
-    <div class="row justify-content-center">
-        <div class="col-10">
+        <titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Sobre" icone="fas fa-book-open"></titulo-pagina>
 
-            <div style="text-align: justify;">
+        <!--Botão Voltar-->
+        <p class="mt-2"></p>
+        <btn-voltar rota="/login" [parametros]="null"></btn-voltar>
 
-                <!--Botão Voltar-->
-                <p class="mt-2"></p>
-                <btn-voltar rota="/login" [parametros]="null"></btn-voltar>
-
-                <h3 class="text-center mt-0"><i class="fas fa-hand-holding-usd me-1"></i>Sistema de Controle Financeiro</h3>
-
-                <h5 class="mt-5"><i class="far fa-dot-circle me-1"></i>Objetivo:</h5>
-                <p>O sistema de controle financeiro tem o objetivo de ser uma ferramenta que auxilia o
-                    usuario na sua vida financeira, oferencendo a ele a oportunidade de registrar seus gastos
-                    através de uma interface gráfica simples e intuítiva.</p>
-    
-                <h5><i class="fas fa-border-all me-1"></i>Divisão:</h5>
-                <p>O sistema de controle financeiro está divido atualmente em duas partes: categoria e lançamentos.</p>
-                <p><i>Categorias:</i> Nessa parte o objetivo é o usuario classsificar seus gastos por categorias.
-                    Essas categorias podem ser: despesas gerais tais como conta de luz, água, alimentação etc,
-                    investimentos, entre outros. Quem faz essa divisão é o proprio usuário,
-                    o sistema oferece ao mesmo o gerenciamento dessas categorias podendo
-                    cadastrar, alterar, excluir, visualizar e realizar lançamentos nas categorias.</p>
-                <p><i>Lançamentos:</i> Nessa parte o objetivo é o usuario realizar registros de 
-                    suas finanças de acordo com cada categoria. O sistema oferece as opções de lançamentos provento e despesa, 
-                    provento é todo lançamento que aumenta o saldo da categoria exemplo pagamento do mês, 
-                    despesa é todo lançamento que diminiu o saldo da categoria exemplo pagamento de conta de luz. Além disso, 
-                    o sistema oferece a possibilidade de gerenciamento dos lançamentos, o usuario pode lançar, alterar, excluir, os lançametos 
-                    e também pode ver o saldo da categoria que é atulizada automaticamente após realizar operações de lançamento.</p>
-            </div>
-
-            <div class="alert alert-success text-center mt-5">
-                <p class="mb-0"><span class="font-weight me-1"><i
-                            class="fas fa-envelope me-1"></i>Email:</span>felipe15lfde@gmail.com</p>
-                <p class="mb-0">Copyright&copy;{{getAno()}} - Todos os direitos reservados. - Desenvolvido por Luiz
-                    Felipe Duarte Elias</p>
-            </div>
-
+        <div class="alert alert-warning text-center mt-3">
+            Este sistema foi pensado e desenvolvido por Luiz Felipe Duarte Elias 
+                estudante de Ciência da Computação pela UEZO.
         </div>
+        
     </div>
 
-</div>
+    <div class="alert alert-success text-center mt-5">
+        <p class="mb-0"><span class="font-weight me-1"><i
+                    class="fas fa-envelope me-1"></i>Email:</span>felipe15lfde@gmail.com</p>
+        <p class="mb-0">Copyright&copy;{{getAno()}} - Todos os direitos reservados. - Desenvolvido por Luiz
+            Felipe Duarte Elias</p>
+    </div>
+
+</layout>

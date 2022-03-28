@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
+import { CategoriaSalvar } from "src/app/modelos/categoria-salvar.model";
 import { Categoria } from "src/app/modelos/categoria.model";
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
 
@@ -14,41 +16,41 @@ export class CategoriaSalvarComponent implements OnInit{
 
     public formCategoria: FormGroup;
 
-    public titulo:string = "Cadastrar";
+    public titulo:string = "Categorias - Cadastrar";
 
     public categoria: Categoria;
 
     public desativaBotaoSalvar:boolean = false;
+
+    private id:number = 0;
 
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
         private activedRoute: ActivatedRoute,
         private categoriaService: CategoriaService,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService
     ){}
 
     ngOnInit(): void {
         this.formCategoria = this.formBuilder.group({
-            id: [0],
             nome: ['',[Validators.required,Validators.minLength(3),Validators.maxLength(60)]],
             descricao: ['',Validators.maxLength(255)],
-            dataCadastro: ['']
         });
 
         this.activedRoute.params.subscribe(resp => {
             let id = resp.id;
-            if(id == null){
-                this.titulo = "Cadastrar";
-            }else{
-                this.titulo = "Atualizar";
+            if(id != null){
+
+                this.id = id;
+                this.titulo = "Categorias - Atualizar";
 
                 this.categoriaService.buscarPorId(id).subscribe(
                     categoria => {
-                        this.formCategoria.get("id").setValue(categoria.id);
+                        this.id = categoria.id;
                         this.formCategoria.get("nome").setValue(categoria.nome);
                         this.formCategoria.get("descricao").setValue(categoria.descricao);
-                        this.formCategoria.get("dataCadastro").setValue(categoria.dataCadastro);
                     },
                     error => {
                         this.router.navigate(['/categoria']);
@@ -75,45 +77,28 @@ export class CategoriaSalvarComponent implements OnInit{
 
         this.desativaBotaoSalvar = true;
        
-        let categoria = this.formCategoria.getRawValue() as Categoria;
+        let categoria = this.formCategoria.getRawValue() as CategoriaSalvar;
 
         this.spinnerService.ativarSpinner();
 
-        if(categoria.id == 0){
-
-            this.categoriaService.cadastrar(categoria).subscribe(
-                resp => {
-                    this.formCategoria.reset();
-                    this.router.navigate(['/categoria']);
-                    this.spinnerService.desativarSpinner();
-                    alert("Categoria Cadastrada com Sucesso!");
-                },
-                error => {
-                    this.desativaBotaoSalvar = false;
-                    this.spinnerService.desativarSpinner();
-                    alert("Erro ao Tentar Cadastrar Categoria!");
-                    console.log(error);        
+        this.categoriaService.salvar(this.id,categoria).subscribe(
+            resp => {
+                this.formCategoria.reset();
+                this.desativaBotaoSalvar = false;
+                this.router.navigate(['/categorias']);
+                this.spinnerService.desativarSpinner();
+                this.alertaService.alertaSucesso("Categoria salva com sucesso!");
+            },
+            error => {
+                this.desativaBotaoSalvar = false;
+                this.spinnerService.desativarSpinner();
+                if(error.error.code == 400){
+                    this.alertaService.alertaErro(`${error.error.message}`,false);
+                }else{
+                    this.alertaService.alertaErro("Erro ao salvar categoria!",false); 
                 }
-            );
-            
-        }else{
-            
-            this.categoriaService.alterar(categoria).subscribe(
-                resp => {
-                    this.formCategoria.reset();
-                    this.router.navigate(['/categoria']);
-                    this.spinnerService.desativarSpinner();
-                    alert("Categoria Atualizada com Sucesso!");
-                },
-                error => {
-                    this.desativaBotaoSalvar = false;
-                    this.spinnerService.desativarSpinner();
-                    alert("Erro ao Tentar Atualizar Categoria!");
-                    console.log(error);
-                }
-            );
-
-        }
+            }
+        );
 
     }
 

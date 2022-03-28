@@ -1,0 +1,24 @@
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Recuperação de Senha" icone="fas fa-question-circle"></titulo-pagina>
+
+<btn-voltar rota="/login"></btn-voltar>
+
+<form [formGroup]="formEmail" (submit)="enviar()">
+
+    <div class="row mb-4 mt-5">
+        <div class="col-12">
+
+            <label class="mb-0" for="email">Email:</label>
+            <input type="text" class="form-control" id="email" formControlName="email" [ngClass]="{'is-invalid': verificaCampo('email')}" autocomplete="off">
+            <span class="float-end text-end">{{tamanhoCampo('email')}}/80</span>
+
+            <div class="invalid-feedback" *ngIf="formEmail.get('email').errors?.required">Email é requerido!</div>
+            <div class="invalid-feedback" *ngIf="formEmail.get('email').errors?.maxlength">Email é maior que 80 caracteres!</div>
+            <div class="invalid-feedback" *ngIf="formEmail.get('email').errors?.email">Email incorreto!</div>
+
+        </div>        
+    </div>
+
+    <button [disabled]="formEmail.invalid || desativaBotaoForm" type="submit" class="btn btn-primary mt-4">
+        <i class="fas fa-retweet me-1"></i>Recuperar Senha</button>
+
+</form>

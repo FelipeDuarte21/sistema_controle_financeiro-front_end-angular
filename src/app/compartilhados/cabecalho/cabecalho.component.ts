@@ -13,6 +13,13 @@ export class CabecalhoComponent implements OnInit{
     public usuario: Usuario = null;
 
     public exibeMenuLancamento:boolean = false;
+
+    public exibeMenuLancamentoSalvo:boolean = false;
+
+    public exibeMenuAnotacoes:boolean = false;
+
+    public exibeMenuParcelados:boolean = false;
+
     public idCategoria:number=0;
 
     constructor(
@@ -28,9 +35,39 @@ export class CabecalhoComponent implements OnInit{
         );
 
         let url = window.sessionStorage.getItem("rota");
+        let path = url;
 
-        if(url.match('/lancamento')){
+        if(url && url.includes("?")){
+            let urlPartes = url.split("?");
+            path = urlPartes[0];
+            if(path.match("/")){
+                path = "/" + path.split("/")[1];
+            }
+        }
+
+        if(url != null && path === '/lancamentos'){
             this.exibeMenuLancamento = true;
+            let partes = url.split('?');
+            partes = partes[1].split('=');
+            this.idCategoria = parseInt(partes[1]);
+        }
+
+        if(url != null && path === '/lancamentos-salvos'){
+            this.exibeMenuLancamentoSalvo = true;
+            let partes = url.split('?');
+            partes = partes[1].split('=');
+            this.idCategoria = parseInt(partes[1]);
+        }
+
+        if(url != null && path === '/anotacoes'){
+            this.exibeMenuAnotacoes = true;
+            let partes = url.split('?');
+            partes = partes[1].split('=');
+            this.idCategoria = parseInt(partes[1]);
+        }
+
+        if(url != null && path === '/parcelados'){
+            this.exibeMenuParcelados = true;
             let partes = url.split('?');
             partes = partes[1].split('=');
             this.idCategoria = parseInt(partes[1]);

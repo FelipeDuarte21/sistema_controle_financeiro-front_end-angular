@@ -9,6 +9,7 @@ import { LancamentoService } from "src/app/servicos/http/lancamento.service";
 export class BotaoDownloadCsvComponent{
 
     @Input() idBalanco:number = 0;
+    @Input() idCategoria:number = 0;
 
     constructor(
         private lancamentoService: LancamentoService
@@ -16,7 +17,7 @@ export class BotaoDownloadCsvComponent{
 
     public baixarArquivoCSV(){
 
-        this.lancamentoService.buscarArquivoCSV(this.idBalanco).subscribe(
+        this.lancamentoService.buscarArquivoCSV(this.idCategoria,this.idBalanco).subscribe(
             data => {
 
                 let file = new Blob([data.body],{type: data.type});

@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
-import { UsuarioCadastro } from "src/app/modelos/usuario-cadastro.model";
+import { UsuarioSalvar } from "src/app/modelos/usuario-salvar.model";
 import { UsuarioService } from "src/app/servicos/http/usuario.service";
 
 @Component({
@@ -17,11 +18,14 @@ export class UsuarioCadastroComponent implements OnInit{
     public messagemErro:string = "";
     public exibeErro:boolean = false;
 
+    public desativaBotaoForm: boolean = false;
+
     constructor(
         private formBuilder: FormBuilder,
         private usuarioService: UsuarioService,
         private router: Router,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService
     ){}
 
     ngOnInit(): void {
@@ -48,25 +52,28 @@ export class UsuarioCadastroComponent implements OnInit{
 
     public enviar(){
 
+        this.desativaBotaoForm = true;
+
         this.spinnerService.ativarSpinner();
 
-        let usuario = this.formCadastroUsuario.getRawValue() as UsuarioCadastro;
+        let usuario = this.formCadastroUsuario.getRawValue() as UsuarioSalvar
 
         this.usuarioService.cadastrar(usuario).subscribe(
             resp => {
                 this.formCadastroUsuario.reset();
-                this.router.navigate(['/']);
+                this.desativaBotaoForm  = false;
                 this.spinnerService.desativarSpinner();
-                alert("Cadastro Realizado Com Sucesso!");
+                this.alertaService.alertaSucesso("Seu cadastro foi realizado com sucesso!",false);
             },
             error => {
-                this.spinnerService.desativarSpinner();
                 console.log(error);
-                this.exibeErro = true;
+                this.desativaBotaoForm = false;
+                this.spinnerService.desativarSpinner();
                 if(error.error.code == 400){
-                    this.messagemErro = error.error.message;
+                    this.alertaService.alertaErro(`Erro - ${error.error.message}`,false);
+                }else{
+                    this.alertaService.alertaErro("Erro ao relizar cadastro",false);
                 }
-                this.formCadastroUsuario.reset();
             }
         );
 

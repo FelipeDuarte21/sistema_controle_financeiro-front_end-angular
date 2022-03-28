@@ -1,0 +1,97 @@
+<!-- Titulo da Página -->
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Parcelados - Parcelas" icone="fas fa-newspaper"></titulo-pagina>
+
+<!--Botão Voltar-->
+<btn-voltar rota="/parcelados" [parametros]="{categoria:this.idCategoria}"></btn-voltar>
+
+<!--Nome da Categoria e do Parcelado-->
+<div class="row mt-4 mt-md-5">
+    <div class="col-12 col-md-3 text-start">
+        <div class="d-flex justify-content-start">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-tags me-1" style="font-size: 12px;"></i>Categoria:</small></h6>
+                <span style="font-size: 20px;">{{parcelado?.categoria.nome}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-9 text-start">
+        <div class="d-flex justify-content-start">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-newspaper me-1" style="font-size: 12px;"></i>Parcelado:</small></h6>
+                <span style="font-size: 18px;">{{parcelado?.titulo}} - {{parcelado?.descricao}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Barra de navegação-->
+<div class="row mt-5" *ngIf="paginaParcelas?.content.length != 0">
+
+    <!--Quantidade de categorias na página-->
+    <div class="col-4 col-md-4">
+        <div class="row justify-content-start">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3">
+                <quantidade-registro [qtdOpcoes]="qtdOpcoes" [opcaoEscolhida]="quantidadeAtual" (alteraQuantidade)="mudarQuantidade($event)"></quantidade-registro>
+            </div>
+        </div>
+    </div>
+    
+    <!--Paginação-->
+    <div class="col-8 col-md-4">
+        <paginacao [totalPagina]="paginaParcelas?.totalPages" [paginaAtual]="paginaParcelas?.number" 
+            (proximo)="mudarPagina($event)" (anterior)="mudarPagina($event)"></paginacao>
+    </div>
+
+</div>
+
+<!--Lista de Parcelados-->
+<div class="row" *ngFor="let p of paginaParcelas?.content">
+
+    <div class="col-12 mt-2">
+        <div class="card">
+            <div class="card-body px-1 py-2">
+                <div class="row">
+
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Número:</small></h6>
+                            <span style="font-size: 17px;">{{p.numero}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-3">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Data de Vencimento:</small></h6>
+                            <span style="font-size: 17px;">{{p.dataVencimento | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Valor:</small></h6>
+                            <span style="font-size: 17px;">{{p.valor | currency: 'BRL'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0 text-center"><small>Pago:</small></h6>
+                            <p style="font-size: 17px;" class="text-center text-success" *ngIf="p.pago"><i class="fas fa-square"></i></p>
+                            <p style="font-size: 17px;" class="text-center text-danger" *ngIf="!p.pago"><i class="fas fa-square"></i></p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-3">
+                        <div class="text-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Data de Pagamento:</small></h6>
+                            <span style="font-size: 17px;" *ngIf="p.dataPagamento">{{p.dataPagamento | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

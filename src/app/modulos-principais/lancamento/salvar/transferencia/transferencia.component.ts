@@ -1,6 +1,8 @@
+import { DatePipe } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { Categoria } from "src/app/modelos/categoria.model";
 import { Transferencia } from "src/app/modelos/transferencia.model";
@@ -10,11 +12,15 @@ import { LancamentoService } from "src/app/servicos/http/lancamento.service";
 @Component({
     selector: 'transferencia',
     templateUrl: './transferencia.component.html',
-    styleUrls: ['./transferencia.component.css']
+    styleUrls: ['./transferencia.component.css'],
+    providers: [
+        DatePipe
+    ]
 })
 export class TransferenciaComponent{
 
     public idCategoria: number = 0;
+    private idBalanco: number = 0;
 
     public formTransferir: FormGroup;
 
@@ -28,14 +34,16 @@ export class TransferenciaComponent{
         private lancamentoService: LancamentoService,
         private router: Router,
         private activedRoute: ActivatedRoute,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService,
+        private formatadorData: DatePipe
     ) { }
 
     ngOnInit(): void {
 
-        this.categoriaService.listar(0,1,1).subscribe(
+        this.categoriaService.listar(0,1).subscribe(
             pag => {
-                this.categoriaService.listar(0,pag.totalElements,1).subscribe(
+                this.categoriaService.listar(0,pag.totalElements).subscribe(
                     pag => {
                         this.categorias = pag.content;
                     },
@@ -52,14 +60,16 @@ export class TransferenciaComponent{
         this.activedRoute.queryParams.subscribe(
             queryParams => {
                 this.idCategoria = queryParams.categoria;
+                this.idBalanco = queryParams.balanco;
             }
         );
-        
+
         this.formTransferir = this.formBuilder.group({
-            idCategoriaDestino: ['', [Validators.required]],
+            categoriaDestino: ['', [Validators.required]],
             nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]],
             descricao: ['', [Validators.maxLength(255)]],
-            valor: ['', [Validators.required, Validators.min(0)]]
+            valor: ['', [Validators.required, Validators.min(0)]],
+            data: [this.formatadorData.transform(new Date(),'yyyy-MM-dd'),[Validators.required]]
         });
 
     }
@@ -82,24 +92,24 @@ export class TransferenciaComponent{
 
         let transferencia = this.formTransferir.getRawValue() as Transferencia;
 
-        transferencia.idCategoriaOrigem = this.idCategoria;
+        transferencia.categoriaOrigem = this.idCategoria;
 
         this.desativaBotaoTransferir = true;
 
-        this.lancamentoService.transferir(transferencia).subscribe(
+        this.lancamentoService.transferir(this.idCategoria,this.idBalanco,transferencia).subscribe(
             resp => {
                 this.formTransferir.reset();
-                this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                this.desativaBotaoTransferir = false;
+                this.router.navigate(['/lancamentos'], { queryParams: { categoria: this.idCategoria } });
                 this.spinnerService.desativarSpinner();
-                alert("Transferência Realizada Com Sucesso!");
+                this.alertaService.alertaSucesso("Transferência realizada com sucesso!");
             },
             error => {
                 this.spinnerService.desativarSpinner();
-                console.log(error);
-                alert("Erro ao Tentar Realizar Transferência!");
                 this.desativaBotaoTransferir = false;
+                this.alertaService.alertaErro("Erro ao realizar transferência!",false);
                 if (error.error.code == 403) {
-                    this.router.navigate(['/lancamento'], { queryParams: { categoria: this.idCategoria } });
+                    this.router.navigate(['/lancamentos'], { queryParams: { categoria: this.idCategoria } });
                 }
             }
         );

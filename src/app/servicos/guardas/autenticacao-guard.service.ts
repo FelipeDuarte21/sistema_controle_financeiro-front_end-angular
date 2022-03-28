@@ -15,7 +15,7 @@ export class AutenticacaoGuardService implements CanActivate{
        
         if(this.usuarioLogado.isUsuarioLogado()){
 
-            this.router.navigate(['/categoria']);
+            this.router.navigate(['/categorias']);
             
             return false;
         }

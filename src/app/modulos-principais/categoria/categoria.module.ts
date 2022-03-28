@@ -11,25 +11,23 @@ import { CategoriaListarComponent } from "./listar/categoria-listar.component";
 import { CategoriaSalvarComponent } from "./salvar/categoria-salvar.component";
 import { QuantidadeRegistroModule } from "src/app/compartilhados/componentes/quantidade-registro/quantidade-registro.module";
 import { PaginacaoModule } from "src/app/compartilhados/componentes/paginacao/paginacao.module";
-import { GridSwitchComponent } from "./listar/grid-dados/grid-switch/grid-switch.component";
 import { GridsComponent } from "./listar/grid-dados/grids/grids.component";
 import { GridCardComponent } from "./listar/grid-dados/grids/grid-card/grid-card.component";
-import { GridTabelaComponent } from "./listar/grid-dados/grids/grid-tabela/grid-tabela.component";
 import { BarraNavegacaoComponent } from "./listar/barra-navegacao/barra-navegacao.component";
 import { TituloPaginaModule } from "src/app/compartilhados/componentes/titulo-pagina/titulo.component.module";
 import { BtnsModule } from "src/app/compartilhados/componentes/btns/btns.module";
 import { CabecalhoModule } from "src/app/compartilhados/cabecalho/cabecalho.module";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
+import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alertas.module";
+import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.module";
 
 @NgModule({
     declarations: [
         CategoriaComponent,
         CategoriaListarComponent,
         CategoriaSalvarComponent,
-        GridSwitchComponent,
         GridsComponent,
         GridCardComponent,
-        GridTabelaComponent,
         BarraNavegacaoComponent
     ],
     imports: [
@@ -43,7 +41,9 @@ import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinn
         QuantidadeRegistroModule,
         PaginacaoModule,
         BtnsModule,
-        SpinnerModule
+        SpinnerModule,
+        AlertasModule,
+        LayoutModule
     ],
     exports: [
         CategoriaComponent

@@ -1,56 +1,51 @@
-<cabecalho></cabecalho>
-<div class="container-fluid mb-5">
+<!--Nome da Página-->
+<h5 class="mt-4 text-center"><i class="fas fa-hand-holding-usd me-1"></i>Sistema de Controle Financeiro - <i
+        class="fas fa-user-plus me-1"></i>Cadastro de Usuário</h5>
 
-    <div class="row justify-content-center">
+<!--Botão Voltar-->
+<btn-voltar rota="/login" [parametros]="null"></btn-voltar>
 
-        <div class="col-11 col-md-8 col-lg-5">
+<form [formGroup]="formCadastroUsuario" (submit)="enviar()">
 
-            <!--Botão Voltar-->
-            <btn-voltar rota="/login" [parametros]="null"></btn-voltar>
+    <div class="form-group mb-4 mt-5">
+        <label class="mb-0" for="nome">Nome</label>
+        <input type="text" class="form-control" id="nome" formControlName="nome"
+            [ngClass]="{'is-invalid': verificaCampo('nome')}" autocomplete="off">
+        <span class="float-end text-end">{{tamanhoCampo('nome')}}/50</span>
 
-            <!--Nome da Página-->
-            <h5 class="mt-4 text-center"><i class="fas fa-hand-holding-usd me-1"></i>Sistema de Controle Financeiro - <i class="fas fa-user-plus me-1"></i>Cadastro de Usuário</h5>
-
-            <form [formGroup]="formCadastroUsuario" (submit)="enviar()" class="mt-4">
-
-                <div class="form-group mb-4 mt-5">
-                    <label class="mb-0" for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome" formControlName="nome"  [ngClass]="{'is-invalid': verificaCampo('nome')}" autocomplete="off">
-                    <span class="float-end text-end">{{tamanhoCampo('nome')}}/50</span>
-
-                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('nome').errors?.required">Nome é requerido!</div>
-                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('nome').errors?.minlength">Nome é menor que 3 caracteres!</div>
-                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('nome').errors?.maxlength">Nome é maior que 50 caracteres!</div>
-                </div>
-
-                <div class="form-group mb-4 mt-5">
-                    <label class="mb-0" for="email">Email</label>
-                    <input type="text" class="form-control" id="email" formControlName="email" [ngClass]="{'is-invalid': verificaCampo('email')}" autocomplete="off" >
-                    <span class="float-end text-end">{{tamanhoCampo('email')}}/80</span>
-
-                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('email').errors?.required">Email é requerido!</div>
-                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('email').errors?.maxlength">Email é maior que 80 caracteres!</div>
-                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('email').errors?.email">Email incorreto!</div>
-                </div>
-
-                <div class="form-group mb-5 mt-5">
-                    <label class="mb-0" for="senha">Senha</label>
-                    <input type="password" class="form-control" id="senha" formControlName="senha" [ngClass]="{'is-invalid': verificaCampo('senha')}" autocomplete="off">
-                    <span class="float-end text-end">{{tamanhoCampo('senha')}}/15</span>
-
-                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.required">Senha é requerido!</div>
-                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.minlength">Senha é menor que 6 caracteres!</div>
-                    <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.maxlength">Senha é maior que 15 caracteres!</div>
-                </div>
-
-                <button [disabled]="formCadastroUsuario.invalid" type="submit" class="btn btn-primary mt-4"><i class="fas fa-user-plus me-1"></i>Cadastrar</button>
-
-            </form>
-
-            <div class="alert alert-danger mt-3 text-center" *ngIf="exibeErro"><i class="fas fa-times me-1"></i>{{messagemErro}}</div>
-        
-        </div>
-
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('nome').errors?.required">Nome é requerido!</div>
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('nome').errors?.minlength">Nome é menor que 3
+            caracteres!</div>
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('nome').errors?.maxlength">Nome é maior que 50
+            caracteres!</div>
     </div>
 
-</div>
+    <div class="form-group mb-4 mt-5">
+        <label class="mb-0" for="email">Email</label>
+        <input type="text" class="form-control" id="email" formControlName="email"
+            [ngClass]="{'is-invalid': verificaCampo('email')}" autocomplete="off">
+        <span class="float-end text-end">{{tamanhoCampo('email')}}/80</span>
+
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('email').errors?.required">Email é requerido!</div>
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('email').errors?.maxlength">Email é maior que 80
+            caracteres!</div>
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('email').errors?.email">Email incorreto!</div>
+    </div>
+
+    <div class="form-group mb-5 mt-5">
+        <label class="mb-0" for="senha">Senha</label>
+        <input type="password" class="form-control" id="senha" formControlName="senha"
+            [ngClass]="{'is-invalid': verificaCampo('senha')}" autocomplete="off">
+        <span class="float-end text-end">{{tamanhoCampo('senha')}}/15</span>
+
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.required">Senha é requerido!</div>
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.minlength">Senha é menor que 8
+            caracteres!</div>
+        <div class="invalid-feedback" *ngIf="formCadastroUsuario.get('senha').errors?.maxlength">Senha é maior que 15
+            caracteres!</div>
+    </div>
+
+    <button [disabled]="formCadastroUsuario.invalid || desativaBotaoForm" type="submit" class="btn btn-primary mt-4"><i
+            class="fas fa-user-plus me-1"></i>Cadastrar</button>
+
+</form>

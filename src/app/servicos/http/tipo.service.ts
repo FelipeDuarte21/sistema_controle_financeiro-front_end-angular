@@ -7,7 +7,7 @@ import { Tipo } from "../../modelos/tipo.model";
 @Injectable()
 export class TipoService{
 
-    private baseURL:string = `${environment.apiURL}/tipoLancamento`
+    private baseURL:string = `${environment.apiURL}/api/tipos-lancamentos`
 
     constructor(
         private http: HttpClient

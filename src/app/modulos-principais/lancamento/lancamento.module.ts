@@ -26,6 +26,13 @@ import { LancamentoNormalComponent } from "./salvar/lancamento-normal/lancamento
 import { TransferenciaComponent } from "./salvar/transferencia/transferencia.component";
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
 import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinner.module";
+import { AlertasModule } from "src/app/compartilhados/componentes/alertas/alertas.module";
+import { LayoutModule } from "src/app/compartilhados/componentes/layout/layout.module";
+import { LancamentoNovoComponent } from "./salvar/lancamento-normal/lancamento-novo/lancamento-novo.component";
+import { LancamentoParceladoComponent } from "./salvar/lancamento-normal/lancamento-parcelado/lancamento-parcelado.component";
+import { ParceladoService } from "src/app/servicos/http/parcelados.service";
+import { LancamentoSalvoComponent } from "./salvar/lancamento-normal/lancamento-salvo/lancamento-salvo.component";
+import { LancamentoSalvoService } from "src/app/servicos/http/lancamento-salvo.service";
 
 @NgModule({
     declarations: [
@@ -39,7 +46,10 @@ import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinn
         BotaoDownloadCsvComponent,
         BarraNavegacaoBalancoComponent,
         LancamentoNormalComponent,
-        TransferenciaComponent
+        TransferenciaComponent,
+        LancamentoNovoComponent,
+        LancamentoParceladoComponent,
+        LancamentoSalvoComponent
     ],
     imports: [
         CommonModule,
@@ -52,7 +62,9 @@ import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinn
         PaginacaoModule,
         BtnsModule,
         TituloPaginaModule,
-        SpinnerModule
+        SpinnerModule,
+        AlertasModule,
+        LayoutModule
     ],
     exports: [
         LancamentoComponent
@@ -67,7 +79,9 @@ import { SpinnerModule } from "src/app/compartilhados/componentes/spinners/spinn
             useClass:  InterceptorService,
             multi: true
         },
-        ModuloGuardService
+        ModuloGuardService,
+        ParceladoService,
+        LancamentoSalvoService
     ]
 })
 export class LancamentoModule{

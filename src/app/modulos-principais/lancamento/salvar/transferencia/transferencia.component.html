@@ -2,24 +2,19 @@
 
     <div class="row float-none mt-4">
 
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="form-group">
-                <label for="categoria">Categoria de Destino:</label>
-                <select class="form-control" id="categoria" formControlName="idCategoriaDestino" 
-                    [ngClass]="{'is-invalid': verificaCampo('idCategoriaDestino')}">
-                    <ng-container *ngFor="let categoria of categorias">
-                        <ng-container *ngIf="categoria.id != idCategoria">
-                            <option [value]="categoria.id">{{categoria.nome}}</option>
-                        </ng-container>
-                    </ng-container>
-                </select>
-                <div class="invalid-feedback" *ngIf="formTransferir.get('idCategoriaDestino').errors?.required">
-                    Categoria de destino é requerida !
-                </div>
+                <label for="tipo">Data:</label>
+                <input type="date" formControlName="data" id="data"
+                        class="form-control" [ngClass]="{'is-invalid': verificaCampo('data')}">
+
+                <div class="invalid-feedback" *ngIf="formTransferir.get('data').errors?.required">Data é
+                    requerida!</div>
+
             </div>
         </div>
 
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="form-group">
                 <label for="valor">Valor:</label>
 
@@ -37,9 +32,26 @@
             </div>
         </div>
 
+        <div class="col-12 col-md-4">
+            <div class="form-group">
+                <label for="categoria">Categoria de Destino:</label>
+                <select class="form-control" id="categoria" formControlName="categoriaDestino" 
+                    [ngClass]="{'is-invalid': verificaCampo('categoriaDestino')}">
+                    <ng-container *ngFor="let categoria of categorias">
+                        <ng-container *ngIf="categoria.id != idCategoria">
+                            <option [value]="categoria.id">{{categoria.nome}}</option>
+                        </ng-container>
+                    </ng-container>
+                </select>
+                <div class="invalid-feedback" *ngIf="formTransferir.get('categoriaDestino').errors?.required">
+                    Categoria de destino é requerida !
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="form-group mt-3">
+    <div class="form-group mt-2">
         <label for="nome">Nome:</label>
         <input type="text" class="form-control" formControlName="nome" id="nome"
             [ngClass]="{'is-invalid': verificaCampo('nome')}" autocomplete="off">

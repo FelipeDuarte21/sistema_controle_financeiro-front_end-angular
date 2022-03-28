@@ -13,12 +13,24 @@
                 <span class="mt-0">{{categoria?.dataCadastro | date: 'dd/MM/yyyy'}}</span>
 
                 <div class="d-grid col-12">
-                    <a [routerLink]="['/lancamento']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary d-block mt-3"><i class="fas fa-hand-holding-usd me-1"></i>Lançamentos</a>
+                    <a [routerLink]="['/lancamentos']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary d-block mt-3"><i class="fas fa-hand-holding-usd me-1"></i>Lançamentos</a>
+                </div>
+
+                <div class="d-grid col-12">
+                    <a [routerLink]="['/lancamentos-salvos']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary d-block mt-3"><i class="fas fa-hand-holding-usd me-1"></i>Lançamentos Salvos</a>
+                </div>
+
+                <div class="d-grid col-12">
+                    <a [routerLink]="['/parcelados']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary d-block mt-3"><i class="fas fa-newspaper me-1"></i>Parcelados</a>
+                </div>
+
+                <div class="d-grid col-12">
+                    <a [routerLink]="['/anotacoes']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary d-block mt-3"><i class="fas fa-book me-1"></i>Anotações</a>
                 </div>
                         
             </div>
             <div class="card-footer">
-                <btn-editar rota="categoria/atualizar" [id]="categoria?.id" [parametros]="null"></btn-editar>
+                <btn-editar rota="categorias/atualizar" [id]="categoria?.id" [parametros]="null"></btn-editar>
                 <btn-excluir [id]="categoria?.id" (excluir)="onClick($event)"></btn-excluir>
             </div>
         </div>

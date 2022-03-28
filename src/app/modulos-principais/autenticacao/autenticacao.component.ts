@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { Autenticacao } from "src/app/modelos/autenticacao.model";
 import { AutenticacaoService } from "src/app/servicos/http/autenticacao.service";
@@ -15,23 +16,22 @@ export class AutenticacaoComponent implements OnInit{
 
     public formAutenticacao: FormGroup;
 
-    public mostraErro: boolean = false;
-
-    public desativaBotaoLogin:boolean = false;
+    public desativaBotaoLogin:boolean = true;
 
     constructor(
         private formBuilder: FormBuilder,
         private autenticacaoService: AutenticacaoService,
         private usuarioLogadoService: UsuarioLogadoService,
         private router: Router,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService
     ){}
 
     ngOnInit(): void {
         
         this.formAutenticacao = this.formBuilder.group({
             email: ['',[Validators.required,Validators.email,Validators.maxLength(80)]],
-            senha: ['',[Validators.required,Validators.minLength(6),Validators.maxLength(15)]]
+            senha: ['',[Validators.required,Validators.minLength(8),Validators.maxLength(15)]]
         });
 
     }
@@ -51,20 +51,19 @@ export class AutenticacaoComponent implements OnInit{
         this.autenticacaoService.login(autenticacao).subscribe(
             resp => {
 
-                let token = resp.headers.get('Authorization');
+                let token = `${resp.tipo} ${resp.token}`;
                 
                 this.usuarioLogadoService.logarUsuario(autenticacao.email,token);
 
-                this.router.navigate(['/categoria']);
+                this.router.navigate(['/categorias']);
 
                 this.spinnerService.desativarSpinner();
 
             },
             error => {
-                console.log(error);
                 this.formAutenticacao.reset();
                 this.spinnerService.desativarSpinner();
-                this.mostraErro = true;
+                this.alertaService.alertaErro("Email e/ou Senha incorretos!");
             }
         );
 
@@ -75,7 +74,7 @@ export class AutenticacaoComponent implements OnInit{
     }
 
     public redirecionaCadastro(){
-        this.router.navigate(['/usuario/cadastro']);
+        this.router.navigate(['/usuarios/cadastro']);
     }
 
 }

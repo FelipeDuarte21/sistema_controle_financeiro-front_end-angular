@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AlertasService } from "src/app/compartilhados/componentes/alertas/alertas.service";
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
+import { BalancoFaixa } from "src/app/modelos/balanco-faixa";
 import { Balanco } from "src/app/modelos/balanco.model";
-import { BalancoDTO } from "src/app/modelos/balancoDTO.models";
 import { PaginaLancamento } from "src/app/modelos/pagina-lancamento.model";
 import { BalancoService } from "src/app/servicos/http/balanco.service";
 import { LancamentoService } from "src/app/servicos/http/lancamento.service";
@@ -21,19 +22,18 @@ export class LancamentoListarComponent implements OnInit{
     public quantidadeAtual = this.qtdOpcoes[0];
 
     private paginaAtual = 0;
-    
-    private ordem = 2;
 
     public idCategoria:number = 0;
 
-    public balancosDTO:BalancoDTO[] = [];
+    public balancosFaixas:BalancoFaixa[] = [];
 
     constructor(
         private balancoService: BalancoService,
         private lancamentoService: LancamentoService,
         private activetedRoute: ActivatedRoute,
         private router: Router,
-        private spinnerService: SpinnerService
+        private spinnerService: SpinnerService,
+        private alertaService: AlertasService
     ){}
 
     ngOnInit(): void {
@@ -61,7 +61,7 @@ export class LancamentoListarComponent implements OnInit{
             balanco => {
                 this.balanco = balanco;
                 this.spinnerService.desativarSpinner();
-                this.buscarResumoBalanco(this.idCategoria,balanco.ano,balanco.mes);
+                this.buscarFaixasBalanco(this.idCategoria,balanco.ano,balanco.mes);
                 this.listarLancamentos();
             },
             error => {
@@ -73,7 +73,8 @@ export class LancamentoListarComponent implements OnInit{
 
     private listarLancamentos(){
         this.spinnerService.ativarSpinner();
-        this.lancamentoService.buscarPorBalanco(this.balanco.id,this.paginaAtual,this.quantidadeAtual,this.ordem).subscribe(
+        this.lancamentoService.listar(this.idCategoria,this.balanco.id,this.paginaAtual,
+            this.quantidadeAtual).subscribe(
             paginaLancamentos => {
                 this.paginaLancamentos = paginaLancamentos;
                 this.spinnerService.desativarSpinner();
@@ -85,15 +86,15 @@ export class LancamentoListarComponent implements OnInit{
         );
     }
 
-    private buscarResumoBalanco(idCategoria: number,ano:number, mes:number){
+    private buscarFaixasBalanco(idCategoria: number,ano:number, mes:number){
 
         this.spinnerService.ativarSpinner();
  
         const qtdMes = 3; //Quantidade mês para aparacer na barra de navegação
 
         this.balancoService.buscarResumo(idCategoria,ano,mes,qtdMes).subscribe(
-            balancosDTO => {
-                this.balancosDTO = balancosDTO;
+            balancosFaixas => {
+                this.balancosFaixas = balancosFaixas;
                 this.spinnerService.desativarSpinner();
             },
             error => {
@@ -111,25 +112,37 @@ export class LancamentoListarComponent implements OnInit{
         let dataRecebida = new Date(`${data['ano']}/${data['mes']}/1`);
         
         if(dataRecebida.getTime() > dataAgora.getTime()){
-            alert("Balanco ainda não cadastrado!");
+            this.alertaService.alertaAviso("Aviso! Mês/Ano ainda não cadastrado!");
             this.buscarBalancoAtual(this.idCategoria);
             return;
         }
 
         this.spinnerService.ativarSpinner();
+
         this.balancoService.buscarPorData(this.idCategoria,data['mes'],data['ano']).subscribe(
             balanco => {
-                this.balanco = balanco;
-                this.paginaAtual = 0;
-                this.quantidadeAtual = this.qtdOpcoes[0];
-                this.spinnerService.desativarSpinner();
-                this.buscarResumoBalanco(this.idCategoria,balanco.ano,balanco.mes)
-                this.listarLancamentos();
+
+                if(balanco.id){
+
+                    this.balanco = balanco;
+                    this.paginaAtual = 0;
+                    this.quantidadeAtual = this.qtdOpcoes[0];
+                    
+                    this.buscarFaixasBalanco(this.idCategoria,balanco.ano,balanco.mes)
+                    this.listarLancamentos();
+
+                }else{
+                    this.spinnerService.desativarSpinner();
+                    this.buscarFaixasBalanco(this.idCategoria,this.balanco.ano,this.balanco.mes)
+                    this.listarLancamentos();
+                    this.alertaService.alertaAviso("Aviso! Mês/Ano não encontrado!");
+                }
+
             },
             respError => {
                 this.spinnerService.desativarSpinner();
                 if(respError.error.code == 404){
-                    alert("Balanco não encontrado!");
+                    this.alertaService.alertaAviso("Aviso! Mês/Ano não encontrado!");
                     this.buscarBalancoAtual(this.idCategoria);
                 }
                 console.log(respError);
@@ -156,18 +169,17 @@ export class LancamentoListarComponent implements OnInit{
 
             this.spinnerService.ativarSpinner();
 
-            this.lancamentoService.excluir(id).subscribe(
+            this.lancamentoService.excluir(this.idCategoria, this.balanco.id,id).subscribe(
                 resp => {
                     this.spinnerService.desativarSpinner();
-                    alert("Lançamento Excluído Com Sucesso!");
+                    this.alertaService.alertaSucesso("Lançamento excluído com sucesso!");
                     this.paginaAtual = 0;
                     this.quantidadeAtual = this.qtdOpcoes[0];
                     this.buscarBalancoAtual(this.idCategoria);
                 },
                 error => {
                     this.spinnerService.desativarSpinner();
-                    console.log(error);
-                    alert("Erro ao excluir Lançamento");
+                    this.alertaService.alertaErro("Erro ao excluir alerta!");
                 }
             );
 
