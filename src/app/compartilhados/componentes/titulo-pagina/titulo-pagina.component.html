@@ -1,0 +1,7 @@
+<ng-container *ngIf="icone">
+    <h5 class="mt-5 text-center">{{titulo}} - <i class="fas me-1" [ngClass]="icone"></i>{{subtitulo}}</h5>
+</ng-container>
+
+<ng-container *ngIf="icone == null">
+    <h5 class="mt-5 text-center">{{titulo}} - {{subtitulo}}</h5>
+</ng-container>

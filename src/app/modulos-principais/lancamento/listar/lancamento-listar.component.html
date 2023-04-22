@@ -1,0 +1,147 @@
+<!--Nome da Página-->
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Lançamentos" icone="fa-hand-holding-usd">
+</titulo-pagina>
+
+<!--Botão Voltar-->
+<btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
+
+<!--Barra de Navegação-->
+<div class="row mt-4">
+
+    <div class="col-12 ">
+        <ul class="nav nav-tabs flex-column flex-md-row">
+            <ng-container *ngFor="let f of folhas; let i = index">
+                <!--
+                <li class="nav-item cursor-mouse" *ngIf="f.atual">
+                    <a class="nav-link active" aria-current="page" (click)="navegarBalanco(b.ano,b.mes)">{{b?.mes |
+                        converteMes}} {{b?.ano}}</a>
+                </li>-->
+                <li class="nav-item cursor-mouse efeito-sobresalto">
+                    <a class="nav-link" [ngClass]="{'active': folha?.id == f.id}" aria-current="page" (click)="mudarFolha(f)">{{f?.mes |
+                        converteMes}} {{f?.ano}}</a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+
+</div>
+
+<!--Informações da folha-->
+<div class="row mt-4 mt-md-5">
+
+    <!--Nome da Categoria-->
+    <div class="col-12 col-md-3 text-start">
+        <div class="d-flex justify-content-start">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-tags me-1" style="font-size: 12px;"></i>Categoria:</small></h6>
+                <span style="font-size: 20px;">{{categoria?.nome}}</span>
+            </div>
+        </div>
+    </div>
+
+    <!--Data da Folha-->
+    <div class="col-12 col-md-6 mt-3 mt-md-0">
+        <div class="d-flex justify-content-start justify-content-md-center">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-calendar-alt me-1"
+                            style="font-size: 12px;"></i>Mês/Ano:</small></h6>
+                <div class="row">
+                    <div class="col-8">
+                        <span style="font-size: 20px;">
+                            {{folha?.mes | converteMes}}/{{folha?.ano}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Saldo da Categoria na folha-->
+    <div class="col-12 col-md-3 mt-3 mt-md-0">
+        <div class="d-flex justify-content-start justify-content-md-end">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-comment-dollar me-1"
+                            style="font-size: 12px;"></i>Saldo:</small></h6>
+                <span class="text-primary" style="font-size: 20px;"
+                    *ngIf="getStatusSaldoAtual() == 1">{{folha?.saldoAtual | currency:'R$'}}</span>
+                <span class="text-danger" style="font-size: 20px;"
+                    *ngIf="getStatusSaldoAtual() == -1">{{folha?.saldoAtual | currency:'R$'}}</span>
+                <span style="font-size: 20px;" *ngIf="getStatusSaldoAtual() == 0">{{folha?.saldoAtual |
+                    currency:'R$'}}</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="position-relative">
+
+    <!--Botão para novo lançamento-->
+    <btn-cadastrar [desativado]="folha?.fechado" titulo="Novo Lançamento" rota="lancamentos/lancar"
+        [parametros]="{categoria:this.idCategoria,folha:this.folha?.id}"></btn-cadastrar>
+
+    <!--Botão para baixar lançamentos em arquivo csv-->
+    <btn-download-csv [idFolha]="folha?.id"></btn-download-csv>
+
+    <!--Lista de Lançamentos-->
+    <div class="row mt-4 mb-4" *ngIf="lancamentos.length > 0">
+
+        <div class="col-12 mt-2 " *ngFor="let lancamento of lancamentos">
+            <div class="card efeito-sobresalto">
+                <div class="card-body px-1 py-2">
+                    <div class="row">
+
+                        <div class="col-12 col-xxl-1">
+                            <div class="text-start text-xxl-center ms-2">
+                                <h6 class="mb-0"><small>Tipo:</small></h6>
+                                <span class="text-success" style="font-size: 17px;"
+                                    *ngIf="lancamento.tipo == 'Provento'"><i class="fas fa-square me-1"></i><span>Provento</span></span>
+                                <span class="text-danger" style="font-size: 17px;"
+                                    *ngIf="lancamento.tipo == 'Despesa'"><i class="fas fa-square me-1"></i><span>Despesa</span></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xxl-1">
+                            <div class="text-start ms-2 mt-2 mt-xxl-0">
+                                <h6 class="mb-0"><small>Data:</small></h6>
+                                <span style="font-size: 17px;">{{lancamento?.data | date: 'dd/MM/yyyy'}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xxl-2">
+                            <div class="text-start ms-2 mt-2 mt-xxl-0">
+                                <h6 class="mb-0"><small>Valor:</small></h6>
+                                <span class="text-success" style="font-size: 17px;"
+                                    *ngIf="lancamento?.tipo == 'Provento'">+ {{lancamento?.valor | currency: 'BRL'}}</span>
+                                <span class="text-danger" style="font-size: 17px;" *ngIf="lancamento?.tipo == 'Despesa'">-
+                                    {{lancamento?.valor | currency: 'BRL'}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xxl-6">
+                            <div class="text-start ms-2 mt-2 mt-xxl-0">
+                                <h6 class="mb-0"><small>Título/Descrição:</small></h6>
+                                <span style="font-size: 17px;">{{lancamento?.titulo}} - {{lancamento?.descricao}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xxl-2">
+                            <div class="text-start ms-2 mt-2 mt-xxl-0">
+                                <h6 class="mb-1"><small>Ações:</small></h6>
+                                <btn-editar [desativado]="folha?.fechado" rota="lancamentos/atualizar" [id]="lancamento?.id" [parametros]="{categoria:this.idCategoria,folha:this.folha?.id}"></btn-editar>
+                                <btn-excluir [desativado]="folha?.fechado" [id]="lancamento?.id" (excluir)="excluir($event)"></btn-excluir>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5" *ngIf="lancamentos?.length == 0">
+        <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não existem lançamentos neste mês!</div>
+    </div>
+
+
+</div>

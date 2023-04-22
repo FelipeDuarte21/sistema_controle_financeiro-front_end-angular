@@ -1,0 +1,35 @@
+<!--Nome da Página-->
+<titulo-pagina titulo="Sistema de Controle Financeiro"  [subtitulo]="titulo" icone="fa-tags"></titulo-pagina>
+
+<!--Botão Voltar-->
+<btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
+
+<form [formGroup]="formCategoria" (submit)="enviar()" class="mt-4">
+
+    <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input formControlName="nome" type="text" class="form-control" id="nome"
+            [ngClass]="{'is-invalid': verificaCampo('nome')}" autocomplete="off">
+        <span class="float-end text-end">{{tamanhoCampo("nome")}}/60</span>
+
+        <div class="invalid-feedback" *ngIf="formCategoria.get('nome')?.errors?.['required']">Nome é requerido!</div>
+        <div class="invalid-feedback" *ngIf="formCategoria.get('nome')?.errors?.['minlength']">Nome menor que 3 caracteres
+        </div>
+        <div class="invalid-feedback" *ngIf="formCategoria.get('nome')?.errors?.['maxlength']">Nome maior que 60 caracteres
+        </div>
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="descricao">Descrição:</label>
+        <textarea formControlName="descricao" id="descricao" cols="30" rows="8" class="form-control"
+            [ngClass]="{'is-invalid': verificaCampo('descricao')}"></textarea>
+        <span class="float-end text-end">{{tamanhoCampo("descricao")}}/255</span>
+        <div class="invalid-feedback" *ngIf="formCategoria.get('descricao')?.errors?.['maxlength']">Descrição é maior que 255
+            caracteres</div>
+    </div>
+
+    <button [disabled]="formCategoria.invalid || desativaBotaoSalvar" type="submit" class="btn btn-primary mt-4 efeito-sobresalto">
+        <i class="far fa-save me-1"></i>Salvar
+    </button>
+
+</form>

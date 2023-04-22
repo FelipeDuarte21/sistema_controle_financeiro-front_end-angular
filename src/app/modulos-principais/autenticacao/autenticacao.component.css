@@ -1,0 +1,22 @@
+.logo {
+    font-size: 400px;
+}
+
+@media(max-width:575px){
+    .logo{
+        font-size: 200px;
+    }
+}
+
+@media(min-width:576px) and (max-width: 768px){
+    .logo{
+        font-size: 350px;
+    }
+}
+
+
+@media(min-width:769px) and (max-width: 992px){
+    .logo{
+        font-size: 300px;
+    }
+}

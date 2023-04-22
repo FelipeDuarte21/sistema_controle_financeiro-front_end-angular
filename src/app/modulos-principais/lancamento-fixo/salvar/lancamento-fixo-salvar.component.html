@@ -1,0 +1,78 @@
+<!-- Titulo da Página -->
+<titulo-pagina titulo="Sistema de Controle Financeiro" [subtitulo]="titulo" icone="fas fa-hand-holding-usd"></titulo-pagina>
+
+<!--Botão Voltar-->
+<btn-voltar rota="/lancamentos-fixos" [parametros]="{categoria:this.idCategoria}"></btn-voltar>
+
+<form [formGroup]="formLancamento" (submit)="enviar()" class="mt-4 mb-5">
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <label for="nome">Nome:</label>
+            <input type="text" class="form-control" formControlName="titulo" id="nome"
+                [ngClass]="{'is-invalid': verificaCampo('titulo')}" autocomplete="off">
+            <span class="float-end text-end">{{tamanhoCampo("titulo")}}/80</span>
+
+            <div class="invalid-feedback" *ngIf="formLancamento.get('titulo')?.errors?.['required']">Titulo é requerido!
+            </div>
+            <div class="invalid-feedback" *ngIf="formLancamento.get('titulo')?.errors?.['minlength']">Titulo menor que 3
+                caracteres</div>
+            <div class="invalid-feedback" *ngIf="formLancamento.get('titulo')?.errors?.['maxlength']">Titulo maior que 80
+                caracteres</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" formControlName="descricao" cols="30" rows="4" class="form-control"
+                [ngClass]="{'is-invalid': verificaCampo('descricao')}"></textarea>
+            <span class="float-end text-end">{{tamanhoCampo("descricao")}}/255</span>
+
+            <div class="invalid-feedback" *ngIf="formLancamento.get('descricao')?.errors?.['maxlength']">Descrição
+                maior que 255 caracteres</div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-12 col-md-6 mt-2 mt-md-0">
+            <div class="form-group">
+                <label for="valor">Valor:</label>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">R$</span>
+                    <input type="number" formControlName="valor" min="0.00" step="0.01" id="valor"
+                        class="form-control" [ngClass]="{'is-invalid': verificaCampo('valor')}">
+
+                    <div class="invalid-feedback" *ngIf="formLancamento.get('valor')?.errors?.['required']">Valor
+                        é requerido!</div>
+                    <div class="invalid-feedback" *ngIf="formLancamento.get('valor')?.errors?.['min']">Valor
+                        mínimo é R$ 0,00</div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 mt-2 mt-md-0">
+            <div class="form-group">
+                <label for="tipo">Tipo:</label>
+                <select name="" id="tipo" formControlName="tipo" class="form-control"
+                    [ngClass]="{'is-invalid': verificaCampo('tipo')}">
+                    <option value="0">Provento</option>
+                    <option value="1">Despesas</option>
+                </select>
+
+                <div class="invalid-feedback" *ngIf="formLancamento.get('tipo')?.errors?.['required']">Tipo é
+                    requerido!</div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <button [disabled]="formLancamento.invalid || desativaBotaoSalvar" class="btn btn-primary mt-3 efeito-sobresalto">
+        <i class="fas fa-save me-1"></i>Salvar
+    </button>
+
+</form>

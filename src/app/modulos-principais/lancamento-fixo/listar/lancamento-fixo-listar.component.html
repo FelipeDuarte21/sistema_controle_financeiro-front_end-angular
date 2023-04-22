@@ -1,0 +1,70 @@
+<!-- Titulo da Página -->
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Lançamentos Salvos" icone="fas fa-hand-holding-usd"></titulo-pagina>
+
+<!--Botão Voltar-->
+<btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
+
+<!--Nome da Categoria-->
+<div class="row mt-4 mt-md-5">
+    <div class="col-12 col-md-3 text-start">
+        <div class="d-flex justify-content-start">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-tags me-1" style="font-size: 12px;"></i>Categoria:</small></h6>
+                <span style="font-size: 20px;">{{nomeCategoria}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Botão de nova anotação-->
+<btn-cadastrar titulo="Novo Lançamento Fixo" rota="lancamentos-fixos/cadastrar" [parametros]="{categoria:this.idCategoria}"></btn-cadastrar>
+
+<!--Lista de Parcelados-->
+<div class="row mt-3" *ngFor="let l of lancamentosFixos">
+
+    <div class="col-12 mt-2">
+        <div class="card efeito-sobresalto">
+            <div class="card-body px-1 py-2">
+                <div class="row">
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start text-xxl-center ms-2">
+                            <h6 class="mb-0"><small>Tipo:</small></h6>
+                            <span class="text-success" style="font-size: 17px;" *ngIf="l.tipo == 'Provento'"><i class="fas fa-square me-1"></i><span>Provento</span></span>
+                            <span class="text-danger" style="font-size: 17px;" *ngIf="l.tipo == 'Despesa'"><i class="fas fa-square me-1"></i><span>Despesa</span></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Valor:</small></h6>
+                            <span class="text-success" style="font-size: 17px;" *ngIf="l?.tipo == 'Provento' ">+ {{l?.valor | currency: 'BRL'}}</span>
+                            <span class="text-danger" style="font-size: 17px;" *ngIf="l?.tipo == 'Despesa' ">- {{l?.valor | currency: 'BRL'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-6">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Titulo/Descrição:</small></h6>
+                            <span style="font-size: 17px;">{{l?.titulo}} - {{l?.descricao}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-1"><small>Ações:</small></h6>
+                            <btn-editar  rota="lancamentos-fixos/atualizar" [id]="l?.id" [parametros]="{categoria:this.idCategoria}"></btn-editar>
+                            <btn-excluir [id]="l?.id" (excluir)="excluir($event)"></btn-excluir>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="mt-5" *ngIf="lancamentosFixos?.length == 0">
+    <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não existem lançamentos fixos cadastrados!</div>
+</div>

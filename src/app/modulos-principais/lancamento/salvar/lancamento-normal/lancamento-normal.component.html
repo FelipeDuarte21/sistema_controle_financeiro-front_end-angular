@@ -1,0 +1,28 @@
+<!-- Painel de navegação entre modos de lançamentos-->
+<ng-container>
+    <ul class="nav nav-tabs flex-column flex-md-row mt-4">
+        <li class="nav-item efeito-sobresalto">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#lancamentoNormalTab"
+                type="button">Normal</button>
+        </li>
+        <li class="nav-item efeito-sobresalto">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#lancamentoSalvoTab"
+                type="button">Fixo</button>
+        </li>
+        <li class="nav-item efeito-sobresalto">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#lancamentoParceladoTab"
+                type="button">Parcelado</button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="lancamentoNormalTab">
+            <lancamento-novo></lancamento-novo>
+        </div>
+        <div class="tab-pane fade" id="lancamentoSalvoTab">
+            <lancamento-fixo></lancamento-fixo>
+        </div>
+        <div class="tab-pane fade" id="lancamentoParceladoTab">
+            <lancamento-parcelado></lancamento-parcelado>
+        </div>
+    </div>
+</ng-container>

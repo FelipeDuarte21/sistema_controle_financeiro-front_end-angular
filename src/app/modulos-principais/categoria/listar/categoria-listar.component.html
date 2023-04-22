@@ -1,0 +1,53 @@
+<!--Nome da Página-->
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Categorias" icone="fa-tags"></titulo-pagina>
+
+<!--Botão para Cadastrar nova categoria-->
+<btn-cadastrar rota="categoria/cadastrar" titulo="Nova Categoria"></btn-cadastrar>
+
+<button type="button" class="btn btn-primary mt-5 efeito-sobresalto me-2" (click)="lancamentoAutomatico()"><i class="fa-solid fa-arrow-up me-1"></i>Lançamento Automático</button>
+
+<a href="#" routerLink="/categoria/porcentagem" type="button" class="btn btn-primary mt-5 efeito-sobresalto"><i class="fas fa-edit me-1"></i>Alterar Porcentagens</a>
+
+<div class="mt-5" *ngIf="categorias?.length == 0">
+    <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não Existe Categorias Cadastradas No Momento!</div>
+</div>
+
+<div class="row mt-5 mb-5">
+
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-2 efeito-sobresalto" *ngFor="let categoria of categorias">
+        <div class="card linha-card">
+            <div class="card-body pt-2">
+                <h6 class="mb-0 mt-0"><small><i class="fas fa-tags me-1" style="font-size: 12px;"></i>Categoria</small></h6>
+                <span class="mt-0 fw-bolder" style="font-size: 24px;">{{categoria?.nome}}</span>
+
+                <h6 class="mt-3 mb-0"><i class="fas fa-comment-dots me-1"></i>Descrição</h6>
+                <span class="mt-0 text-justify">{{categoria?.descricao}}</span>
+
+                <h6 class="mt-3 mb-0"><i class="fas fa-calendar-alt me-1"></i>Data de Criação</h6>
+                <span class="mt-0">{{categoria?.dataCadastro | date: 'dd/MM/yyyy'}}</span>
+
+                <div class="d-grid col-12">
+                    <a [routerLink]="['/lancamentos']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary d-block mt-3 efeito-sobresalto"><i class="fas fa-hand-holding-usd me-1"></i>Lançamentos</a>
+                </div>
+
+                <div class="d-grid col-12">
+                    <a [routerLink]="['/lancamentos-fixos']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary d-block mt-3 efeito-sobresalto"><i class="fas fa-hand-holding-usd me-1"></i>Lançamentos Fixos</a>
+                </div>
+
+                <div class="d-grid col-12">
+                    <a [routerLink]="['/parcelados']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary d-block mt-3 efeito-sobresalto"><i class="fas fa-newspaper me-1"></i>Parcelados</a>
+                </div>
+
+                <div class="d-grid col-12">
+                    <a [routerLink]="['/anotacoes']" [queryParams]="{categoria:categoria?.id}" class="btn btn-primary d-block mt-3 efeito-sobresalto"><i class="fas fa-book me-1"></i>Anotações</a>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <btn-editar rota="categoria/atualizar" [id]="categoria.id" [parametros]="null"></btn-editar>
+                <btn-excluir [id]="categoria.id" (excluir)="excluir($event)"></btn-excluir>
+            </div>
+        </div>
+    </div>
+
+</div>

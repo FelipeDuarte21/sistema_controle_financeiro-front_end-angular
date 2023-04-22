@@ -1,0 +1,98 @@
+<!-- Titulo da Página -->
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Parcelados" icone="fas fa-newspaper"></titulo-pagina>
+
+<!--Botão Voltar-->
+<btn-voltar rota="/categoria" [parametros]="null"></btn-voltar>
+
+<!--Nome da Categoria-->
+<div class="row mt-4 mt-md-5">
+    <div class="col-12 col-md-3 text-start">
+        <div class="d-flex justify-content-start">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-tags me-1" style="font-size: 12px;"></i>Categoria:</small></h6>
+                <span style="font-size: 20px;">{{categoria?.nome}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Botão de nova anotação-->
+<btn-cadastrar titulo="Novo Parcelado" rota="parcelados/cadastrar" [parametros]="{categoria:this.idCategoria}"></btn-cadastrar>
+
+<!--Lista de Parcelados-->
+<div class="row mt-4 mb-3" *ngFor="let p of parcelados">
+
+    <div class="col-12 mt-2 ">
+        <div class="card efeito-sobresalto">
+            <div class="card-body px-1 py-2">
+                <div class="row">
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Data:</small></h6>
+                            <span style="font-size: 17px;">{{p.data | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-4">
+                        <div class="text-start ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Título/Descrição:</small></h6>
+                            <span  style="font-size: 17px;">{{p.titulo}} - {{p.descricao}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Valor Total:</small></h6>
+                            <span  style="font-size: 17px;">{{ p.valorTotal | currency: 'BRL'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Valor Pago:</small></h6>
+                            <span  style="font-size: 17px;">{{ p.valorPago | currency: 'BRL'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Parcelas Pagas:</small></h6>
+                            <span  style="font-size: 17px;">{{ p.totalParcelasPagas}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Total de Parcelas:</small></h6>
+                            <span  style="font-size: 17px;">{{ p.totalParcelas}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-1">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Quitado:</small></h6>
+                            <p style="font-size: 17px;" class="text-success" *ngIf="p.quitado"><i class="fas fa-square me-1"></i>Sim</p>
+                            <p style="font-size: 17px;" class="text-danger" *ngIf="!p.quitado"><i class="fas fa-square me-1"></i>Não</p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-1"><small>Ações:</small></h6>
+                            <a href="#" [routerLink]="['parcelas']" [queryParams]="{categoria:this.idCategoria,parcelado:p.id}" class="btn btn-primary btn-sm me-1 efeito-sobresalto"><i class="fas fa-eye me-1"></i>Parcelas</a>
+                            <btn-editar rota="parcelados/atualizar" [id]="p.id" [parametros]="{categoria:this.idCategoria}"></btn-editar>
+                            <btn-excluir [id]="p.id" (excluir)="excluir($event)"></btn-excluir>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="mt-5" *ngIf="parcelados?.length == 0">
+    <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle me-1"></i>Não há parcelados cadastrados no momento!</div>
+</div>

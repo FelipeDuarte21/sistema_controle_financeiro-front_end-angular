@@ -1,0 +1,31 @@
+<!--Nome da Página-->
+<titulo-pagina titulo="Sistema de Controle Financeiro" [subtitulo]="titulo" icone="fa-hand-holding-usd"></titulo-pagina>
+
+<!--Botão Voltar-->
+<btn-voltar rota="/lancamentos" [parametros]="{categoria:idCategoria}"></btn-voltar>
+
+<!-- Painel de navegação entre modos de lançamentos-->
+<ng-container *ngIf="id == 0">
+    <ul class="nav nav-tabs flex-column flex-md-row">
+        <li class="nav-item efeito-sobresalto">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#lancamentoTab"
+                type="button">Lançamentos</button>
+        </li>
+        <li class="nav-item efeito-sobresalto">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#transferenciaTab"
+                type="button">Transferência</button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="lancamentoTab">
+            <lancamento-normal></lancamento-normal>
+        </div>
+        <div class="tab-pane fade" id="transferenciaTab">
+            <transferencia></transferencia>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="id != 0">
+    <lancamento-novo></lancamento-novo>
+</ng-container>

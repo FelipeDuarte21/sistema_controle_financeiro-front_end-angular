@@ -1,0 +1,69 @@
+<!-- Titulo da Página -->
+<titulo-pagina titulo="Sistema de Controle Financeiro" subtitulo="Parcelados - Parcelas" icone="fas fa-newspaper"></titulo-pagina>
+
+<!--Botão Voltar-->
+<btn-voltar rota="/parcelados" [parametros]="{categoria:this.idCategoria}"></btn-voltar>
+
+<!--Nome da Categoria e do Parcelado-->
+<div class="row mt-4 mt-md-5">
+
+    <div class="col-12 col-md-9 text-start">
+        <div class="d-flex justify-content-start">
+            <div class="text-start">
+                <h6 class="mb-0"><small><i class="fas fa-newspaper me-1" style="font-size: 12px;"></i>Parcelado:</small></h6>
+                <span style="font-size: 18px;">{{parcelado?.titulo}} - {{parcelado?.descricao}}</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--Lista de Parcelados-->
+<div class="row mt-3 mb-3" *ngFor="let p of parcelas">
+
+    <div class="col-12 mt-2">
+        <div class="card efeito-sobresalto">
+            <div class="card-body px-1 py-2">
+                <div class="row">
+                    <div class="col-12 col-xxl-2">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Parcela:</small></h6>
+                            <span style="font-size: 17px;">{{p.numero}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12" [ngClass]="{'col-xxl-3': p.dataPagamento, 'col-xxl-4': !p.dataPagamento}">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Data de Vencimento:</small></h6>
+                            <span style="font-size: 17px;">{{p.dataVencimento | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12" [ngClass]="{'col-xxl-2': p.dataPagamento, 'col-xxl-3': !p.dataPagamento}">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Valor:</small></h6>
+                            <span style="font-size: 17px;">{{p.valor | currency: 'BRL'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12" [ngClass]="{'col-xxl-2': p.dataPagamento, 'col-xxl-3': !p.dataPagamento}">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Pago:</small></h6>
+                            <p style="font-size: 17px;" class="text-success" *ngIf="p.pago"><i class="fas fa-square me-1"></i>Sim</p>
+                            <p style="font-size: 17px;" class="text-danger" *ngIf="!p.pago"><i class="fas fa-square me-1"></i>Não</p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xxl-3" *ngIf="p.dataPagamento">
+                        <div class="text-start text-xxl-center ms-2 mt-2 mt-xxl-0">
+                            <h6 class="mb-0"><small>Data de Pagamento:</small></h6>
+                            <span style="font-size: 17px;">{{p.dataPagamento | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
