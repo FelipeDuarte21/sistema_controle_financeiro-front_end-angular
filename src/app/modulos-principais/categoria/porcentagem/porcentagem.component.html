@@ -14,10 +14,10 @@
             <div class="form-group">
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">R$</span>
-                    <input type="number" step="0.01" formControlName="rendaMensalTotal" class="form form-control" [ngClass]="{'is-invalid': verificaCampoPorcentagem('rendaMensalTotal')}"/>
+                    <input type="number" step="0.01" formControlName="rendaMensal" class="form form-control" [ngClass]="{'is-invalid': verificaCampoPorcentagem('rendaMensal')}"/>
 
-                    <div class="invalid-feedback" *ngIf="formPorcentagem.get('rendaMensalTotal')?.errors?.['required']">Renda Mensal Total é requerido!</div>
-                    <div class="invalid-feedback" *ngIf="formPorcentagem.get('rendaMensalTotal')?.errors?.['min']">Renda Mensal menor que R$ 0,00</div>
+                    <div class="invalid-feedback" *ngIf="formPorcentagem.get('rendaMensal')?.errors?.['required']">Renda Mensal Total é requerido!</div>
+                    <div class="invalid-feedback" *ngIf="formPorcentagem.get('rendaMensal')?.errors?.['min']">Renda Mensal menor que R$ 0,00</div>
 
                 </div>
             </div>
@@ -66,8 +66,8 @@
         </div>
 
         <div class="col-12 col-md-4 col-xl-2 col-xxl-1 text-md-center">
-            <h5 *ngIf="getValorTotal().toFixed(2) != formPorcentagem.get('rendaMensalTotal')?.value" class="text-danger">{{getValorTotal() | currency}}</h5>
-            <h5 *ngIf="getValorTotal().toFixed(2) == formPorcentagem.get('rendaMensalTotal')?.value" class="text-success">{{getValorTotal() | currency}}</h5>
+            <h5 *ngIf="getValorTotal().toFixed(2) != formPorcentagem.get('rendaMensal')?.value" class="text-danger">{{getValorTotal() | currency}}</h5>
+            <h5 *ngIf="getValorTotal().toFixed(2) == formPorcentagem.get('rendaMensal')?.value" class="text-success">{{getValorTotal() | currency}}</h5>
         </div>
 
     </div>

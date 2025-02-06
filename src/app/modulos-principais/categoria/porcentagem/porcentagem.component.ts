@@ -5,6 +5,7 @@ import { AlertasService } from "src/app/compartilhados/componentes/alertas/alert
 import { SpinnerService } from "src/app/compartilhados/componentes/spinners/spinner.service";
 import { Categoria } from "src/app/modelos/categoria.model";
 import { CategoriaPorcentageDados } from "src/app/modelos/categoriaPorcentagemDados.model";
+import { Porcentagem } from "src/app/modelos/porcentagem.model";
 import { CategoriaService } from "src/app/servicos/http/categoria.service";
 import { UsuarioService } from "src/app/servicos/http/usuario.service";
 
@@ -34,7 +35,7 @@ export class PorcentagemComponent implements OnInit{
         let rendaMensalTotal = parseInt(window.sessionStorage.getItem("rendaMensalTotal") as string ) as number;
 
         this.formPorcentagem = this.formBuilder.group({
-            rendaMensalTotal: [rendaMensalTotal,[Validators.required,Validators.min(0.00)]],
+            rendaMensal: [rendaMensalTotal,[Validators.required,Validators.min(0.00)]],
             categorias: this.formBuilder.array([]),
         });
 
@@ -75,7 +76,7 @@ export class PorcentagemComponent implements OnInit{
     }
 
     public getValorCalculado(porcentagem: number): number{
-        let rendaTotal = this.formPorcentagem.get('rendaMensalTotal')?.value as number;
+        let rendaTotal = this.formPorcentagem.get('rendaMensal')?.value as number;
         return rendaTotal * (porcentagem / 100);
     }
 
@@ -112,12 +113,14 @@ export class PorcentagemComponent implements OnInit{
 
         this.spinnerService.ativarSpinner();
 
-        let dados = this.formCategoria.getRawValue() as CategoriaPorcentageDados[];
+        let dados = this.formPorcentagem.getRawValue() as Porcentagem;
+        dados.idConta = parseInt(window.sessionStorage.getItem("idConta") as string);
 
         this.categoriaService.alterarPorcentagems(dados).subscribe({
             next: categorias => {
                 this.spinnerService.desativarSpinner();
                 this.alertaService.alertaSucesso("Sucesso! porcentagems das categorias foram atualizadas com sucesso!");
+                window.sessionStorage.setItem('rendaMensalTotal', dados.rendaMensal.toString())
                 this.router.navigate(['/categoria']);
             },
             error: error => {

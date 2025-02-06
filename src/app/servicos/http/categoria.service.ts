@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { CategoriaDados } from "src/app/modelos/categoriaDados.model";
 import { CategoriaPorcentageDados } from "src/app/modelos/categoriaPorcentagemDados.model";
+import { Porcentagem } from "src/app/modelos/porcentagem.model";
 
 @Injectable()
 export class CategoriaService{
@@ -41,8 +42,8 @@ export class CategoriaService{
         return this.http.get<Categoria[]>(`${this.baseURL}?conta=${idConta}`);
     }
 
-    public alterarPorcentagems(categoriaPorcentagem: CategoriaPorcentageDados[]): Observable<Categoria[]>{
-        return this.http.patch<Categoria[]>(`${this.baseURL}/porcentagem`,categoriaPorcentagem);
+    public alterarPorcentagems(porcentagem: Porcentagem): Observable<Categoria[]>{
+        return this.http.patch<Categoria[]>(`${this.baseURL}/porcentagem`,porcentagem);
     }
 
 }
